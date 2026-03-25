@@ -1,36 +1,34 @@
 ---
-title: The Cline Workflow
+title: The Execution Workflow
 description: Plan → Act → Verify, one task at a time
 ---
 
-# The Cline Workflow
+# The Execution Workflow
 
 ## TLDR
 
-**New chat for every task.** This prevents context pollution.
+**New conversation for every task.** Prevents context pollution.
 
-**Minimal prompting.** "Can we plan task 2.3?" is enough—AI reads your docs for context.
+**Plan mode FIRST.** Whether using Cline or Claude Code, always review the approach before AI writes code. For fixes and debugging, this is **critical**.
 
-**Plan before Act.** Review the approach before AI starts coding.
+**Minimal prompting.** "Can we plan task 2.3?" is enough — AI reads your docs for context.
 
-**Approve commands.** You see every terminal command before it runs.
-
-**Verify and score.** Check the work, assign confidence, close chat, next task.
+**Verify and score.** Check the work, assign confidence, close, next task.
 
 ---
 
 ## The Cycle
 
 ```
-1. Open new Cline chat
+1. Open new Cline chat / Claude Code session
 2. "Can we please plan task X.X?"
 3. AI reads docs, proposes approach
 4. Review plan, ask questions, adjust
-5. "Proceed" → Act Mode
-6. Approve terminal commands as needed
+5. "Proceed" → execution
+6. Approve commands as needed
 7. AI completes work, provides confidence score
-8. Verify it works
-9. Close chat
+8. Verify it works (run app, check browser, run tests)
+9. Close conversation
 10. Next task
 ```
 
@@ -38,23 +36,43 @@ Every task follows this cycle. No exceptions.
 
 ---
 
-## Why New Chat Per Task
+## Why New Conversation Per Task
 
 Long conversations accumulate garbage:
 - Old debugging tangents
 - Superseded decisions
-- Conflicting context
+- Conflicting context from abandoned approaches
+- Token costs for context you're barely using
 
-By message 100, AI is confused.
+By message 80, AI is confused and you're paying for 80 messages of context on every response.
 
-New chat = fresh start. Your documentation provides continuity, not chat history.
+New conversation = fresh start. Your documentation provides continuity, not chat history.
 
 **The pattern:**
-- Task 1 → New chat → Complete → Close
-- Task 2 → New chat → Complete → Close
-- Task 3 → New chat → Complete → Close
+- Task 1 → New conversation → Complete → Close
+- Task 2 → New conversation → Complete → Close
+- Task 3 → New conversation → Complete → Close
 
-Each task gets AI's full attention without pollution from previous work.
+---
+
+## Plan Mode: Non-Negotiable for Fixes
+
+For new tasks following a sprint plan, plan mode confirms alignment. For **fixes, debugging, and tweaks**, plan mode is absolutely critical:
+
+```
+I need to fix this: [describe the problem]
+
+Please investigate and propose a plan before making any changes.
+```
+
+**Why this matters for fixes:**
+- Without a plan, AI starts changing code based on its first guess
+- First guesses are often wrong for bugs
+- Changes without a plan create new bugs
+- A 2-minute plan review saves 30 minutes of rework
+
+**In Cline:** Use the explicit Plan Mode toggle.
+**In Claude Code:** Ask it to plan, or use `--plan` flag.
 
 ---
 
@@ -65,78 +83,45 @@ You don't need elaborate prompts. This works:
 > "Can we please plan task 2.3?"
 
 AI will:
-1. Read your ROADMAP.md to find task 2.3
-2. Read README.md for project context
-3. Check CLAUDE_RULES.md for standards
-4. Look at LEARNINGS.md for gotchas
-5. Propose an approach
+1. Read your `.clinerules` / `CLAUDE.md` for rules
+2. Read `ARCHITECTURE.md` for the system design
+3. Read the sprint plan to find the task
+4. Read the task spec for details
+5. Check `LEARNINGS.md` for gotchas
+6. Propose an approach
 
 If your docs are good, the prompt can be simple.
 
 **When to add context:**
 - External APIs: "Here's the API docs: [link]"
-- Changed requirements: "Actually, we decided to use X instead of Y"
+- Changed requirements: "Actually, we're using X instead of Y"
 - Specific constraints: "This needs to work offline"
 
 Otherwise, trust your docs.
 
 ---
 
-## Plan Mode
+## Execution
 
-When you prompt, AI enters Plan Mode:
-
-```
-You: "Can we plan task 2.3 - user authentication?"
-
-AI: "Based on the ROADMAP, this task involves:
-- Creating login/register endpoints
-- JWT token generation
-- Password hashing with bcrypt
-
-Proposed approach:
-1. Add User model with email/passwordHash
-2. Create auth service for hashing/tokens
-3. Add POST /auth/login and /auth/register routes
-4. Write tests
-
-Questions:
-- Token expiration: 24 hours okay?
-- Should I add refresh tokens or keep MVP simple?
-- Rate limiting now or defer to Phase 2?"
-```
-
-Answer the questions. Adjust the plan if needed.
-
-**Don't skip this.** Catching misunderstandings now is cheap. Fixing code later is expensive.
-
----
-
-## Act Mode
-
-Once the plan is right:
+Once the plan looks right:
 
 > "Looks good. Proceed."
 
-AI switches to Act Mode and starts working:
-- Creates/modifies files
-- Runs commands (with your approval)
-- Writes tests
-- Documents the work
+AI starts working — creating files, editing code, running commands.
 
-**Terminal approval:**
-
+**Terminal approval (Cline):**
 ```
 Cline wants to run: npm install bcrypt jsonwebtoken
 [Approve] [Reject] [Edit]
 ```
 
-Quick approvals for standard stuff (npm install, npm test).
-Careful review for anything destructive (rm, database operations, git push).
+Quick approval for standard stuff (install, test). Careful review for anything destructive (rm, database operations, git operations).
+
+**Claude Code:** Review the proposed changes in your terminal. You can stop it at any point.
 
 ---
 
-## Completion
+## Completion and Scoring
 
 When AI finishes, it should provide:
 
@@ -148,10 +133,11 @@ When AI finishes, it should provide:
 - Register endpoint working
 - JWT tokens generating correctly
 - Tests passing (8/8)
+- Smoke tested in browser
 
 **Deferred:**
-- Rate limiting (Phase 2 per roadmap)
-- Refresh tokens (v1.0)
+- Rate limiting (Sprint 2 per roadmap)
+- Refresh tokens (V2)
 
 **Notes:**
 - Used 24h token expiry as discussed
@@ -159,46 +145,41 @@ When AI finishes, it should provide:
 ```
 
 **Your job:**
-1. Verify it actually works (run the app, test manually)
+1. Run the app, test manually
 2. Check confidence score makes sense
-3. If below 8/10, fix before moving on
-4. Close chat, open next task
-
----
-
-## Visual Verification
-
-For UI tasks, ask AI what you should see:
-
-> "Before we close, describe what I should see when I test the login flow."
-
-```
-AI: "At localhost:3000/login you should see:
-- Email and password fields
-- 'Sign In' button
-- After correct login: redirect to dashboard
-- After wrong password: 'Invalid credentials' error
-
-Try email: test@example.com, password: test123"
-```
-
-Test it. Report any differences. Fix before closing.
+3. Below 8/10? Fix before moving on
+4. Close conversation, move to next task
 
 ---
 
 ## When Things Go Wrong
 
-**AI seems confused:**
-Your docs might be incomplete or contradictory. Check them.
+**AI seems confused:** Your docs might be incomplete or contradictory. Check them.
 
-**AI does something unexpected:**
-Stop Act Mode, discuss in Plan Mode, then resume.
+**AI does something unexpected:** Stop execution, go back to plan mode, discuss.
 
-**Confidence is below 8:**
-Don't move on. Ask AI what's missing and fix it.
+**Confidence below 8:** Don't move on. Ask what's missing and fix it.
 
-**Task is taking way too long:**
-It's probably too big. Split it into smaller subtasks.
+**Task taking way too long:** Probably too big. Split into subtasks.
+
+**Going in circles on a bug:** Stop. Write a task doc capturing what's been tried and what's left. Start fresh. (See [Context Management](/part-5/context-management) for details.)
+
+---
+
+## The Side-Task Trap
+
+During a task, AI (or you) notices something else that needs fixing in a different part of the app.
+
+**Wrong approach:** "While we're here, let's fix that too."
+
+**Right approach:** "That's important but not our current task. Write a quick task doc for it and let's stay focused."
+
+Resist the temptation. Each conversation has limited context. Piling unrelated work into it:
+- Increases token costs (paying for context you're only 20% using)
+- Increases confusion (AI mixing concerns)
+- Increases error risk (changes in unrelated areas without proper planning)
+
+Write the task doc. Start a fresh conversation for it later.
 
 ---
 
@@ -206,11 +187,11 @@ It's probably too big. Split it into smaller subtasks.
 
 | Phase | What Happens |
 |-------|--------------|
-| New chat | Fresh context, AI reads docs |
+| New conversation | Fresh context, AI reads docs |
 | Plan Mode | AI proposes approach, you review |
-| Act Mode | AI executes, you approve commands |
+| Execution | AI writes code, you approve commands |
 | Completion | Confidence score, verification |
-| Close | Done. Next task gets new chat |
+| Close | Done. Next task gets new conversation |
 
 ---
 

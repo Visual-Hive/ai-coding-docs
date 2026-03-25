@@ -1,22 +1,22 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
-  title: 'Vibe Coding Guide',
-  description: 'Build production-ready apps with AI—without wasting money',
-  
+  title: 'AI-Assisted Software Engineering Guide',
+  description: 'Build production-ready apps with AI — systematically, not randomly',
+
   cleanUrls: true,
   lastUpdated: true,
-  
+
   head: [
     ['meta', { name: 'theme-color', content: '#5f67ee' }],
     ['meta', { property: 'og:type', content: 'website' }],
-    ['meta', { property: 'og:title', content: 'Vibe Coding Guide' }],
-    ['meta', { property: 'og:description', content: 'Build production-ready apps with AI—without wasting money' }],
+    ['meta', { property: 'og:title', content: 'AI-Assisted Software Engineering Guide' }],
+    ['meta', { property: 'og:description', content: 'Build production-ready apps with AI — systematically, not randomly' }],
   ],
 
   themeConfig: {
-    siteTitle: 'Vibe Coding Guide',
-    
+    siteTitle: 'AI-Assisted SE Guide',
+
     nav: [
       { text: 'Guide', link: '/introduction' },
       { text: 'Templates', link: '/part-6/templates' },
@@ -58,7 +58,7 @@ export default defineConfig({
         text: 'Part III: Execution',
         collapsed: false,
         items: [
-          { text: 'The Cline Workflow', link: '/part-3/cline-workflow' },
+          { text: 'The Execution Workflow', link: '/part-3/cline-workflow' },
           { text: 'Task Documentation', link: '/part-3/task-patterns' },
           { text: 'Confidence Scoring', link: '/part-3/confidence-scoring' },
         ]
@@ -82,10 +82,10 @@ export default defineConfig({
       },
       {
         text: 'Part VI: Resources',
-        collapsed: true,
+        collapsed: false,
         items: [
-          { text: 'Templates', link: '/part-6/templates' },
-          { text: 'Prompts', link: '/part-6/prompts' },
+          { text: 'Project Templates', link: '/part-6/templates' },
+          { text: 'Prompt Library', link: '/part-6/prompts' },
           { text: 'Case Studies', link: '/part-6/case-studies' },
           { text: 'Setup Guide', link: '/part-6/setup-guide' },
         ]

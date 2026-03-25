@@ -1,338 +1,210 @@
 ---
-title: Templates
-description: Copy-paste documents to start your project
+title: Project Templates
+description: Drop-in files to start any AI-assisted project
 ---
 
-# Templates
+# Project Templates
 
-Ready-to-use templates for all five core documents. Copy, customize, go.
+Drop these files into any repo and AI will know how to build your project. Each template is ready to customize — fill in the brackets, adjust the rules to your stack, and go.
+
+**Quick start:** Copy the entire `project-templates/` directory from this repo into your project root. Customize each file. Point Cline or Claude Code at it and start working.
 
 ---
 
-## README.md
+## What's Included
+
+| File | Purpose | Customize? |
+|------|---------|-----------|
+| **README.md** | Project overview, vision, scope, tech stack, setup | Yes — fill in your project details |
+| **ARCHITECTURE.md** | System design, DB schemas, components, API, deployment | Yes — critical to get right |
+| **LEARNINGS.md** | Empty log for solutions and gotchas | Minimal — just start using it |
+| **.clinerules** | Quality rules for Cline (VS Code) | Yes — add tech-specific rules |
+| **CLAUDE.md** | Quality rules for Claude Code (CLI) | Yes — same content as .clinerules |
+| **TASK_TEMPLATE.md** | Format for individual task specifications | Light customization |
+| **SPRINT_PLAN_TEMPLATE.md** | Format for sprint planning documents | Light customization |
+| **SPRINT_RULES.md** | Rules for sizing sprints, writing tasks, managing scope | Review and adjust |
+
+### Prompt Templates
+
+| File | When to Use |
+|------|------------|
+| **prompts/01-initial-brainstorm.md** | Starting a new project (Claude Opus, in a Project) |
+| **prompts/02-generate-foundation-docs.md** | After brainstorming — generate all docs at once |
+| **prompts/03-generate-task-docs.md** | Generate individual task specs for a sprint |
+| **prompts/04-new-feature-brainstorm.md** | Adding features to an existing project |
+| **prompts/05-fix-and-debug.md** | Debugging workflow with the 30-minute rule |
+| **prompts/06-context-rescue.md** | When to start fresh and how to hand off context |
+| **prompts/07-phase-audit.md** | Code review after completing a phase |
+
+---
+
+## How to Use These
+
+### For a Brand New Project
+
+1. **Brainstorm first** — Use `prompts/01-initial-brainstorm.md` in Claude (Opus, in a Project)
+2. **Generate docs** — Use `prompts/02-generate-foundation-docs.md` to have Claude fill in all templates based on your brainstorming conversation
+3. **Review and adjust** — Claude generates good first drafts, but review everything. Push back on vague schemas, weak rules, oversized sprints.
+4. **Generate task specs** — Use `prompts/03-generate-task-docs.md` for detailed task documents
+5. **Push to GitHub** — Add all docs and any starter code to your repo
+6. **Start executing** — Point Cline or Claude Code at the repo and start with Task 1
+
+### For an Existing Project
+
+1. Add the templates you're missing (especially ARCHITECTURE.md and .clinerules/CLAUDE.md)
+2. Fill them in based on your current codebase
+3. Create a sprint plan for your next batch of work
+4. Start using the task-per-conversation workflow
+
+---
+
+## The Templates
+
+### README.md
 
 ```markdown
 # [Project Name]
 
-[One sentence: what this does]
+[One sentence: what this does and who it's for]
 
 ## Vision
 
-[2-3 paragraphs: what this could become. Dream big here.]
+[2-3 paragraphs: full picture of what this could become]
 
 ## Current Phase: MVP
 
 Building the minimum to validate [core concept].
 
-**Included:**
-- [Feature 1]
+**In scope:**
+- [Feature 1 — why it's essential]
 - [Feature 2]
 - [Feature 3]
 
-**Not included (yet):**
-- [Deferred 1] → v1.0
-- [Deferred 2] → v1.0
-- [Deferred 3] → Production
-
-**Success criteria:**
-- [How we know MVP worked]
-
-## Tech Stack
-
-- Frontend: [X]
-- Backend: [X]
-- Database: [X]
-- Hosting: [X]
-
-## Setup
-
-```bash
-# Clone and install
-git clone [repo]
-cd [project]
-npm install
-
-# Environment
-cp .env.example .env
-# Edit .env with your values
-
-# Run
-npm run dev
-```
-
-## Project Structure
-
-```
-src/
-├── [folder]/    # [Purpose]
-├── [folder]/    # [Purpose]
-└── [folder]/    # [Purpose]
-```
-```
-
----
-
-## ROADMAP.md
-
-```markdown
-# Roadmap
-
-## Phase 1: MVP ([X] weeks)
-
-Goal: Validate [core concept]
-
-### Task 1: Project Setup
-- [ ] 1.1 Initialize repo and structure
-- [ ] 1.2 Database setup
-- [ ] 1.3 Basic config and env
-
-### Task 2: [Core Feature]
-- [ ] 2.1 [Subtask]
-- [ ] 2.2 [Subtask]
-- [ ] 2.3 [Subtask]
-
-### Task 3: [Second Feature]
-- [ ] 3.1 [Subtask]
-- [ ] 3.2 [Subtask]
-
-### Task 4: Polish & Deploy
-- [ ] 4.1 Error handling
-- [ ] 4.2 Basic tests
-- [ ] 4.3 Deploy
-
-## Phase 2: v1.0 (after MVP validates)
-
-- [ ] [Feature]
-- [ ] [Feature]
-- [ ] [Feature]
-
-## Deferred
-
-| Feature | Target | Reason |
-|---------|--------|--------|
-| [Feature] | v1.0 | [Why not MVP] |
-| [Feature] | Production | [Why not v1.0] |
-```
-
----
-
-## CLAUDE_RULES.md
-
-```markdown
-# Claude Rules
-
-## Project Context
-
-[One paragraph: what we're building and current phase]
-
-## Code Standards
-
-- **Comments:** Aim for 50%. Explain "why" not "what"
-- **Functions:** Every function gets a docstring
-- **Errors:** Handle explicitly, no silent failures
-- **Tests:** Required for business logic
-
-## Confidence Scoring
-
-After each task, provide:
-
-```
-## Confidence: X/10
-
-**Met:**
-- [x] [Criterion]
-- [x] [Criterion]
-
 **Deferred:**
-- [ ] [Thing] (Phase X)
-```
-
-**8/10 minimum to proceed.**
-
-## Ask Human When
-
-- Security decisions
-- Architectural changes  
-- Ambiguous requirements
-- Anything destructive
-- Confidence below 8
-
-## Tech-Specific Rules
-
-### [Framework/Language]
-- [Rule]
-- [Rule]
-
-### Database
-- [Rule]
-- [Rule]
-```
-
----
-
-## TASK_TEMPLATE.md
-
-```markdown
-# Task [X.X]: [Name]
-
-**Status:** [Complete/In Progress] | **Confidence:** [X/10]
-
-## What I Built
-
-[2-3 sentences: what this task accomplished]
-
-## Decisions
-
-- **[Decision]:** [Why]
-- **[Decision]:** [Why]
-
-## Tests
-
-[Pass/fail status, brief coverage note]
-
-## Notes
-
-[Anything useful for future tasks]
-```
-
----
-
-## LEARNINGS.md
-
-```markdown
-# Learnings
-
-Running log of solutions and gotchas. Check this at the start of each task.
-
----
-
-## [Date]: [Topic]
-
-**Problem:** [What went wrong]
-
-**Solution:** [How we fixed it]
-
-**Apply to:** [When this is relevant]
-
----
-
-## Quick Reference
-
-| Issue | Solution | Entry |
-|-------|----------|-------|
-| [Common issue] | [Quick fix] | [Date] |
-```
-
----
-
-## Filled Example: Conference Networking App
-
-### README.md
-
-```markdown
-# NetworkMatch
-
-AI-powered conference networking that connects the right people.
-
-## Vision
-
-Transform conference networking from random encounters to meaningful connections. Attendees get AI-matched with the most relevant people based on skills, interests, and goals. Full vision includes real-time matching, in-app messaging, calendar integration, and post-event follow-ups.
-
-## Current Phase: MVP
-
-Validating that AI matching creates valuable connections.
-
-**Included:**
-- CSV upload of attendees
-- Simple profiles (name, skills, interests, goals)
-- AI matching with top 10 recommendations
-- Match explanations
-- Basic feedback collection
-
-**Not included (yet):**
-- User accounts → v1.0
-- Messaging → v1.0
-- Calendar integration → Production
+- [Feature] → v1.0 (reason)
+- [Feature] → Production (reason)
 
 **Success criteria:**
-- 70%+ of users rate matches as helpful
-- At least one organizer wants to pay for it
+- [Measurable criteria]
 
 ## Tech Stack
 
-- Frontend: React + Tailwind
-- Backend: Node + Express
-- Database: Supabase (PostgreSQL)
-- AI: Claude API
-- Hosting: Vercel
+| Layer | Technology | Rationale |
+|-------|-----------|-----------|
+| Frontend | [X] | [Why] |
+| Backend | [X] | [Why] |
+| Database | [X] | [Why] |
+| Hosting | [X] | [Why] |
 
 ## Setup
 
-```bash
-git clone https://github.com/you/networkmatch
-cd networkmatch
-npm install
-cp .env.example .env
-# Add your SUPABASE_URL, SUPABASE_KEY, ANTHROPIC_API_KEY
-npm run dev
-```
-```
+[Install and run instructions]
 
-### ROADMAP.md
+## Key Documentation
 
-```markdown
-# Roadmap
-
-## Phase 1: MVP (3 weeks)
-
-Goal: Validate AI matching creates valuable connections
-
-### Task 1: Foundation
-- [x] 1.1 Project setup
-- [x] 1.2 Supabase database
-- [x] 1.3 Basic Express server
-
-### Task 2: Data Management
-- [x] 2.1 Attendee schema
-- [ ] 2.2 CSV upload endpoint
-- [ ] 2.3 Data validation
-
-### Task 3: Matching
-- [ ] 3.1 Matching algorithm
-- [ ] 3.2 Claude API for explanations
-- [ ] 3.3 Matches endpoint
-
-### Task 4: Frontend
-- [ ] 4.1 Upload interface
-- [ ] 4.2 Matches display
-- [ ] 4.3 Feedback form
-
-### Task 5: Polish
-- [ ] 5.1 Error handling
-- [ ] 5.2 Basic tests
-- [ ] 5.3 Deploy to Vercel
-
-## Phase 2: v1.0
-
-- [ ] User authentication
-- [ ] Rich profiles with photos
-- [ ] In-app messaging
-- [ ] Real-time updates
+| Document | Purpose |
+|----------|---------|
+| `ARCHITECTURE.md` | System design, DB schema |
+| `.clinerules` / `CLAUDE.md` | AI development rules |
+| `dev-docs/sprints/` | Sprint plans and task specs |
+| `LEARNINGS.md` | Solutions and gotchas |
 ```
 
 ---
 
-## Usage Tips
+### ARCHITECTURE.md (Key Sections)
 
-**Starting a project:**
-1. Copy all five templates
-2. Fill in README with your vision and MVP scope
-3. Fill in ROADMAP with tasks from brainstorming
-4. Customize CLAUDE_RULES for your tech stack
-5. Leave TASK_TEMPLATE and LEARNINGS mostly as-is
+```markdown
+# Architecture
 
-**Keep templates lean.**
-If you're adding lots of sections, you're over-engineering. The templates here are the right size.
+## System Overview
+[High-level diagram and description]
+
+## Database Schema
+### [table_name]
+| Column | Type | Constraints | Notes |
+|--------|------|-------------|-------|
+| id | UUID | PK | |
+| [field] | [type] | [constraints] | [notes] |
+
+### Relationships
+[Entity relationship descriptions]
+
+## Component Architecture
+[Component hierarchy and responsibilities]
+
+## API Design
+| Method | Path | Purpose | Auth |
+|--------|------|---------|------|
+| POST | /api/auth/login | Authenticate | No |
+
+## Key Technical Decisions
+| Decision | Choice | Rationale |
+|----------|--------|-----------|
+| [Decision] | [Choice] | [Why] |
+```
+
+---
+
+### .clinerules / CLAUDE.md (Key Sections)
+
+```markdown
+## Iron-Clad Developer Rules
+
+### Quality Standards
+- Unit tests mandatory for all business logic
+- Smoke test after every change
+- Browser testing for UI changes
+- Handle errors explicitly — no silent failures
+- Comment the "why" on non-obvious decisions
+- Every function gets a docstring
+
+### Development Workflow
+- Plan mode FIRST — always
+- One task at a time — no side quests
+- Commit working code only
+- Update docs after every task
+
+### Prohibited
+- Do NOT skip tests
+- Do NOT refactor outside current task scope
+- Do NOT add unspecified features
+- Do NOT use `any` types
+
+### Confidence Scoring
+After each task: rate 1-10, 8 minimum to proceed.
+
+### Ask Human When
+- Security decisions
+- Architectural changes
+- Ambiguous requirements
+- Confidence below 8
+```
+
+---
+
+## Real-World Example: EventHive
+
+[EventHive](https://github.com/visual-hive/eventhive) demonstrates these templates in production:
+
+- **ARCHITECTURE.md** — 11KB with full database schemas (8 tables), component hierarchy, auth flow, API conventions, deployment architecture
+- **.clinerules** — 12KB of strict development rules including mandatory Erleah annotation attributes, prohibited behaviors, and tech-specific conventions
+- **dev-docs/sprints/** — 4 sprints with individual task specs, architectural decision records (ADRs), and sprint plans
+- **dev-docs/issues/ACTIVE.md** — Lightweight bug tracking separate from GitHub issues
+
+Browse the repo to see what thorough project documentation looks like.
+
+---
+
+## Tips
+
+**Don't skip ARCHITECTURE.md.** It's the single most impactful document. AI with real schemas writes correct code on the first try. AI without them guesses and you spend hours debugging.
+
+**Make .clinerules strict.** "Tests are mandatory" not "try to write tests." AI follows explicit rules. Vague suggestions get ignored.
+
+**Review Claude's output.** When you use the prompts to generate these docs, Claude produces good first drafts. But review everything — push back on vague schemas, weak rules, and oversized sprints.
+
+**Keep docs updated.** After every task, check: is ARCHITECTURE.md still accurate? Is LEARNINGS.md up to date? Stale docs cause stale output.
 
 ---
 

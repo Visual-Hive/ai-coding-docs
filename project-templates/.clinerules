@@ -1,0 +1,85 @@
+# Project: [Project Name]
+# Phase: [MVP / v1.0 / Production]
+
+## Before EVERY Task
+
+Read these files first:
+1. `ARCHITECTURE.md` — system design and schema
+2. `README.md` — project scope and current phase
+3. `LEARNINGS.md` — known gotchas and solutions
+4. Current sprint plan in `dev-docs/sprints/`
+
+## Iron-Clad Developer Rules
+
+### Quality Standards
+- **Unit tests are mandatory** — write tests for every piece of business logic, every utility function, every API endpoint. No exceptions.
+- **Smoke test after every change** — after any development, debugging, or fix, run the app and verify it works end-to-end. No stone unturned.
+- **Browser/UI testing required** — for any frontend change, verify visually in the browser. Describe what should appear and confirm it does.
+- **Handle errors explicitly** — no silent failures, no empty catch blocks. Log meaningful messages. Return proper error responses.
+- **Comment the "why"** — every non-obvious decision gets a comment explaining WHY, not what. Aim for heavy commenting on business logic.
+- **Every function gets a docstring** — parameters, return type, purpose. No exceptions for public functions.
+
+### Development Workflow
+- **Plan mode FIRST** — always propose an approach and get approval before writing code
+- **One task at a time** — do not start working on side issues discovered during a task. Document them for later.
+- **Commit working code** — never commit broken code. If tests fail, fix them before committing.
+- **Update docs after every task** — LEARNINGS.md for gotchas, sprint plan for status, ARCHITECTURE.md if structure changed.
+
+### Architecture Rules
+- **Follow existing patterns** — check how similar things are done in the codebase before creating new patterns
+- **No new dependencies without discussion** — justify any new package and get approval
+- **Use absolute imports** — use `$lib/`, `@/`, or project aliases. No relative imports crossing module boundaries.
+- **Database changes need migrations** — never modify the database schema without a proper migration file
+
+### What NOT To Do
+- Do NOT skip tests to save time
+- Do NOT refactor code outside the current task scope
+- Do NOT add features not in the current task specification
+- Do NOT use `any` types (TypeScript) or skip type safety
+- Do NOT store secrets or credentials in code
+- Do NOT ignore linter warnings
+
+## Confidence Scoring
+
+After each task, provide:
+
+```
+## Confidence: X/10
+
+**Met:**
+- [x] [Criterion]
+- [x] [Criterion]
+
+**Deferred:**
+- [ ] [Thing] → [Which phase/sprint]
+
+**Tests:**
+- Unit: [X/Y passing]
+- Smoke: [Verified / Not verified]
+```
+
+**8/10 minimum to proceed.** Below 8 means fix it before moving on.
+
+## Ask Human When
+
+- Security-related decisions
+- Architectural changes not in the spec
+- Ambiguous requirements
+- Anything destructive (deleting data, dropping tables)
+- Confidence below 8
+- Task is taking significantly longer than estimated
+- A discovered issue affects another part of the app (write a task doc instead of fixing it inline)
+
+## Tech-Specific Rules
+
+### [Framework — e.g., SvelteKit / Next.js / Express]
+- [Rule specific to your framework]
+- [Rule specific to your framework]
+
+### [Database — e.g., PostgreSQL / Supabase]
+- [Rule specific to your DB]
+- [Rule specific to your DB]
+
+### [Styling — e.g., Tailwind / CSS Modules]
+- [Rule specific to your styling approach]
+- [Rule specific to your styling approach]

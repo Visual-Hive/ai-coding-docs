@@ -1,170 +1,165 @@
 ---
 title: The Brainstorming Session
-description: Scoping your MVP before writing any code
+description: Starting every project with a proper conversation
 ---
 
 # The Brainstorming Session
 
 ## TLDR
 
-Before writing code, have a 30-60 minute conversation with AI to scope your MVP. Describe your full vision, then let AI help you identify what you can realistically build in 2-4 weeks to prove the core concept.
+Every project starts with a **conversation with Claude Opus inside a Project**. Not a single prompt. A real, multi-turn discussion lasting 30-60 minutes. You describe your vision, Claude pushes back, asks questions, recommends tech, debates scope, maybe prototypes a layout. The quality of this conversation determines everything that follows.
 
-This conversation is the highest-ROI activity in your entire project. It prevents building the wrong thing.
+This is the highest-ROI activity in your entire project.
+
+---
+
+## Why Opus, Why a Project
+
+**Why Opus:** The initial conversation quality is dramatically better. Opus thinks deeper about scope, challenges assumptions more effectively, and the resulting foundation documents are 10X better. Don't start with Sonnet or Haiku for this phase — the savings aren't worth the quality loss.
+
+**Why a Project:** Claude Projects give persistent file context. You can:
+- Start with an empty Project and just talk
+- Add reference files (design mockups, competitor screenshots, API docs)
+- Later sync your GitHub repo so Claude sees the actual codebase
+- Every new conversation in the Project inherits the same context
 
 ---
 
 ## The Conversation
 
-**Step 1: Describe everything you want**
+This isn't "prompt → response → done." It's a real discussion.
 
-Don't hold back. Tell AI the full vision:
+**Turn 1: Describe everything**
 
-> "I want to build a conference networking app where attendees get AI-powered match recommendations, can schedule meetings, message each other, see analytics on their networking, integrate with LinkedIn and Zoom..."
+Don't hold back. Tell Claude the full vision:
 
-**Step 2: Ask for MVP scoping**
+> "I want to build a community platform for event professionals. They can browse open-source tools, configure them with their branding, deploy them. Plus resources, guides, video tutorials. Eventually an AI assistant that knows the platform..."
 
-> "That's my full vision. But I want to validate the concept first. What's the minimum I could build in 2-3 weeks to prove the core idea works?"
+**Turn 2: Claude analyzes and asks questions**
 
-**Step 3: Let AI analyze**
+Claude should:
+- Identify the core value proposition
+- Ask about your technical level, timeline, budget
+- Point out complexity you might be underestimating
+- Suggest what's MVP vs what's V2
 
-AI with extended thinking will:
-- Identify your core value proposition (what's actually unique)
-- Separate must-haves from nice-to-haves
-- Propose a focused MVP
-- Estimate timeline and cost
+**Turn 3-5: Back and forth**
 
-**Step 4: Iterate**
+This is where the real value is:
+- "Is that really minimal enough for MVP?"
+- "What if we cut the AI assistant and just do tools + resources?"
+- "Do we need user accounts or can we do magic links for MVP?"
+- "Show me what the tech stack comparison looks like"
+- "Can you sketch out the main page layout so I know we're aligned?"
 
-Push back. Ask questions:
-- "Is that really minimal enough?"
-- "What if we cut X?"
-- "Do we need user accounts for MVP?"
+**Turn 6+: Converge on decisions**
 
-Keep narrowing until you have something achievable.
+Claude lays out the technology recommendations with alternatives and trade-offs. Depending on your technical level, this is more or less detailed. Topics to cover:
+- Frontend framework and why
+- Backend approach and why
+- Database choice and why
+- Auth strategy
+- Hosting/deployment
+- Data architecture (how the pieces connect)
+
+---
+
+## What Makes a Good Brainstorm
+
+**Claude should be recommending, not just agreeing.** If Claude never pushes back on your ideas, you're not getting the value. Push Claude to challenge you:
+
+> "Be honest — is this scope realistic for 3 weeks? What would you cut?"
+
+**Tech stack discussion should include alternatives.** Not just "use React" but "here are 3 options, here's why I'd recommend this one for your situation."
+
+**Data architecture matters early.** Discuss how entities relate. What are the main database tables? How does auth connect to the rest? This prevents painful refactoring later.
+
+**Prototype if needed.** If you and Claude aren't sure you're imagining the same thing, ask Claude to describe or prototype a page layout. Alignment now prevents rework later.
 
 ---
 
 ## Example Output
 
-After 30 minutes of conversation, you should have:
+After 30-45 minutes of conversation (using EventHive as an example):
 
 **Core insight:**
-> "The unique value is AI matching. Everything else (messaging, scheduling, analytics) is enhancement. Prove matching works first."
+> "The unique value is making open-source event tools accessible to non-technical organizers. The community and resources support that mission. The AI assistant is V2."
 
 **MVP scope:**
-- Upload attendee CSV
-- AI generates top 10 matches per person
-- Simple page to view your matches
-- Basic feedback collection
-- No user accounts (magic links)
-- No real-time, no messaging, no integrations
+- Member registration and profiles
+- Tool library with browsing and filtering
+- Tool configuration with custom branding
+- Widget hosting for deployed tools
+- Resource library (guides, articles)
+- Admin panel for content management
 
-**Timeline:** 2-3 weeks
+**Deferred to V2:**
+- AI assistant (Erleah) → Sprint 3+
+- Real-time collaboration → Production
+- Third-party integrations → Production
 
-**Cost:** ~$250 in tokens
+**Tech stack:**
+- SvelteKit (full-stack, fast, good DX)
+- PostgreSQL with Drizzle ORM
+- Tailwind CSS
+- Cookie-based auth (simpler than JWT for this use case)
+- Docker on Hetzner (cost-effective self-hosting)
 
-**Success criteria:** Do people find their matches valuable?
+**Key decisions documented:**
+- Standalone app, not part of existing monorepo
+- Three-tier tool hosting model (browser-only, self-hosted, platform-hosted)
+- JSONB for flexible tool configuration schemas
 
 ---
 
 ## Red Flags During Scoping
 
 **"Everything is essential"**
-> "We need video calls AND messaging AND scheduling or it won't work."
+> "We need tools AND resources AND AI assistant AND messaging or it won't work."
 
-Push back: "Can people use Zoom links and manual scheduling for MVP? Let's prove matching works first."
+Push back: "Can we validate that organizers want the tools first? Everything else supports that core."
 
 **"It's not that complex"**
-> "It's just calendar integration."
+> "AI assistant is just a chatbot, how hard can it be?"
 
-Reality check: Calendar integration = OAuth + multiple providers + timezones + recurring events + error handling = 2 weeks alone. Defer it.
+Reality check: AI assistant = ghost cursor + speech synthesis + HUD overlay + RAG knowledge base + action system = 11 tasks spanning weeks. Defer it.
 
 **"Users won't understand without X"**
-> "We need an onboarding tutorial or users will be confused."
+> "We need a full onboarding wizard or users will be lost."
 
-Counter: Ship without it. If users are confused, that tells you exactly what to explain. Don't guess.
-
-**Scope creep during discussion**
-> "Oh, and we should also add..."
-
-Stop. Write it down for v1.0. Don't add it to MVP.
+Counter: Ship with a simple questionnaire. If users are confused, that tells you what to explain. Don't guess.
 
 ---
 
 ## What You Walk Away With
 
-By end of brainstorming, document:
+By end of brainstorming:
 
-**1. MVP Scope (one paragraph)**
-> We're building a conference networking MVP that imports attendee data via CSV, generates AI-powered match recommendations, and displays top 10 matches per attendee with explanations. No user accounts, no messaging, no integrations.
+1. **MVP scope** (one clear paragraph)
+2. **Success criteria** (2-3 measurable bullets)
+3. **Deferred features** (with reasoning for each)
+4. **Tech stack** (with rationale, not just names)
+5. **Data architecture** (main entities and relationships)
+6. **Key technical decisions** (documented with reasoning)
 
-**2. Success Criteria (2-3 bullets)**
-- 70%+ of test users rate matches as helpful
-- At least one organizer expresses purchase intent
-- Core matching runs in <2 seconds
+This becomes the foundation for your README, ARCHITECTURE.md, and sprint plan.
 
-**3. Deferred Features (list)**
-- User accounts → v1.0
-- Real-time updates → v1.0  
-- Messaging → v1.0
-- Calendar integration → Production
-- Mobile apps → Production
-
-**4. Technical Decisions (list)**
-- React + Node + PostgreSQL
-- Simple tag matching (not vector DB) for MVP speed
-- Deploy on Vercel free tier
-
-This becomes the foundation for your README and ROADMAP.
-
----
-
-## Prompts That Work
-
-**Opening:**
-```
-I want to build [full description].
-
-My constraints:
-- Timeline: [2-4 weeks for MVP]
-- Budget: [$200-500 in tokens]
-- Skills: [what you can do]
-
-Help me:
-1. Identify the core value proposition
-2. Scope an MVP that validates just that
-3. List what to defer to later phases
-4. Estimate timeline and cost
-```
-
-**Narrowing:**
-```
-That still feels big. What's the absolute minimum 
-to test whether [core concept] works?
-```
-
-**Technical decisions:**
-```
-For this MVP scope, what tech stack would you 
-recommend and why? Keep it simple.
-```
+**Don't close this conversation yet.** The next step is asking Claude to generate your foundation documents — do that in the same conversation so all the brainstorming context is available.
 
 ---
 
 ## Common Mistakes
 
-**Skipping this conversation entirely**
-Starting with "build me X" instead of "help me scope X." You'll regret it.
+**Using Sonnet/Haiku for brainstorming.** The quality difference is significant. Use Opus for this phase. It's worth the cost.
 
-**Not pushing back on AI's first suggestion**
-AI often proposes something too big initially. Ask "what can we cut?"
+**One prompt, one response.** Brainstorming needs back-and-forth. If you got a good answer on the first try, you probably didn't explore enough.
 
-**Forgetting to document the output**
-The brainstorming insights are valuable. Write them down before they fade.
+**Not using a Project.** Without persistent context, you lose the brainstorming insights when you start a new conversation.
 
-**Treating MVP features as temporary**
-MVP code should still be good code. You're not throwing it away—you're building on it.
+**Skipping this entirely.** Starting with "build me X" instead of "let's discuss X." You'll regret it at $500 in rework.
+
+**Forgetting to document.** The brainstorming insights are valuable. Make sure Claude generates the foundation docs before you move on.
 
 ---
 
-**Next:** [Documentation Architecture](/part-2/documentation-architecture) — Setting up the docs that guide development.
+**Next:** [Documentation Architecture](/part-2/documentation-architecture) — The documents that make everything work.

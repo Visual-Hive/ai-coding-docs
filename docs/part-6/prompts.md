@@ -5,93 +5,105 @@ description: Copy-paste prompts for every phase of development
 
 # Prompts
 
-Tested prompts for each stage. Copy, paste, customize the bracketed parts.
+Tested prompts for each stage. These are also available as individual files in `project-templates/prompts/` for easy reference.
 
 ---
 
-## Brainstorming Prompts
+## Phase 1: Initial Brainstorm
 
-**Initial scoping:**
-```
-I want to build [describe your full vision].
+> **Where:** Claude (Opus), inside a Project. **Not** Cline or Claude Code.
 
-Constraints:
-- Timeline: [2-4 weeks for MVP]
-- Budget: [$200-500 in tokens]
-- My skills: [what you can do]
+```
+I want to build [describe your full vision — don't hold back].
 
-Help me:
-1. Identify the core value proposition
-2. Scope an MVP that validates just that
-3. List what to defer to later
-4. Estimate timeline and cost
-```
+My situation:
+- Technical level: [beginner / intermediate / advanced]
+- Timeline goal: [e.g., MVP in 2-4 weeks]
+- Budget: [e.g., $200-500 in AI tokens]
+- Existing resources: [designs, APIs, datasets, code you have]
 
-**Narrowing scope:**
-```
-That still feels big. What's the absolute minimum to test 
-whether [core concept] works? What can we cut?
-```
+Let's have a thorough discussion before committing to anything:
+1. Talk through the idea — what's exciting, what's risky
+2. Identify the core value proposition
+3. Discuss V1 (MVP) vs V2 scope
+4. Talk through features I might be missing
+5. Recommend technology with trade-offs and alternatives
+6. Discuss data architecture
 
-**Technical decisions:**
-```
-For this MVP scope, recommend a tech stack. 
-Keep it simple—I want to move fast.
-Explain trade-offs briefly.
+Don't just give me a plan. Let's have a real back-and-forth.
+Ask me questions. Challenge my assumptions.
 ```
 
-**Finalizing:**
+**Follow-ups:**
 ```
-Summarize what we decided:
-1. MVP scope (one paragraph)
-2. Tech stack
-3. What's deferred
-4. Timeline and cost estimate
+That still feels ambitious. What's the absolute minimum
+to test whether [core concept] works?
 ```
 
----
-
-## Documentation Prompts
-
-**Generate README:**
 ```
-Create a README.md for this project.
-
-Project: [name]
-MVP scope: [what we're building]
-Tech stack: [technologies]
-Full vision: [eventual goals]
-
-Keep it under 50 lines. Include: vision, current phase, 
-tech stack, setup instructions.
+Can you lay out 2-3 tech stack options with honest
+pros/cons? Consider my skill level and timeline.
 ```
 
-**Generate ROADMAP:**
 ```
-Create a ROADMAP.md breaking the MVP into tasks and subtasks.
-
-MVP features: [list]
-Timeline: [X weeks]
-
-Each subtask should take 30-90 minutes.
-Use checkbox format for tracking.
-```
-
-**Generate CLAUDE_RULES:**
-```
-Create CLAUDE_RULES.md for this project.
-
-Tech stack: [technologies]
-My standards: [any specific preferences]
-
-Include: code standards, confidence scoring format,
-when to ask for help, tech-specific rules.
-Keep it under 40 lines.
+Can you sketch the main [page/screen] layout so I can
+tell you if we're aligned?
 ```
 
 ---
 
-## Task Execution Prompts
+## Phase 2: Generate Foundation Documents
+
+> **Where:** Same Claude conversation as the brainstorm.
+
+```
+Based on everything we've discussed, generate the
+foundational documents for this project:
+
+1. README.md — vision, scope, tech stack, setup
+2. ARCHITECTURE.md — full DB schemas, components, API,
+   auth flow, deployment, key decisions
+3. LEARNINGS.md — empty template
+4. .clinerules AND/OR CLAUDE.md — iron-clad quality rules
+   with mandatory testing, plan-first workflow,
+   prohibited behaviors, tech-specific rules
+5. SPRINT_RULES.md — sprint sizing and task writing rules
+6. TASK_TEMPLATE.md — task specification format
+7. Sprint 1 plan with task index and execution order
+8. Any foundational code files that should exist from
+   the start (configs, schemas, .env.example, etc.)
+
+Make the ARCHITECTURE.md schemas specific — actual column
+names, types, and constraints. Make the rules strict —
+"tests are mandatory" not "try to test."
+```
+
+---
+
+## Phase 3: Generate Task Specs
+
+> **Where:** Same conversation, or new conversation in the same Project.
+
+```
+Generate detailed task specs for each Sprint 1 task.
+Each should follow TASK_TEMPLATE.md format with:
+
+1. Context — why this task exists
+2. Requirements — numbered, specific, testable
+3. Technical approach — files to create/modify, patterns
+4. Acceptance criteria — checkboxes including tests
+5. Notes — edge cases, gotchas
+
+Reference specific file paths and schemas from
+ARCHITECTURE.md. Each spec should be detailed enough
+that Cline/Claude Code can execute without clarification.
+```
+
+---
+
+## Phase 4: Task Execution
+
+> **Where:** Cline or Claude Code. New conversation per task.
 
 **Starting a task:**
 ```
@@ -109,146 +121,107 @@ Additional context:
 - [Changed requirement]
 ```
 
-**Proceeding to execution:**
+**Proceeding:**
 ```
 Looks good. Proceed.
 ```
 
-**Requesting changes:**
-```
-Adjust the plan:
-- [Change 1]
-- [Change 2]
+---
 
-Then proceed.
+## Phase 5: Fixes & Debugging
+
+> **Where:** Cline or Claude Code. **Plan mode is critical.**
+
+**Standard fix:**
+```
+I need to fix this: [describe the problem]
+
+Error: [paste error message]
+Steps to reproduce: [1, 2, 3]
+
+Please investigate and propose a plan before making changes.
+```
+
+**When going in circles (30+ minutes):**
+```
+We're not making progress. Please write a task doc capturing:
+1. The original problem
+2. What we've tried and why it didn't work
+3. Current state of the code
+4. Recommended next steps
+
+I'll start a fresh conversation with this context.
 ```
 
 ---
 
-## Review Prompts
+## Phase 6: New Features
 
-**Visual verification:**
-```
-Before we close, describe what I should see when I:
-1. [Action 1]
-2. [Action 2]
-3. [Action 3]
+> **Where:** Claude (Opus), Project with GitHub repo synced.
 
-I'll verify and report back.
 ```
+I want to add [feature] to [project name].
 
-**Confidence check:**
-```
-What's your confidence score for this task?
-List what's done and what's deferred.
-```
-
-**Task documentation:**
-```
-Create the task doc for what we just completed.
-Use the format from TASK_TEMPLATE.md.
+Review the synced repo to understand the current state.
+Let's discuss:
+1. How does this fit with what exists?
+2. What's the minimum viable version?
+3. What should be deferred?
+4. What existing patterns can we reuse?
+5. Any architectural changes needed?
 ```
 
 ---
 
-## Audit Prompts
+## Phase 7: Phase Audit
 
-**Phase audit:**
+> **Where:** Fresh Claude conversation. No development context.
+
 ```
-You're a senior developer reviewing this codebase.
+You're a senior developer auditing this codebase.
 
-Context: This is the [MVP/v1.0] phase of [brief description].
+Project: [brief description]
+Phase completed: [MVP / Sprint N / v1.0]
+Tech stack: [list]
 
 Review for:
-- Bugs or logic errors
-- Security issues
-- Missing error handling
-- Code quality problems
-- Test coverage gaps
+1. Bugs and logic errors
+2. Security issues (OWASP top 10)
+3. Missing error handling
+4. Code quality (dead code, duplication, naming)
+5. Test coverage gaps
+6. Architecture violations
+7. Performance concerns
 
-Rate 1-10. List specific issues with file references.
-Be critical—I want to find problems.
-```
-
-**Focused audit:**
-```
-Review just the authentication code in [path].
-
-Check for:
-- Security vulnerabilities
-- Missing error cases
-- Test coverage
-
-List specific issues.
-```
-
-**Re-audit after fixes:**
-```
-I've fixed the issues from the last audit.
-Please re-review and confirm the score.
+For each issue: severity, file reference, what's wrong, how to fix.
+Rate 1-10 overall. Be critical.
 ```
 
 ---
 
-## Debugging Prompts
+## Phase 8: Context Rescue
 
-**When stuck:**
+> **Where:** Current conversation (to capture), then new conversation (to continue).
+
+**Capturing progress:**
 ```
-I'm stuck on this issue:
-
-[Describe the problem]
-[Include error message if any]
-
-What I've tried:
-- [Attempt 1]
-- [Attempt 2]
-
-Help me debug this systematically.
-```
-
-**When AI is looping:**
-```
-We've been going in circles. Let's step back.
-
-The core problem is: [describe]
-The goal is: [describe]
-
-What's a different approach we haven't tried?
+We need to pause. Write a task doc capturing:
+1. Original objective
+2. What was completed
+3. What remains
+4. Blockers and current issues
+5. Files the next conversation should review
+6. Recommended next steps
 ```
 
----
-
-## Recovery Prompts
-
-**Scope check:**
+**Starting fresh:**
 ```
-I feel like we've drifted from the original scope.
+Picking up work on [task name]. Context from previous session:
 
-Original MVP scope: [from README]
-What we've built: [current state]
+[paste or reference the task doc]
 
-Are we still on track? What should we cut?
-```
-
-**Documentation refresh:**
-```
-Review these docs for accuracy:
-- README.md
-- ROADMAP.md
-- CLAUDE_RULES.md
-
-What's outdated? What's missing?
-Suggest specific updates.
-```
-
-**Fresh start:**
-```
-I'm starting fresh on task [X.X].
-
-Context: [Brief state of project]
-Goal: [What this task should accomplish]
-
-Please read the project docs and propose a plan.
+Please read the project docs, review the listed files,
+and propose a plan to complete the remaining work.
 ```
 
 ---
@@ -257,24 +230,29 @@ Please read the project docs and propose a plan.
 
 **Too vague:**
 ```
-❌ "Fix the bug"
-❌ "Make it better"
-❌ "Do whatever you think"
+Fix the bug
+Make it better
+Do whatever you think
 ```
 
 **Too verbose:**
 ```
-❌ [500 words of context AI can find in your docs]
+[500 words of context that exists in your docs]
 ```
 
 **Priming for bad output:**
 ```
-❌ "This is probably easy..."
-❌ "Just quickly..."
-❌ "Tell me my code is good"
+This is probably easy...
+Just quickly...
+Tell me my code is good
 ```
 
-Keep prompts direct and specific. Let docs provide context.
+**Skipping plan mode:**
+```
+Just fix [the thing]     ← AI will dive in without thinking
+```
+
+Keep prompts direct and specific. Let docs provide context. Always plan before acting.
 
 ---
 

@@ -7,35 +7,47 @@ description: The mindset that makes AI-assisted development actually work
 
 ## TLDR
 
-**Treat AI like a talented junior developer.** It can write code fast, but it needs clear direction, quality checks, and documentation to reference.
+**Start every project with a conversation, not a prompt.** Use Claude Opus in a Project. Brainstorm, debate, scope. The initial conversation quality determines everything.
 
-**Validate before you invest.** Spend $200 proving your core concept works before spending $2000 building everything.
+**Documentation is the product.** Your docs are what make AI effective. Without them, every session starts from zero. With them, AI can execute autonomously.
 
-**Document first.** AI has no memory between sessions. Your docs *are* its memory.
+**Quality rules are iron-clad.** Mandatory testing, plan-before-act, no scope creep. These aren't suggestions — they're the contract that prevents garbage output.
 
-**Check quality as you go.** AI rates its own work. Below 8/10? Fix it before moving on.
-
-**Audit between phases.** Fresh AI eyes catch what you missed.
+**Fresh conversations beat long ones.** When in doubt, start a new conversation. It's cheaper and more effective than carrying polluted context.
 
 ---
 
-## The Junior Developer Mental Model
+## The Real Mental Model
 
-Claude can write code faster than you. But like any talented junior dev, it:
+Claude isn't a junior developer you babysit. It's more like a highly capable contractor who needs three things:
 
-**Can do:**
-- Write code quickly
-- Follow patterns from documentation
-- Debug when given direction
-- Generate tests
+1. **Clear spec** — What to build, why, and how it fits with what exists
+2. **Quality standards** — What "done" means, what's not acceptable
+3. **Continuity** — What was decided, what was learned, what exists
 
-**Can't do (alone):**
-- Judge if a project is too ambitious
-- Remember decisions from last week
-- Know when to stop and ask
-- Maintain consistent standards
+Give it those three things (via your documentation) and it produces excellent work. Skip them and it produces expensive garbage.
 
-**Your job:** Be the senior dev. Set direction, define standards, verify quality.
+**Your job:** Be the architect. Set direction, define standards, review output. Don't write the code — write the spec and the rules.
+
+---
+
+## The Process (Why Each Step Matters)
+
+### 1. Brainstorm with Opus
+
+The initial conversation quality is infinitely better with Opus. Not marginally — fundamentally. The resulting scope, architecture decisions, and foundation documents are 10X better. This is where you invest in quality.
+
+### 2. Generate Thorough Documentation
+
+AI's memory lives in your docs. The ARCHITECTURE.md with real schemas. The .clinerules with strict quality standards. The sprint plan with specific task specs. These documents are what allow AI to "just get started" on any task without needing hand-holding.
+
+### 3. Execute in Focused Tasks
+
+One task per conversation. Plan before acting. Test after completing. Score confidence. Close the conversation. Next task, fresh start.
+
+### 4. Know When to Start Fresh
+
+This is the skill most people lack. A conversation going in circles costs more than starting over. A side-task in the wrong conversation creates confusion. **9 times out of 10, starting a new conversation is the better choice.**
 
 ---
 
@@ -44,48 +56,48 @@ Claude can write code faster than you. But like any talented junior dev, it:
 Most AI coding fails because people try to build everything at once.
 
 **The pattern:**
-> "Build me a Slack clone with video, threading, apps, search..."
-> 
-> *6 weeks and $3000 later: half-built mess*
+> "Build me a platform with tools, resources, AI assistant, community..."
+>
+> *8 weeks and $3000 later: half-built mess*
 
 **Better pattern:**
-> "I want to build a Slack clone."
+> "I want to build a community platform for event professionals."
 >
-> AI: "That's huge. What's the ONE thing that would make yours different?"
+> Claude: "That's broad. What's the ONE thing that makes this different?"
 >
-> "AI-powered message summarization."
+> "Easy access to open-source event tools with custom branding."
 >
-> AI: "Let's build just that first. If people love the summaries, then build the chat platform around it."
+> Claude: "Let's build just the tool library and deployment first. If organizers love it, then add community features."
 
-**Result:** $250 and 3 weeks to validate whether anyone wants AI summaries. If yes, continue. If no, you learned cheap.
-
-This "MVP-first" conversation is the most important part of any project. It happens before you write any code.
+**Result:** $300 and 4 weeks to validate the core concept. If yes, continue. If no, you learned cheap.
 
 ---
 
-## Documentation Is AI's Memory
+## Documentation Is the Product
 
-AI forgets everything between sessions. Your documentation is the only continuity.
+Your docs aren't overhead. They're the mechanism that makes everything work.
 
 **Without docs:**
-- Day 1: "Let's use PostgreSQL"
-- Day 7: AI suggests MongoDB
-- Day 14: Confusion
+- Day 1: "Let's use cookie-based auth"
+- Day 7: AI suggests JWT
+- Day 14: Half the code uses cookies, half uses JWT
 
-**With docs:**
-- Day 1: Decision goes in README
-- Day 7: AI reads README, stays consistent
+**With ARCHITECTURE.md:**
+- Day 1: Auth decision documented with rationale
+- Day 7: AI reads the doc, stays consistent
 - Day 14: Still consistent
 
-**The five docs you need:**
+**Without .clinerules:**
+- AI skips tests "to save time"
+- AI starts refactoring code outside the task
+- AI adds unasked-for features
+- Quality degrades invisibly
 
-1. **README.md** — What we're building, what phase we're in
-2. **ROADMAP.md** — Tasks broken into subtasks
-3. **CLAUDE_RULES.md** — Standards and quality requirements
-4. **TASK_TEMPLATE.md** — Format for task documentation
-5. **LEARNINGS.md** — Solutions to problems we've hit
-
-Create these before coding. Update them as you go.
+**With iron-clad .clinerules:**
+- Tests are mandatory. No exceptions.
+- Plan mode first. Always.
+- Stay in scope. Write a task doc for side issues.
+- Update LEARNINGS.md when you discover something.
 
 ---
 
@@ -96,50 +108,38 @@ Every completed task needs a score out of 10.
 ```markdown
 ## Confidence: 8/10
 
-**Must-have (met):**
-- [x] Login works
-- [x] Errors handled
-- [x] Tests pass
+**Met:**
+- [x] Login endpoint works
+- [x] Error handling for invalid credentials
+- [x] Unit tests passing (6/6)
+- [x] Smoke test verified in browser
 
-**Nice-to-have (skipped):**
-- [ ] Rate limiting (Phase 2)
+**Deferred:**
+- [ ] Rate limiting (Sprint 2)
 ```
 
-**The rule:** Below 8/10? Fix it. Don't move on with broken foundations.
+**8/10 minimum to proceed.** Below 8 means fix it before moving on.
 
-This prevents the cascade failure where broken auth leads to broken database leads to broken everything.
+This prevents cascade failure: broken auth → broken database calls → broken everything. Catch it early, fix it immediately.
 
 ---
 
-## Phase Audits
+## The Fresh Conversation Principle
 
-After finishing a major phase (like MVP), get fresh eyes on it.
+Long conversations accumulate noise:
+- Old debugging tangents
+- Superseded decisions
+- Conflicting context from abandoned approaches
 
-**Process:**
-1. Push code to GitHub
-2. Start new Claude conversation
-3. "You're a senior dev. Audit this code."
-4. Fix what it finds
-5. Then continue
+By message 80, AI is working with polluted context and producing worse output than a fresh start would.
 
-The auditor catches accumulated issues that you stopped noticing. It's like code review, but AI can review everything at once.
+**Rules:**
+- One task = one conversation
+- Going in circles? Write a task doc, start fresh.
+- Side issue discovered? Write a task doc, handle it separately.
+- Been in the same conversation for 2+ hours? Probably time to start fresh.
 
----
-
-## Comment More Than Feels Natural
-
-Aim for 50% comments. Yes, really.
-
-```python
-# Skills weighted 2x because professional connections 
-# matter more than hobby overlap at business events.
-# TODO: Make this configurable after user research.
-score = (skills_overlap * 2) + interests_overlap
-```
-
-Three months later, you'll know exactly why that `* 2` exists. Without the comment, you'd be guessing.
-
-The goal isn't minimal code. It's **maximum clarity for future readers**—including AI in future sessions.
+The cost of reloading context (AI re-reads your docs) is far less than the cost of confused, context-polluted output.
 
 ---
 
@@ -147,13 +147,14 @@ The goal isn't minimal code. It's **maximum clarity for future readers**—inclu
 
 | Principle | Action |
 |-----------|--------|
-| Junior dev mental model | You direct, AI executes |
-| Validate first | MVP before full build |
-| Doc-first development | Five docs before coding |
-| Confidence scoring | 8/10 minimum to proceed |
-| Phase audits | Fresh AI reviews each phase |
-| Heavy commenting | 50% comments, explain "why" |
+| Opus for brainstorming | Best reasoning produces best foundations |
+| Documentation is memory | Thorough docs = autonomous AI execution |
+| Iron-clad quality rules | Mandatory testing, plan mode, no scope creep |
+| Focused tasks | One task per conversation, plan before act |
+| Fresh conversations | When in doubt, start over — it's almost always better |
+| Confidence scoring | 8/10 minimum, fix before moving on |
+| Phase audits | Fresh AI eyes between major milestones |
 
 ---
 
-**Next:** [Tool Selection](/part-1/tool-selection) — Choosing the right AI tools for this workflow.
+**Next:** [Tool Selection](/part-1/tool-selection) — Choosing the right tools for each phase.

@@ -1,31 +1,53 @@
 ---
 title: Tool Selection
-description: Choosing the right AI coding tool for structured development
+description: Choosing the right AI tools for each phase of development
 ---
 
 # Tool Selection
 
 ## TLDR
 
-**Use Cline** (VS Code extension) for most projects. Its Plan Mode → Act Mode workflow matches this methodology perfectly, and terminal approval keeps you in control.
+**Start every project in Claude** (preferably Opus) **inside a Project.** The brainstorming and document generation quality is unmatched. This is non-negotiable.
 
-**Use Claude Code** (terminal) for quick exploration or if you prefer command-line workflows.
+**Use Cline or Claude Code** for execution. Both work. Cline has built-in Plan/Act modes. Claude Code has plan mode too. Pick what fits your workflow.
 
-**Use Claude Web** for brainstorming sessions and phase audits—not for writing code.
-
-**Extended thinking is required.** Without it, AI makes shallow decisions that cost you later.
+**Use Claude Projects** for ongoing context. Sync your GitHub repo so Claude always knows where the project stands.
 
 ---
 
-## Cline: The Default Choice
+## Claude Projects: Where It All Begins
 
-Cline is a VS Code extension that works in two modes:
+Every project starts here. A Claude Project gives you:
+
+- **Persistent file context** — upload docs, sync a repo, Claude reads them every conversation
+- **Opus-quality brainstorming** — the initial conversation quality is dramatically better with Opus. The resulting foundation docs will be 10X better than any other tool or model.
+- **Multi-turn discussion** — brainstorming should be several turns of back-and-forth, not one prompt and one response
+
+**How to use it:**
+
+1. Create a Project in Claude
+2. Optionally add initial files (design mockups, API docs, reference projects)
+3. Start a conversation about what you want to build
+4. Have a real discussion — multiple turns, questions, push-back, refinement
+5. Ask Claude to generate your foundation documents
+6. Review, refine, export to your repo
+
+**When to come back:**
+- Adding new features (sync the latest GitHub repo first)
+- Major scope changes
+- Strategic decisions about architecture or direction
+
+---
+
+## Cline: Structured Execution
+
+Cline is a VS Code extension with two explicit modes:
 
 **Plan Mode:** AI reads your project, proposes an approach, asks clarifying questions.
 
 **Act Mode:** AI executes the plan, creating/editing files and running commands.
 
-This matches our workflow exactly:
+This matches the methodology perfectly:
 1. "Can we plan task 3?" → Plan Mode
 2. Review the plan, adjust if needed
 3. "Proceed" → Act Mode
@@ -33,60 +55,61 @@ This matches our workflow exactly:
 5. Verify the result
 
 **Why terminal approval matters:**
-
 ```
 Cline wants to run: rm -rf node_modules && npm install
 [Approve] [Reject] [Edit]
 ```
 
-You see every command before it runs. This prevents disasters and keeps you aware of what's happening.
+You see every command before it runs. This prevents disasters.
 
 **Setup:**
 1. Install "Cline" from VS Code extensions
-2. Configure with your Anthropic API key
+2. Configure with your API key
 3. Enable extended thinking
-4. Set `autoApproveCommands: false`
+4. Keep `autoApproveCommands: false` (at least initially)
 
 ---
 
-## Claude Code: The Alternative
+## Claude Code: Terminal-Native Execution
 
-Terminal-based tool. You type natural language, it writes code.
+CLI tool for developers who prefer terminal workflows.
 
 ```bash
-$ claude "add authentication to this Express app"
+$ claude "plan task 3.2 from the sprint plan"
 ```
 
-**Advantages:**
-- Faster for quick tasks
-- No VS Code dependency
-- Explicit thinking levels (`think hard`, `ultrathink`)
+**Key features for this methodology:**
+- **Plan mode** — `claude --plan` or ask it to plan before acting. Critical for fixes and debugging.
+- **CLAUDE.md** — Claude Code reads this file automatically. Same role as `.clinerules` for Cline.
+- **Project context** — reads your repo structure and docs
 
-**Disadvantages for this methodology:**
-- Less structured Plan → Act separation
-- You have to manually enforce approval workflows
-- Context loading is more manual
+**When to use Claude Code vs Cline:**
+- You prefer terminal over VS Code
+- You want tighter Git integration
+- Quick fixes and small tasks
+- You're comfortable reviewing diffs instead of watching file edits
 
-**Use it when:** You're doing exploratory work, quick fixes, or you just prefer terminal.
+**When to use Cline instead:**
+- You want visual Plan/Act mode separation
+- You prefer seeing file changes in the editor
+- You want explicit terminal command approval
+- Larger, more complex tasks where visual feedback helps
 
-**Skip it when:** You're doing structured, multi-phase development.
+**Both are valid.** The methodology works with either. The important thing is: **always plan before acting.**
 
 ---
 
-## Claude Web: For Specific Phases Only
+## The Tool for Each Phase
 
-**Use for brainstorming** (before development):
-> "I want to build X. Help me scope an MVP."
-
-Extended thinking shines here. Let AI reason through complexity before you commit to building.
-
-**Use for phase audits** (between development phases):
-1. Push code to GitHub
-2. Start fresh Claude conversation
-3. "You're a senior dev. Review this repo for issues."
-4. Fix what it finds
-
-**Don't use for:** Writing code during active development. The web interface isn't designed for file management and iterative coding.
+| Phase | Tool | Why |
+|-------|------|-----|
+| **Initial brainstorm** | Claude (Opus, in a Project) | Best reasoning, persistent context |
+| **Foundation docs** | Claude (same conversation) | Keeps brainstorm context |
+| **Task execution** | Cline or Claude Code | Plan → Act → Verify cycle |
+| **Fixes & debugging** | Cline or Claude Code | Plan mode first, always |
+| **New features** | Claude (Project with repo synced) | Strategic discussion first |
+| **Phase audits** | Claude (fresh conversation) | Fresh eyes, no dev context |
+| **Quick tweaks** | Claude Code | Fast, low overhead |
 
 ---
 
@@ -96,61 +119,36 @@ Extended thinking is when AI reasons through a problem before responding. Withou
 
 **Simple prompt → shallow answer:**
 > "Design a matching algorithm"
-> 
+>
 > AI: "Here's cosine similarity..." [generic solution]
 
 **With extended thinking:**
-> AI thinks: "1000 users, needs to be fast, they mentioned budget constraints, vector DB might be overkill for MVP..."
+> AI reasons: "1000 users, needs to be fast, budget constraints, vector DB might be overkill for MVP..."
 >
-> AI: "For your MVP scale, simple tag overlap will be faster and cheaper than vector similarity. Here's why, and here's when you'd upgrade..."
+> AI: "For your MVP scale, simple tag overlap will be faster and cheaper. Here's why, and here's when you'd upgrade..."
 
 Extended thinking catches problems before they become expensive.
-
-**Enable it:**
-- Claude Web: Settings → Extended Thinking → On
-- Cline: Automatic with Claude models
-- Claude Code: Use `think hard` or `ultrathink` keywords
 
 ---
 
 ## Cost Expectations
 
-| Task Type | Tokens | Cost (Sonnet) |
-|-----------|--------|---------------|
-| Simple task | 5-10k | $0.05-0.10 |
-| Medium task | 15-25k | $0.15-0.25 |
-| Complex task | 30-50k | $0.30-0.50 |
+| Task Type | Tokens | Approx. Cost |
+|-----------|--------|-------------|
+| Simple task | 5-10k | $0.05-0.15 |
+| Medium task | 15-25k | $0.15-0.30 |
+| Complex task | 30-50k | $0.30-0.60 |
+| Brainstorm session | 50-100k | $1-3 |
 
-**Typical MVP (25-35 tasks):** $200-400
+**Typical MVP (25-35 tasks + brainstorming):** $200-500
 
-The methodology adds ~20% cost overhead (more documentation, confidence scoring). It saves 10x that in avoided rework.
-
----
-
-## Quick Decision
-
-```
-Building something production-worthy?
-├─ Yes → Cline
-└─ No, just exploring → Claude Code
-
-Need structured workflow with approval?
-├─ Yes → Cline
-└─ No, I want speed → Claude Code
-
-Brainstorming or auditing?
-└─ Claude Web
-```
-
-For 90% of readers following this guide: **use Cline.**
+The methodology adds ~20% overhead (documentation, scoring, audits). It saves 10x that in avoided rework.
 
 ---
 
 ## Proof It Works
 
-This methodology built [RISE](https://github.com/The-Low-Code-Foundation/rise)—a desktop Electron app—in 4 weeks for ~$400 in tokens. Production-ready, documented, maintainable.
-
-Not a toy demo. A real application with multi-process architecture, build pipelines, and comprehensive tests.
+This methodology built [RISE](https://github.com/The-Low-Code-Foundation/rise) — a desktop Electron app — in 4 weeks for ~$400. And [EventHive](https://github.com/visual-hive/eventhive) — a full community platform — using the same process with thorough sprint-based documentation.
 
 ---
 

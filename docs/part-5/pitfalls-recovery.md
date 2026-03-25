@@ -7,16 +7,95 @@ description: What goes wrong and how to recover
 
 ## TLDR
 
-Even with a solid methodology, things go wrong. Recognizing problems early and knowing how to recover keeps projects on track.
+Even with solid methodology, things go wrong. The difference between a successful project and a failed one is recognizing problems early and knowing the recovery pattern — which is usually: stop, write a task doc, start fresh.
 
 ---
 
-## Pitfall 1: Scope Creep
+## Pitfall 1: The Side-Task Spiral
 
 **What happens:**
-You're building login. AI suggests "while we're here, let's add password reset, OAuth, 2FA..."
+You're working on auth. You notice the header component has a bug. "Quick fix while I'm here." The quick fix reveals a state management issue. Now you're refactoring stores while your auth task sits half-done.
 
-Three days later you're still on "authentication" and nothing is done.
+**Signs:**
+- Current task paused for "just one more thing"
+- Conversation context includes 3+ unrelated topics
+- You've lost track of what the original task was
+- Token costs are climbing but progress isn't
+
+**Recovery:**
+Stop. Ask AI to write a task doc for the side issue. Get back to the original task. Handle the side issue in a fresh conversation.
+
+**Prevention:**
+When AI mentions something outside the current task: "Good catch. Write a task doc for it. Let's stay on [current task]."
+
+**The rule:** You cannot be too strict about starting fresh conversations. It's 9/10 the better choice.
+
+---
+
+## Pitfall 2: Overloading Conversations
+
+**What happens:**
+You pile multiple unrelated tasks into one conversation. "While we're here, also fix X and add Y and refactor Z." The conversation balloons to 100+ messages. AI is confused. Every response costs a fortune in input tokens because it's processing the entire bloated history.
+
+**Signs:**
+- Conversation has been going for hours
+- You're paying for context that's only 20% relevant
+- AI is mixing up details from different tasks
+- Quality of output is declining
+
+**Recovery:**
+Close the conversation. For each remaining task, start a fresh conversation with just the relevant context.
+
+**Prevention:**
+One task = one conversation. Always. The cost of reloading docs in a fresh conversation is trivial compared to carrying 80 messages of irrelevant context.
+
+---
+
+## Pitfall 3: Going in Circles on Bugs
+
+**What happens:**
+You hit a bug. AI suggests a fix. Doesn't work. Another fix. Still broken. New error. AI suggests reverting. You've been at this for an hour.
+
+**Signs:**
+- Same error keeps appearing or morphing
+- Fixes create new bugs
+- AI is guessing rather than reasoning
+- You're frustrated and throwing tokens at it
+
+**Recovery:**
+1. Stop immediately
+2. Ask AI to write a task doc: what was the problem, what was tried, what's the current state, what should be tried next
+3. Start a completely fresh conversation with the task doc
+4. The fresh conversation often solves it in minutes because it doesn't have failed attempts polluting its reasoning
+
+**Prevention:**
+Set a 30-minute rule. If a bug isn't solved in 30 minutes, the approach is wrong, not just the code. Stop, document, restart.
+
+---
+
+## Pitfall 4: Skipping Plan Mode for Fixes
+
+**What happens:**
+"It's just a small fix, I'll skip plan mode." AI dives in, makes changes, breaks something else, tries to fix that, cascade of changes.
+
+**Signs:**
+- "Quick fix" turned into 20 minutes of changes
+- Files modified that weren't related to the original fix
+- Tests that were passing now fail
+- Scope of changes far exceeds what you expected
+
+**Recovery:**
+Revert the changes. Start fresh. Use plan mode.
+
+**Prevention:**
+Plan mode for fixes is MORE important than plan mode for new features. New features have a task spec guiding them. Fixes don't — plan mode is the only checkpoint.
+
+---
+
+## Pitfall 5: Scope Creep
+
+**What happens:**
+You're building login. AI suggests "while we're here, let's add password reset, OAuth, 2FA..." Three days later you're still on "authentication."
 
 **Signs:**
 - Tasks keep expanding
@@ -25,155 +104,67 @@ Three days later you're still on "authentication" and nothing is done.
 - MVP features keep growing
 
 **Recovery:**
-Stop. Return to your ROADMAP. Is this task done as originally scoped? If yes, close it. New ideas go to backlog, not current task.
+Return to your sprint plan. Is this task done as originally scoped? Yes → close it. New ideas → new tasks for later.
 
 **Prevention:**
-When AI suggests additions, say: "Good idea. Add it to ROADMAP for later. For now, let's finish the original scope."
+"Good idea. Add it to the backlog. For now, let's finish the original scope."
 
 ---
 
-## Pitfall 2: Confidence Inflation
+## Pitfall 6: Weak Documentation Leading to Bad Output
 
 **What happens:**
-AI rates everything 8/10 or 9/10. You don't verify. Later, you discover the code has significant issues.
+Your .clinerules says "try to write tests." Your ARCHITECTURE.md has vague descriptions instead of schemas. AI takes the path of least resistance: skips tests, guesses at schemas, produces mediocre code.
 
 **Signs:**
-- Every task is 8/10+ with minimal justification
+- AI output quality feels inconsistent
+- Schema mismatches between what AI writes and what exists
+- Tests are superficial or missing
+- Different parts of the code use different patterns
+
+**Recovery:**
+Invest a session in strengthening your docs. Add real schemas to ARCHITECTURE.md. Make .clinerules iron-clad ("tests are mandatory" not "try to test"). Add patterns and conventions.
+
+**Prevention:**
+Invest in documentation quality upfront. The time spent writing thorough ARCHITECTURE.md and strict .clinerules pays back 50x in consistent AI output.
+
+---
+
+## Pitfall 7: Not Using Claude Projects for New Features
+
+**What happens:**
+You want to add a feature. Instead of going back to Claude with the repo synced in a Project, you just tell Cline "add feature X." Without the strategic brainstorming, the implementation is narrow, misses edge cases, and doesn't fit well with the existing architecture.
+
+**Signs:**
+- New feature feels bolted-on rather than integrated
+- Architectural inconsistencies
+- Missing pieces discovered during testing
+- Rework needed to fit with existing code
+
+**Recovery:**
+Stop. Go to Claude (Opus, Project with repo synced). Have the brainstorming conversation. Generate proper task specs. Then execute.
+
+**Prevention:**
+New features always start with a conversation in Claude. Fixes and tweaks can go straight to Cline/Claude Code. Know the difference.
+
+---
+
+## Pitfall 8: Confidence Inflation
+
+**What happens:**
+AI rates everything 8/10. You don't verify. Later, bugs emerge in production.
+
+**Signs:**
+- Every task is 8/10+ with thin justification
 - You're not manually testing
 - "Tests pass" but tests are superficial
-- Bugs appear when integrating tasks
+- Bugs appear during integration
 
 **Recovery:**
-Slow down. For the next few tasks, verify everything yourself:
-- Run the code manually
-- Try edge cases
-- Read the tests—are they actually testing important things?
-- Question the confidence score
+For the next few tasks, verify everything yourself. Run the code. Try edge cases. Read the tests — do they test real behavior?
 
 **Prevention:**
-Treat AI's confidence score as a starting point. Trust but verify. If you haven't tested it yourself, you don't know it works.
-
----
-
-## Pitfall 3: Documentation Rot
-
-**What happens:**
-You update code but not docs. ROADMAP says one thing, code does another. LEARNINGS hasn't been updated in weeks.
-
-**Signs:**
-- AI suggests things that contradict existing code
-- You're confused about what's been built
-- New chats start with outdated context
-- Technical decisions don't match docs
-
-**Recovery:**
-Dedicate a session to doc cleanup:
-- Update ROADMAP with actual status
-- Review README for accuracy
-- Add missing LEARNINGS entries
-- Check CLAUDE_RULES still reflects reality
-
-**Prevention:**
-End-of-task habit: "Before closing, are docs updated?" Takes 2 minutes. Saves hours of confusion.
-
----
-
-## Pitfall 4: The Endless Debug Loop
-
-**What happens:**
-You hit a bug. AI suggests a fix. It doesn't work. AI suggests another. Still broken. You've been on the same issue for 2 hours.
-
-**Signs:**
-- Same error keeps appearing
-- Fixes create new bugs
-- AI is guessing rather than reasoning
-- You're frustrated and stuck
-
-**Recovery:**
-Stop. Take a break. Then:
-1. Start a fresh chat
-2. Clearly describe the problem from scratch
-3. Ask AI to reason through it step-by-step
-4. If still stuck after 30 minutes, ask a human or step away
-
-**Prevention:**
-Set a time limit. If a bug isn't solved in 30 minutes, something is wrong with the approach, not just the code. Step back and reconsider.
-
----
-
-## Pitfall 5: Ignoring AI's Questions
-
-**What happens:**
-AI asks clarifying questions. You say "just do whatever." AI makes assumptions. Assumptions are wrong.
-
-**Signs:**
-- AI's output doesn't match your expectations
-- You're surprised by implementation choices
-- Rework is common
-- "That's not what I wanted" happens frequently
-
-**Recovery:**
-For the next task, engage with every question. If AI asks "should I use approach A or B?", think about it and answer.
-
-**Prevention:**
-AI's questions are usually good. They surface ambiguity you hadn't considered. Answer them thoughtfully—it takes less time than rework.
-
----
-
-## Pitfall 6: Skipping the Brainstorm
-
-**What happens:**
-You jump straight to coding without scoping. Three weeks later, you realize you built the wrong thing or too much.
-
-**Signs:**
-- No clear MVP definition
-- Features keep getting added
-- You're not sure when "done" is
-- Budget is blown
-
-**Recovery:**
-Stop building. Have the brainstorming conversation now. Define MVP. Cut scope. Resume with focus.
-
-**Prevention:**
-Always start with: "Help me scope an MVP for this." 30 minutes of conversation prevents weeks of wasted work.
-
----
-
-## Pitfall 7: Perfectionism
-
-**What happens:**
-Every task needs to be 10/10. You refactor endlessly. MVP takes 3 months instead of 3 weeks.
-
-**Signs:**
-- Tasks reopen for "polish"
-- You're optimizing before validating
-- "Good enough" feels wrong
-- Ship date keeps slipping
-
-**Recovery:**
-Set a hard deadline. Whatever is 8/10 by that date ships. Note improvements for v1.0, don't block MVP.
-
-**Prevention:**
-Remember: MVP validates the concept. It doesn't need to be perfect. You'll improve it after you know it's worth improving.
-
----
-
-## Pitfall 8: Solo Hero Mode
-
-**What happens:**
-You stop using the methodology. "I'll just quickly..." becomes "I've been hacking for a week and everything is broken."
-
-**Signs:**
-- Tasks aren't documented
-- Confidence scores skipped
-- Chat history is a mess
-- You feel lost in your own project
-
-**Recovery:**
-Pause. Document current state. Create proper tasks for what's next. Return to the workflow.
-
-**Prevention:**
-The methodology feels slow until you experience the alternative. Trust the process, especially when you're tempted to skip it.
+Trust but verify. AI's confidence score is a starting point. Your manual testing confirms it.
 
 ---
 
@@ -181,13 +172,15 @@ The methodology feels slow until you experience the alternative. Trust the proce
 
 When a project feels off-track:
 
-1. [ ] Is scope still reasonable? (Check ROADMAP)
-2. [ ] Are docs current? (Quick review)
-3. [ ] Am I actually testing? (Be honest)
-4. [ ] Am I in an endless loop? (Time-check)
-5. [ ] Should I just start fresh? (New chat, clear head)
+1. [ ] Am I in a conversation that's too long? → Start fresh
+2. [ ] Am I working on a side task? → Write task doc, refocus
+3. [ ] Am I going in circles? → Write task doc, start fresh
+4. [ ] Are my docs up to date? → Quick review and update
+5. [ ] Am I actually testing? → Be honest
+6. [ ] Did I skip plan mode? → Go back to plan mode
+7. [ ] Is scope still reasonable? → Check sprint plan
 
-Most problems resolve with: stop, document current state, start a fresh chat with clear scope.
+Most problems resolve with: **stop, write a task doc, start a fresh conversation.**
 
 ---
 

@@ -1,59 +1,59 @@
 ---
 layout: home
-title: Vibe Coding Guide
-description: Build production-ready apps with AI—without wasting money
+title: AI-Assisted Software Engineering Guide
+description: Build production-ready apps with AI — systematically, not randomly
 
 hero:
-  name: "Vibe Coding Guide"
-  text: "AI-Assisted Development That Actually Works"
-  tagline: Validate first. Build systematically. Ship production-ready code.
+  name: "AI-Assisted Software Engineering"
+  text: "A Methodology That Actually Works"
+  tagline: Start with a conversation. Document thoroughly. Execute systematically. Ship production-ready code.
   actions:
     - theme: brand
       text: Start Reading
       link: /introduction
     - theme: alt
-      text: Templates
+      text: Project Templates
       link: /part-6/templates
 
 features:
-  - icon: 🎯
-    title: Validate Before You Build
-    details: Scope an MVP in conversation with AI. Prove your concept works for $200 before spending $2000.
-  
+  - icon: 🧠
+    title: Start with Opus
+    details: Every project begins with a real brainstorming conversation in Claude Opus. The quality of your foundation docs determines everything.
+
   - icon: 📋
-    title: Structure That Works
-    details: Five simple docs give AI the context it needs. No more "forgetting" decisions between sessions.
-  
-  - icon: ✅
-    title: Built-in Quality Checks
-    details: Confidence scoring and phase audits catch problems before they compound.
-  
-  - icon: 💰
-    title: Budget-Conscious
-    details: Know what you're spending. Typical MVP costs $200-400 in tokens.
+    title: Iron-Clad Documentation
+    details: ARCHITECTURE.md with real schemas. Strict .clinerules. Sprint plans with detailed task specs. AI knows exactly what to build.
+
+  - icon: 🔄
+    title: Fresh Conversations Win
+    details: One task per conversation. Going in circles? Write a task doc, start fresh. 9/10 times it's the better choice.
+
+  - icon: 📦
+    title: Drop-In Templates
+    details: Copy project-templates/ into any repo. Customize. Point Cline or Claude Code at it. Start building.
 ---
 
-## The Problem
+## The Process
 
-Most AI-assisted coding fails because people try to build everything at once. No scoping. No quality gates. No documentation. Result: expensive, broken code.
-
-## The Solution
-
-1. **Brainstorm first** — Let AI help you scope a realistic MVP
-2. **Document before coding** — Five lean docs that AI reads every session
-3. **Work in tasks** — New chat per task, focused execution
-4. **Check quality** — Confidence scoring, phase audits
-5. **Build on solid ground** — Each phase works before starting the next
+1. **Brainstorm with Opus** — Real conversation in a Claude Project. Discuss scope, tech stack, architecture. Multiple turns, not one prompt.
+2. **Generate foundation docs** — README, Architecture, rules, sprint plan, task specs. Thorough enough that AI can execute autonomously.
+3. **Execute in focused tasks** — One task per conversation. Plan mode first. Test after. Score confidence. Close. Next.
+4. **Know when to start fresh** — Side tasks, circular debugging, long conversations — write a task doc and start a new conversation.
+5. **Audit between phases** — Fresh AI reviews your code. Fix what it finds before continuing.
 
 ## Who This Is For
 
-- Developers who want AI to accelerate their work without producing garbage
-- Founders validating ideas before burning runway
-- Team leads establishing standards for AI-assisted development
+- **Developers** who want AI to accelerate their work without producing garbage
+- **Founders** validating ideas before burning runway
+- **Team leads** establishing standards for AI-assisted development
+
+## Real Example
+
+[EventHive](https://github.com/visual-hive/eventhive) — a community platform for event professionals — was built using this methodology. Browse its repo to see thorough architecture docs, strict development rules, sprint-based task specs, and architectural decision records in action.
 
 ## Get Started
 
 <div style="display: flex; gap: 1rem; margin-top: 2rem;">
   <a href="/introduction" style="padding: 0.75rem 1.5rem; background: var(--vp-c-brand); color: white; border-radius: 4px; text-decoration: none;">Read the Guide →</a>
-  <a href="/part-6/templates" style="padding: 0.75rem 1.5rem; border: 1px solid var(--vp-c-brand); border-radius: 4px; text-decoration: none;">Jump to Templates</a>
+  <a href="/part-6/templates" style="padding: 0.75rem 1.5rem; border: 1px solid var(--vp-c-brand); border-radius: 4px; text-decoration: none;">Get the Templates</a>
 </div>
