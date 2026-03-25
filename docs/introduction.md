@@ -80,7 +80,7 @@ If a fix or feature starts going in circles, ask AI to write a task doc capturin
 **Part VI: Resources**
 - Drop-in project templates (sync to any repo)
 - Prompt library for every phase
-- Real-world case study: EventHive
+- Real-world case study: VH Conference Toolkit
 
 ---
 
@@ -127,15 +127,15 @@ These assume following the methodology. Skip steps and costs balloon.
 
 ---
 
-## Real Example: EventHive
+## Real Example: VH Conference Toolkit
 
-[EventHive](https://github.com/visual-hive/eventhive) is a community platform for event professionals built using this exact methodology. Its repo demonstrates what good project documentation looks like:
+The [VH Conference Toolkit](https://github.com/Visual-Hive/vh-conference-toolkit) is a suite of open-source tools for event professionals, built using this exact methodology. Its repo demonstrates what good project documentation looks like:
 
-- Thorough `ARCHITECTURE.md` with full database schemas and component hierarchy
-- Strict `.clinerules` with mandatory testing and quality standards
-- Sprint-based `dev-docs/` with individual task specs
+- Thorough architecture docs with full schemas and component hierarchy
+- Strict development rules with mandatory testing and quality standards
+- Sprint-based task documentation with individual task specs
 - Architectural Decision Records (ADRs) for major choices
-- Active issue tracking separate from GitHub issues
+- Each tool built as an independent, well-documented module
 
 Browse the repo to see the methodology in action.
 

@@ -80,7 +80,7 @@ Claude lays out the technology recommendations with alternatives and trade-offs.
 
 ## Example Output
 
-After 30-45 minutes of conversation (using EventHive as an example):
+After 30-45 minutes of conversation (using a conference toolkit as an example):
 
 **Core insight:**
 > "The unique value is making open-source event tools accessible to non-technical organizers. The community and resources support that mission. The AI assistant is V2."

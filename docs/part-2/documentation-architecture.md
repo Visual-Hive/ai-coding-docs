@@ -60,7 +60,7 @@ When AI reads this, it writes correct queries and migrations the first time. Wit
 - Deployment architecture
 - Key technical decisions with rationale
 
-See the [EventHive ARCHITECTURE.md](https://github.com/visual-hive/eventhive) for a real example of what this looks like in practice.
+See the [VH Conference Toolkit](https://github.com/Visual-Hive/vh-conference-toolkit) for a real example of what this looks like in practice.
 
 ---
 
@@ -116,7 +116,7 @@ This is what separates "tell AI to build something" from "give AI a clear spec a
 
 When Cline or Claude Code reads a task spec + ARCHITECTURE.md + .clinerules, it has everything it needs. No clarifying questions. Just execution.
 
-**Example from EventHive:**
+**Example from a real project (VH Conference Toolkit):**
 ```
 dev-docs/sprints/sprint-01-initial-setup/
 ├── SPRINT-EH-001-PLAN.md          # Sprint plan with 12 tasks

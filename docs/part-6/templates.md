@@ -183,14 +183,14 @@ After each task: rate 1-10, 8 minimum to proceed.
 
 ---
 
-## Real-World Example: EventHive
+## Real-World Example: VH Conference Toolkit
 
-[EventHive](https://github.com/visual-hive/eventhive) demonstrates these templates in production:
+The [VH Conference Toolkit](https://github.com/Visual-Hive/vh-conference-toolkit) demonstrates these templates in production:
 
-- **ARCHITECTURE.md** — 11KB with full database schemas (8 tables), component hierarchy, auth flow, API conventions, deployment architecture
-- **.clinerules** — 12KB of strict development rules including mandatory Erleah annotation attributes, prohibited behaviors, and tech-specific conventions
-- **dev-docs/sprints/** — 4 sprints with individual task specs, architectural decision records (ADRs), and sprint plans
-- **dev-docs/issues/ACTIVE.md** — Lightweight bug tracking separate from GitHub issues
+- Thorough architecture documentation with full schemas and component specifications
+- Strict development rules with mandatory testing, prohibited behaviors, and tech-specific conventions
+- Sprint-based task documentation with individual task specs and architectural decision records (ADRs)
+- Each tool built as an independent, well-documented module following the same methodology
 
 Browse the repo to see what thorough project documentation looks like.
 

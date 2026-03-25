@@ -67,7 +67,7 @@ docs/                       # The methodology guide (VitePress)
 
 ## Real Example
 
-[EventHive](https://github.com/visual-hive/eventhive) was built using this methodology. Browse its repo to see thorough architecture docs, strict `.clinerules`, sprint-based task specs, and ADRs in action.
+The [VH Conference Toolkit](https://github.com/Visual-Hive/vh-conference-toolkit) was built using this methodology. Browse its repo to see thorough architecture docs, strict development rules, sprint-based task specs, and ADRs in action.
 
 ## Proof It Works
 

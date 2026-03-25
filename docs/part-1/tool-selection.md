@@ -148,7 +148,7 @@ The methodology adds ~20% overhead (documentation, scoring, audits). It saves 10
 
 ## Proof It Works
 
-This methodology built [RISE](https://github.com/The-Low-Code-Foundation/rise) — a desktop Electron app — in 4 weeks for ~$400. And [EventHive](https://github.com/visual-hive/eventhive) — a full community platform — using the same process with thorough sprint-based documentation.
+This methodology built [RISE](https://github.com/The-Low-Code-Foundation/rise) — a desktop Electron app — in 4 weeks for ~$400. And the [VH Conference Toolkit](https://github.com/Visual-Hive/vh-conference-toolkit) — a suite of open-source event tools — using the same process with thorough sprint-based documentation.
 
 ---
 

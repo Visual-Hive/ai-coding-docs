@@ -49,7 +49,7 @@ features:
 
 ## Real Example
 
-[EventHive](https://github.com/visual-hive/eventhive) — a community platform for event professionals — was built using this methodology. Browse its repo to see thorough architecture docs, strict development rules, sprint-based task specs, and architectural decision records in action.
+The [VH Conference Toolkit](https://github.com/Visual-Hive/vh-conference-toolkit) — a suite of open-source tools for event professionals — was built using this methodology. Browse its repo to see thorough architecture docs, strict development rules, sprint-based task specs, and architectural decision records in action.
 
 ## Get Started
 
