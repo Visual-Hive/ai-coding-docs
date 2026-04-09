@@ -195,6 +195,50 @@ The methodology feels like overhead—until you skip it and watch a project fall
 
 ---
 
+## OpsNest Control Panel (Backend Visibility)
+
+**Project:** Admin control panel for a SvelteKit + Directus membership portal
+**Complexity:** Medium (9 tasks, 2-week sprint)
+**What it demonstrates:** The "build observability tools early" pattern from [The Project Control Panel](/part-5/control-panel)
+
+### The Setup
+
+SvelteKit app on a Hetzner VPS, Directus CMS in Docker, n8n being migrated to SvelteKit API routes. The admin had no way to see deployment health, data state, automation flows, or security posture. Sprint 3 was a deliberate experiment: build the control panel, observe what the AI gets right and wrong, write the docs from real experience.
+
+### What Was Built (9 Tasks)
+
+1. Tabbed control panel shell at `/admin/control-panel`
+2. Deployment centre: `deployment.json` + live health checks
+3. Data browser: Directus schema introspection + paginated viewer
+4. Data editing: inline cell editing + `static-data/` JSON files
+5. Automation annotations: `@flow` JSDoc + `flowLog()` utility + `flow-registry.js`
+6. Automation visualiser: step diagram with live status overlay
+7. Security runner: 8 automated checks (env vars, auth guards, cookie settings)
+8. User journey testing: interactive pass/fail checklists with bug report generator
+9. `.clinerules` update: codified all conventions as rules for future AI sessions
+
+### What It Caught
+
+- **Stale deploy:** The deployment tab revealed Sprint 3 was never actually deployed. The new `/api/health` endpoint returned 404 on the live server.
+- **Hallucinated env vars:** The security runner found `DIRECTUS_URL` used throughout monitoring code instead of `VITE_DIRECTUS_URL`. Looked correct. Passed code review. Failed at runtime.
+- **Missing type narrowing:** The security checks exposed a pattern of unchecked assumptions that would have been invisible in normal testing.
+
+**3 bugs caught by the control panel's own monitoring — none visible in code review.**
+
+### Numbers
+
+| Metric | Value |
+|--------|-------|
+| Timeline | 2 weeks |
+| Tasks | 9 |
+| Token cost | ~$80 |
+| Bugs caught by own monitoring | 3 |
+| `.clinerules` rules added | 5 |
+
+**The rule that came out of it:** "When writing any code that references env var names, ALWAYS read `.env.example` first. Never invent names from conventions." One rule, one entire class of hallucination prevented.
+
+---
+
 ## Patterns Across Projects
 
 **What consistently works:**

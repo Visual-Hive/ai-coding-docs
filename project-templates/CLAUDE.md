@@ -31,6 +31,36 @@ Read these files first:
 - **Use project import aliases** — no deep relative imports across module boundaries
 - **Database changes need migrations** — always use migration files for schema changes
 
+### Control Panel Conventions (if project has a backend)
+
+**Deployment monitoring:**
+- Maintain `deployment.json` at project root listing all services, health endpoints, and deploy methods
+- Update it whenever a service is added, removed, or its URL changes
+- Implement `/api/health` returning `{ status: 'ok', timestamp: '...' }`
+
+**Data visibility:**
+- When creating enum-like data or option sets, create a JSON file in `static-data/` first
+- The control panel reads these files — check there before inventing dropdown values in code
+
+**Automation flows:**
+- Every backend automation (webhook, cron, pipeline) MUST have:
+  1. A `@flow` JSDoc annotation declaring name, trigger, and steps
+  2. An entry in the flow registry file
+  3. `flowLog()` calls at each logical step with sanitised input/output
+- `flowLog()` MUST NEVER include passwords, tokens, API keys, or raw JWTs
+- `flowLog()` MUST NEVER crash the actual flow — always wrap in try/catch
+
+**User journey testing:**
+- After implementing any user-facing feature, append a test journey to `USER_JOURNEYS.json`
+- Include: journey name, user role, exact steps, exact expected outcomes
+- The control panel renders these as interactive pass/fail checklists
+
+**Security checks:**
+- When referencing env var names in monitoring/check code, ALWAYS read `.env.example` first — never invent names from conventions
+- All admin routes must have auth guards
+- All API routes (except public webhooks) must verify authentication
+- Error responses must not leak stack traces
+
 ### Prohibited
 - Do NOT skip tests
 - Do NOT refactor outside current task scope

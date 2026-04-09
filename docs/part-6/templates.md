@@ -142,6 +142,10 @@ Building the minimum to validate [core concept].
 | Decision | Choice | Rationale |
 |----------|--------|-----------|
 | [Decision] | [Choice] | [Why] |
+
+## Control Panel (if applicable)
+[Convention files, routes, and registered automation flows]
+[See The Project Control Panel](/part-5/control-panel) for the full pattern]
 ```
 
 ---
@@ -179,6 +183,10 @@ After each task: rate 1-10, 8 minimum to proceed.
 - Architectural changes
 - Ambiguous requirements
 - Confidence below 8
+
+### Control Panel Conventions (if project has a backend)
+[Deployment monitoring, automation flow annotations, user journey testing, security checks]
+[See The Project Control Panel](/part-5/control-panel) for the full rules]
 ```
 
 ---

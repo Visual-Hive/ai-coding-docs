@@ -118,3 +118,30 @@ users 1──▶ N sessions      (user_id FK)
 | [Auth strategy] | [Choice] | [Why] |
 | [Styling approach] | [Choice] | [Why] |
 | [State management] | [Choice] | [Why] |
+
+## Control Panel (if applicable)
+
+### Convention Files
+| File | Purpose | Maintained By |
+|------|---------|--------------|
+| `deployment.json` | Service registry with health endpoints | AI coder (on deploy changes) |
+| `static-data/*.json` | Option sets for forms and dropdowns | Human (via dashboard) or AI |
+| `[flow-registry-path]` | Automation flow declarations | AI coder (on new automations) |
+| `USER_JOURNEYS.json` | Interactive test checklists | AI coder (on new features) |
+
+### Control Panel Routes
+| Route | Purpose | Auth |
+|-------|---------|------|
+| `/admin/control-panel` | Dashboard with tabs | Admin |
+| `/api/health` | App health check | None |
+| `/api/control-panel/deployment` | Service health aggregator | Admin |
+| `/api/control-panel/schema` | Database introspection | Admin |
+| `/api/control-panel/data/[collection]` | Data browser CRUD | Admin |
+| `/api/control-panel/security` | Security scan runner | Admin |
+| `/api/control-panel/automations` | Flow execution logs | Admin |
+| `/api/control-panel/journeys` | Test journey definitions | Admin |
+
+### Registered Automation Flows
+| Flow ID | Trigger | Steps | File |
+|---------|---------|-------|------|
+| [flow-id] | [trigger description] | [count] | [source file path] |

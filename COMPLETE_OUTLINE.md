@@ -595,6 +595,22 @@ This document provides detailed outlines for all remaining chapters. Each can be
 
 ---
 
+### Chapter 12b: The Project Control Panel ✅ COMPLETE
+
+**File:** `docs/part-5/control-panel.md`
+**Status:** Written and published
+
+A chapter documenting the control panel pattern — a localhost admin dashboard that gives visibility into deployment health, data state, automation flows, and security in AI-coded projects. Based on real experience from OpsNest Sprint 3.
+
+**Covers:**
+- The Problem (black box backends)
+- The Four Tabs: Deployment Centre, Data Browser, Automation Visualiser, Security & Testing
+- Convention files and `.clinerules` rules
+- When to build it (minimum viable vs full)
+- OpsNest learnings
+
+---
+
 ## Part VI: Practical Resources
 
 ### Chapter 13: Complete Template Library
