@@ -159,3 +159,5 @@ See [Phase Audits](/part-4/phase-audits) for how to use the security runner outp
 ::: tip Start with deployment.json
 If you only do one thing from this chapter, add a `deployment.json` to your project root and a `/api/health` endpoint. The next time a deploy doesn't take effect, you'll know in 5 seconds instead of 30 minutes.
 :::
+
+For the frontend equivalent — tweaking styles, text, links, and SEO without an AI loop — see [The Frontend Tweaker](/part-5/frontend-tweaker).

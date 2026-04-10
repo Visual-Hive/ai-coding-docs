@@ -23,6 +23,7 @@ Drop these files into any repo and AI will know how to build your project. Each 
 | **TASK_TEMPLATE.md** | Format for individual task specifications | Light customization |
 | **SPRINT_PLAN_TEMPLATE.md** | Format for sprint planning documents | Light customization |
 | **SPRINT_RULES.md** | Rules for sizing sprints, writing tasks, managing scope | Review and adjust |
+| **convention-files/** | Frontend Tweaker starter files (design tokens, i18n, links, meta) | Yes — adjust to your stack |
 
 ### Prompt Templates
 
@@ -187,6 +188,10 @@ After each task: rate 1-10, 8 minimum to proceed.
 ### Control Panel Conventions (if project has a backend)
 [Deployment monitoring, automation flow annotations, user journey testing, security checks]
 [See The Project Control Panel](/part-5/control-panel) for the full rules]
+
+### Frontend Tweaker Conventions (all projects with a UI)
+[i18n text management, @tweak style tokens, link management, SEO meta content]
+[See The Frontend Tweaker](/part-5/frontend-tweaker) for the full rules]
 ```
 
 ---

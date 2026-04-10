@@ -597,6 +597,8 @@ This document provides detailed outlines for all remaining chapters. Each can be
 
 ### Chapter 12b: The Project Control Panel ✅ COMPLETE
 
+### Chapter 12c: The Frontend Tweaker ✅ COMPLETE
+
 **File:** `docs/part-5/control-panel.md`
 **Status:** Written and published
 

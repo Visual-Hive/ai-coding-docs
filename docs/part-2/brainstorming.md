@@ -171,7 +171,7 @@ This becomes the foundation for your README, ARCHITECTURE.md, and sprint plan.
 
 **Letting Claude use inline HTML previews.** Set a project instruction or profile preference telling Claude to always use the artifacts system for mockups and documentation, never the inline chat preview. The inline preview is a cute gimmick, but you'll waste tokens having Claude recreate the work as an artifact when you need to export or share it.
 
-**Not discussing platform targets.** If there's even the slightest intention of going to mobile app stores or desktop, this needs to be in the brainstorming conversation. Bolting on Capacitor or Electron/Tauri after the fact is painful. Even if you start with a web MVP, the architectural choices (framework, routing, build system) should accommodate your eventual platform targets.
+**Not discussing platform targets.** If there's even the slightest intention of going to mobile app stores or desktop, this needs to be in the brainstorming conversation. Bolting on Capacitor or Electron/Tauri after the fact is painful. Even if you start with a web MVP, the architectural choices (framework, routing, build system) should accommodate your eventual platform targets. If the project has a UI, plan for [Frontend Tweaker conventions](/part-5/frontend-tweaker) from Sprint 1.
 
 ---
 

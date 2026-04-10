@@ -145,3 +145,14 @@ users 1──▶ N sessions      (user_id FK)
 | Flow ID | Trigger | Steps | File |
 |---------|---------|-------|------|
 | [flow-id] | [trigger description] | [count] | [source file path] |
+
+## Frontend Tweaker Convention Files (if project has a UI)
+
+| File | Purpose | Maintained By |
+|------|---------|--------------|
+| `src/styles/design-tokens.css` | CSS custom properties with `@tweak` annotations | AI coder (on component changes) |
+| `src/locales/en.json` | i18n translation keys for all user-facing text | AI coder (on new/changed text) |
+| `src/config/links.json` | All external URLs and navigation hrefs | AI coder (on link changes) |
+| `src/config/meta.json` | Page titles, meta descriptions, OG content | AI coder (on new pages) |
+
+See [The Frontend Tweaker](/part-5/frontend-tweaker) for the full pattern.

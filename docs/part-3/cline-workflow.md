@@ -156,7 +156,7 @@ When AI finishes, it should provide:
 
 When testing locally, you don't always need to describe problems in words. Cline supports visual input that can dramatically speed up debugging.
 
-**Screenshots:** Use the `+` icon on the Cline chat bar to attach a screenshot when something looks wrong in the browser. A picture of a broken layout, a misaligned element, or an unexpected error page communicates the problem faster and more accurately than trying to describe it in non-developer language. This is especially useful for CSS issues, responsive layout problems, and visual regressions.
+**Screenshots:** Use the `+` icon on the Cline chat bar to attach a screenshot when something looks wrong in the browser. A picture of a broken layout, a misaligned element, or an unexpected error page communicates the problem faster and more accurately than trying to describe it in non-developer language. This is especially useful for CSS issues, responsive layout problems, and visual regressions. For small cosmetic tweaks (font sizes, colours, spacing, button labels), the [Frontend Tweaker](/part-5/frontend-tweaker) conventions let you edit these directly without invoking Cline at all.
 
 **JavaScript console output:** Get comfortable with the browser's developer tools (F12 or right-click → Inspect → Console tab). When the frontend misbehaves, the console often shows the actual error — a failed API call, a null reference, a missing module. Copy-paste the console output directly into the Cline chat. This gives Cline the exact error message, stack trace, and context it needs to diagnose the problem without guessing.
 

@@ -1,0 +1,58 @@
+:root {
+  /* ===== Brand Tokens ===== */
+  /* @tweak Brand primary colour | type: color */
+  --brand-primary: #3b82f6;
+  /* @tweak Brand dark colour | type: color */
+  --brand-dark: #1e293b;
+  /* @tweak Brand accent colour | type: color */
+  --brand-accent: #f59e0b;
+
+  /* ===== Semantic Tokens ===== */
+  /* @tweak Body text colour | type: color */
+  --text-primary: #1e293b;
+  /* @tweak Secondary text colour | type: color */
+  --text-secondary: #64748b;
+  /* @tweak Background surface | type: color */
+  --bg-surface: #ffffff;
+  /* @tweak Default border colour | type: color */
+  --border-default: #e2e8f0;
+
+  /* ===== Typography ===== */
+  /* @tweak Base font size | range: 14px, 20px */
+  --font-size-base: 16px;
+  /* @tweak Heading font size (h1) | range: 1.5rem, 4rem */
+  --font-size-h1: 2.25rem;
+  /* @tweak Body line height | range: 1.2, 2.0 */
+  --line-height-body: 1.6;
+
+  /* ===== Spacing ===== */
+  /* @tweak Section vertical padding | range: 1rem, 6rem */
+  --section-padding-y: 3rem;
+  /* @tweak Container max width | range: 960px, 1440px */
+  --container-max-width: 1200px;
+  /* @tweak Card padding | range: 0.5rem, 3rem */
+  --card-padding: 1.5rem;
+  /* @tweak Card border radius | range: 0px, 24px */
+  --card-border-radius: 8px;
+
+  /* ===== Interactive ===== */
+  /* @tweak Button padding horizontal | range: 0.5rem, 3rem */
+  --btn-padding-x: 1.5rem;
+  /* @tweak Button border radius | range: 0px, 24px */
+  --btn-border-radius: 6px;
+  /* @tweak Primary button background | type: color */
+  --btn-primary-bg: var(--brand-primary);
+  /* @tweak Primary button hover background | type: color | state: hover */
+  --btn-primary-hover-bg: #2563eb;
+}
+
+.dark {
+  /* @tweak Body text colour (dark mode) | type: color */
+  --text-primary: #f1f5f9;
+  /* @tweak Secondary text colour (dark mode) | type: color */
+  --text-secondary: #94a3b8;
+  /* @tweak Background surface (dark mode) | type: color */
+  --bg-surface: #0f172a;
+  /* @tweak Default border colour (dark mode) | type: color */
+  --border-default: #334155;
+}

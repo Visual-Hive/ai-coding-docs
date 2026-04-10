@@ -1,0 +1,11 @@
+{
+  "common": {
+    "app_name": "[PROJECT_NAME]",
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try again"
+  },
+  "nav": {
+    "home": "Home"
+  }
+}
