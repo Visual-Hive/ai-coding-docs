@@ -70,7 +70,16 @@ Claude lays out the technology recommendations with alternatives and trade-offs.
 
 > "Be honest — is this scope realistic for 3 weeks? What would you cut?"
 
-**Tech stack discussion should include alternatives.** Not just "use React" but "here are 3 options, here's why I'd recommend this one for your situation."
+**Make Claude verify its suggestions with web search.** Claude's training data can be months out of date. This is especially dangerous with LLM model names, library versions, and framework recommendations — it may suggest deprecated packages or older versions of tools. Tell Claude: "Please do a web search to check what the latest stable version of X is before recommending it." This one habit prevents a whole class of problems during execution.
+
+**Tech stack discussion should include alternatives.** Not just "use React" but "here are 3 options, here's why I'd recommend this one for your situation." For new projects where you have no framework preference, Svelte is worth considering — it produces cleaner code that AI handles better, with smaller bundle sizes and a growing ecosystem. React remains appropriate when the project requires specific React-only libraries or your team already knows it well.
+
+**Discuss your platform targets early.** This conversation should cover where the app will run — and the answer shapes the entire architecture:
+
+- **Web only?** Simple. Netlify or Vercel for static/frontend, Hetzner or similar for backends.
+- **Mobile app store?** Plan for Capacitor from the start. Consider Fastlane for deployment automation. This must be baked into the project foundation, not bolted on later.
+- **PWA?** A great middle ground for testing prototypes without app store deployment pain. Discuss whether PWA is sufficient or if native is required.
+- **Desktop app?** Electron is the established choice, Tauri is the modern lightweight alternative (Rust-based, 96% smaller binaries, lower memory usage). Both have trade-offs — desktop apps can become a nightmare of debugging, rebuilding, and reinstalling, so plan for extra logging and control panel systems from the start.
 
 **Data architecture matters early.** Discuss how entities relate. What are the main database tables? How does auth connect to the rest? This prevents painful refactoring later.
 
@@ -159,6 +168,10 @@ This becomes the foundation for your README, ARCHITECTURE.md, and sprint plan.
 **Skipping this entirely.** Starting with "build me X" instead of "let's discuss X." You'll regret it at $500 in rework.
 
 **Forgetting to document.** The brainstorming insights are valuable. Make sure Claude generates the foundation docs before you move on.
+
+**Letting Claude use inline HTML previews.** Set a project instruction or profile preference telling Claude to always use the artifacts system for mockups and documentation, never the inline chat preview. The inline preview is a cute gimmick, but you'll waste tokens having Claude recreate the work as an artifact when you need to export or share it.
+
+**Not discussing platform targets.** If there's even the slightest intention of going to mobile app stores or desktop, this needs to be in the brainstorming conversation. Bolting on Capacitor or Electron/Tauri after the fact is painful. Even if you start with a web MVP, the architectural choices (framework, routing, build system) should accommodate your eventual platform targets.
 
 ---
 

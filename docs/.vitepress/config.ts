@@ -8,7 +8,7 @@ export default defineConfig({
   lastUpdated: true,
 
   head: [
-    ['meta', { name: 'theme-color', content: '#5f67ee' }],
+    ['meta', { name: 'theme-color', content: '#f8fa30' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:title', content: 'AI-Assisted Software Engineering Guide' }],
     ['meta', { property: 'og:description', content: 'Build production-ready apps with AI — systematically, not randomly' }],
@@ -16,6 +16,10 @@ export default defineConfig({
 
   themeConfig: {
     siteTitle: 'AI-Assisted SE Guide',
+    logo: {
+      light: '/assets/logo_black.png',
+      dark: '/assets/logo_white.png'
+    },
 
     nav: [
       { text: 'Guide', link: '/introduction' },
@@ -79,6 +83,7 @@ export default defineConfig({
           { text: 'Common Pitfalls', link: '/part-5/pitfalls-recovery' },
           { text: 'Team Workflows', link: '/part-5/team-workflows' },
           { text: 'The Project Control Panel', link: '/part-5/control-panel' },
+          { text: 'Deployment & Platform Targets', link: '/part-5/deployment-platforms' },
         ]
       },
       {
@@ -102,7 +107,7 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/The-Low-Code-Foundation/vibe-coding-docs' }
+      { icon: 'github', link: 'https://github.com/Visual-Hive/ai-coding-docs' }
     ],
 
     footer: {

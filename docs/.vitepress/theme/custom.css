@@ -1,0 +1,188 @@
+/**
+ * Visual Hive Branding — Custom VitePress Theme
+ * Brand color: #f8fa30 (neon yellow)
+ */
+
+/* ========================================
+   Brand Color Overrides
+   ======================================== */
+
+:root {
+  /* Brand colors — light mode needs darker variants for readability */
+  --vp-c-brand-1: #d4d600;
+  --vp-c-brand-2: #c0c200;
+  --vp-c-brand-3: #a8aa00;
+  --vp-c-brand-soft: rgba(248, 250, 48, 0.14);
+
+  /* Button text must be dark on yellow background */
+  --vp-button-brand-text: #1a1a2e;
+  --vp-button-brand-bg: #f8fa30;
+  --vp-button-brand-hover-text: #1a1a2e;
+  --vp-button-brand-hover-bg: #e6e82b;
+  --vp-button-brand-active-text: #1a1a2e;
+  --vp-button-brand-active-bg: #d4d600;
+}
+
+.dark {
+  /* Brighter values work well on dark backgrounds */
+  --vp-c-brand-1: #f8fa30;
+  --vp-c-brand-2: #e6e82b;
+  --vp-c-brand-3: #d4d600;
+  --vp-c-brand-soft: rgba(248, 250, 48, 0.16);
+}
+
+/* ========================================
+   Hero Section
+   ======================================== */
+
+/* Hero name gradient — yellow to soft gold */
+:root {
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: -webkit-linear-gradient(
+    120deg,
+    #f8fa30 30%,
+    #e6c84a
+  );
+}
+
+/* Hero image glow */
+:root {
+  --vp-home-hero-image-background-image: linear-gradient(
+    -45deg,
+    #f8fa3050 50%,
+    #e6c84a50 50%
+  );
+  --vp-home-hero-image-filter: blur(44px);
+}
+
+/* ========================================
+   Logo Sizing & Navbar Title — stacked layout
+   ======================================== */
+
+.VPNavBarTitle .logo {
+  height: 36px;
+  width: auto;
+  flex-shrink: 0;
+}
+
+/* Stack logo above the title text */
+.VPNavBarTitle a {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  line-height: 1.2;
+}
+
+.VPNavBarTitle .title {
+  white-space: normal;
+  word-break: break-word;
+  font-size: 0.78rem;
+  line-height: 1.3;
+  max-width: 140px;
+  opacity: 0.85;
+}
+
+/* ========================================
+   Visual Hive CTA Component
+   ======================================== */
+
+.vh-cta {
+  margin: 2.5rem 0;
+  padding: 1.75rem 2rem;
+  border-radius: 12px;
+  border: 1px solid var(--vp-c-brand-soft);
+  background: linear-gradient(
+    135deg,
+    var(--vp-c-brand-soft),
+    transparent 60%
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+.vh-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--vp-c-brand-1);
+  border-radius: 4px 0 0 4px;
+}
+
+.vh-cta h3 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--vp-c-brand-1);
+}
+
+.dark .vh-cta h3 {
+  color: #f8fa30;
+}
+
+.vh-cta p {
+  margin: 0 0 1.25rem 0;
+  line-height: 1.7;
+  color: var(--vp-c-text-1);
+}
+
+.vh-cta .vh-cta-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.vh-cta .vh-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.vh-cta .vh-cta-btn-primary {
+  background: var(--vp-button-brand-bg);
+  color: #1a1a2e !important;
+}
+
+.vh-cta .vh-cta-btn-primary:hover,
+.vh-cta .vh-cta-btn-primary:focus,
+.vh-cta .vh-cta-btn-primary:active {
+  background: var(--vp-button-brand-hover-bg);
+  color: #1a1a2e !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(248, 250, 48, 0.3);
+}
+
+.vh-cta .vh-cta-btn-secondary {
+  border: 1px solid var(--vp-c-brand-1);
+  color: var(--vp-c-brand-1) !important;
+  background: transparent;
+}
+
+.vh-cta .vh-cta-btn-secondary:hover,
+.vh-cta .vh-cta-btn-secondary:focus,
+.vh-cta .vh-cta-btn-secondary:active {
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1) !important;
+  transform: translateY(-1px);
+}
+
+/* ========================================
+   Fix VitePress brand button text on hover
+   (prevents yellow text on yellow background)
+   ======================================== */
+
+.VPButton.brand,
+.VPButton.brand:hover,
+.VPButton.brand:focus,
+.VPButton.brand:active {
+  color: #1a1a2e !important;
+}

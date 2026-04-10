@@ -194,6 +194,41 @@ Future you will be grateful.
 
 ---
 
+## Making the Codebase AI-Navigable
+
+Comments explain "why." But there's a deeper layer: making the codebase a map that AI can navigate to find its own past work and translate the user's understanding of the app into the code itself.
+
+**The problem:** What the user sees ("the pricing section on the homepage") and what exists in code (`src/components/landing/FeatureGrid.svelte`) are completely different languages. When the user says "the pricing cards are misaligned," Cline needs to find the right file, the right component, the right CSS rule. In a large project, this is surprisingly hard.
+
+**The solution:** Build identification into the code from the start.
+
+**Meaningful element IDs and data attributes:**
+
+```html
+<!-- Bad: AI can't find this from "the pricing section" -->
+<div class="grid grid-cols-3 gap-4">
+
+<!-- Good: AI can grep for this -->
+<div id="pricing-cards-section" data-component="PricingCards" class="grid grid-cols-3 gap-4">
+```
+
+**Component-level comments that describe what the user sees:**
+
+```svelte
+<!--
+  COMPONENT: PricingCards
+  USER-FACING: The three pricing tier cards on the homepage (/pricing section)
+  DISPLAYS: Free, Pro, and Enterprise tiers with feature lists
+  DATA SOURCE: static-data/pricing-tiers.json
+-->
+```
+
+**The control panel reinforces this pattern.** When using the [Project Control Panel](/part-5/control-panel), the conventions around `deployment.json`, `flow-registry.js`, and `USER_JOURNEYS.json` all serve the same purpose — creating a structured, searchable index of the application that both human and AI can navigate.
+
+In advanced projects, you can take this further: baking descriptions into element attributes that an AI assistant can read at runtime, enabling it to understand which part of the application the user is interacting with. This makes the codebase a living, interactive map of the application — and it makes future AI work dramatically more efficient.
+
+---
+
 ## Quick Checklist
 
 Before finishing a task:

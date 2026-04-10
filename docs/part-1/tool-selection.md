@@ -68,6 +68,14 @@ You see every command before it runs. This prevents disasters.
 3. Enable extended thinking
 4. Keep `autoApproveCommands: false` (at least initially)
 
+**Recommended settings for beginners:**
+
+**Disable sub-agents.** In Cline settings, turn off "sub agents." In practice this feature leads to more time wasting and errors than having Cline complete the task in the main chat, even at the expense of the context limit. Advanced users with high-end hardware can experiment with this later, but for most users and most projects, keep it off.
+
+**Disable checkpoints.** Turn off "checkpoints" in Cline settings. This causes Cline to slow down significantly, and only an advanced user would know how to make best use of it. Keep it off until you're comfortable with the basic workflow.
+
+**Manage your chat history.** After a dozen or so task conversations, check the conversation history (the history button at the top of the Cline panel). There's a red "Delete all history" button at the bottom that shows the total size of stored conversations — this can reach 100MB+ quickly during a project. If your `.clinerules` are set right and Cline has been documenting its work properly, deleting history is safe to do regularly to free up disk space and memory. If a conversation is only half-finished, go into the history and star it first — clicking "Delete all history" will then show a modal offering "Delete all except favourites" so you can clean out completed conversations without losing work in progress.
+
 ---
 
 ## Claude Code: Terminal-Native Execution

@@ -54,6 +54,17 @@ The [VH Conference Toolkit](https://github.com/Visual-Hive/vh-conference-toolkit
 ## Get Started
 
 <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-  <a href="/introduction" style="padding: 0.75rem 1.5rem; background: var(--vp-c-brand); color: white; border-radius: 4px; text-decoration: none;">Read the Guide →</a>
-  <a href="/part-6/templates" style="padding: 0.75rem 1.5rem; border: 1px solid var(--vp-c-brand); border-radius: 4px; text-decoration: none;">Get the Templates</a>
+  <a href="/introduction" style="padding: 0.75rem 1.5rem; background: var(--vp-c-brand-1); color: #1a1a2e; border-radius: 4px; text-decoration: none; font-weight: 600;">Read the Guide →</a>
+  <a href="/part-6/templates" style="padding: 0.75rem 1.5rem; border: 1px solid var(--vp-c-brand-1); border-radius: 4px; text-decoration: none;">Get the Templates</a>
+</div>
+
+---
+
+<div class="vh-cta">
+  <h3>Need a hand getting started?</h3>
+  <p>Whether you're exploring AI-assisted development for the first time or looking to sharpen an existing workflow, the team at <a href="https://visualhive.co">Visual Hive</a> can help. Book a free consultation to talk through your goals — from strategy audits that pinpoint bottlenecks to hands-on development and deployment.</p>
+  <div class="vh-cta-actions">
+    <a href="https://visualhive.co/contact/" target="_blank" class="vh-cta-btn vh-cta-btn-primary">Book a Free Consultation →</a>
+    <a href="https://visualhive.co" target="_blank" class="vh-cta-btn vh-cta-btn-secondary">Learn About Visual Hive</a>
+  </div>
 </div>

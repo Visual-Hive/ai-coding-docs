@@ -258,4 +258,15 @@ SvelteKit app on a Hetzner VPS, Directus CMS in Docker, n8n being migrated to Sv
 
 ---
 
+<div class="vh-cta">
+  <h3>Ready to see these results on your own project?</h3>
+  <p>The teams behind these case studies followed a clear process — and you can too. If you'd like help applying this methodology to your project, whether it's a strategy audit, architecture review, or end-to-end build, <a href="https://visualhive.co">Visual Hive</a> is here to help. Start with a free consultation — no commitment, just clarity.</p>
+  <div class="vh-cta-actions">
+    <a href="https://visualhive.co/contact/" target="_blank" class="vh-cta-btn vh-cta-btn-primary">Book a Free Consultation →</a>
+    <a href="https://visualhive.co" target="_blank" class="vh-cta-btn vh-cta-btn-secondary">About Visual Hive</a>
+  </div>
+</div>
+
+---
+
 **Next:** [Getting Started](/introduction) — Ready to try it yourself?

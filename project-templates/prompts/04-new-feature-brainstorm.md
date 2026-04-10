@@ -21,9 +21,10 @@ Let's discuss:
 3. What should be deferred to a later iteration?
 4. What existing components/patterns can we reuse?
 5. Are there any architectural changes needed, or does this fit within the current structure?
-6. What are the risks or things that could go wrong?
+6. Are there any new dependencies needed? If so, please search the web to confirm the latest stable versions.
+7. What are the risks or things that could go wrong?
 
-Let's talk through it before committing to a plan.
+Let's talk through it before committing to a plan. If recommending any new libraries or tools, please verify they're current with a web search.
 ```
 
 ## Follow-Up: Generate Sprint

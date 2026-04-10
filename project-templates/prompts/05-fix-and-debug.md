@@ -20,6 +20,10 @@ Please review the relevant code and propose a fix in plan mode before making cha
 
 **Critical:** Review the plan. Approve it. THEN let the AI act.
 
+::: tip Visual debugging
+Use the `+` icon on the Cline chat bar to attach a **screenshot** of what's wrong. For frontend issues, also open the browser's JavaScript console (F12 → Console tab) and **copy-paste the console output** into the chat. The combination of a screenshot + console error gives Cline enough context to usually diagnose and fix in one turn.
+:::
+
 ## For Larger Debug Sessions
 
 ```

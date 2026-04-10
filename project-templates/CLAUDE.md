@@ -24,6 +24,9 @@ Read these files first:
 - **One task at a time** — don't work on side issues. Document them for a separate task.
 - **Commit working code** — never commit if tests fail
 - **Update docs after every task** — LEARNINGS.md, sprint plan status, ARCHITECTURE.md if structure changed
+- **Ask questions when anything is unclear** — if a task spec is ambiguous or a requirement contradicts the architecture, ask before building
+- **Never start serious development without a task document** — small bug fixes (2-3) in plan mode are acceptable, but substantial work must have a task doc first. Document all fixes in LEARNINGS.md or as an annex to the relevant task doc.
+- **Handle API timeout errors gracefully** — if file writes time out, break the task into smaller chunks (e.g., write CSS first, then HTML body in sections, then footer)
 
 ### Architecture Rules
 - **Follow existing patterns** — check the codebase before inventing new patterns
@@ -68,6 +71,14 @@ Read these files first:
 - Do NOT use `any` types or skip type safety
 - Do NOT store secrets in code
 - Do NOT ignore linter warnings
+- Do NOT install dependencies without first searching the web for the latest stable version
+- Do NOT overwrite production `.env` files with local values
+- Do NOT push code to the production stack directly — dev first, user promotes to prod manually
+
+### Git & Security Hygiene
+- Set up `.gitignore` from the start and review it regularly — no API keys, SSH keys, `.env` files, or credentials in the repo
+- When adding new env vars, update `.env.example` with the variable name and a description (not the secret)
+- Before any git push, verify `.gitignore` covers all sensitive files
 
 ## Confidence Scoring
 
@@ -100,6 +111,18 @@ After each task:
 - Discovered issue affects another part of the app
 
 ## Tech-Specific Rules
+
+### SvelteKit (if applicable)
+- After ANY code change, run `npm run build` and check for build errors before declaring the task complete
+- If build artifacts seem stale, run `rm -rf .svelte-kit && npm run build` for a clean rebuild
+- When modifying shared utilities, layouts, or server load functions, test ALL pages that could be affected — not just the page you worked on
+- Guard all browser-only APIs (`window`, `document`, `localStorage`) with `if (browser)` from `$app/environment`
+- If a page throws a 500, check the server terminal — the actual error is there, not in the browser
+
+### Drizzle ORM + PostgreSQL (if applicable)
+- After any schema migration on the dev server, ALWAYS run the seed script
+- Include the seed command in the deployment checklist: migrations → seed → verify
+- Use upsert logic in seed scripts rather than truncate-and-reinsert
 
 ### [Framework]
 - [Rule]

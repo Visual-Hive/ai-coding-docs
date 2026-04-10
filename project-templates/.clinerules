@@ -24,6 +24,9 @@ Read these files first:
 - **One task at a time** — do not start working on side issues discovered during a task. Document them for later.
 - **Commit working code** — never commit broken code. If tests fail, fix them before committing.
 - **Update docs after every task** — LEARNINGS.md for gotchas, sprint plan for status, ARCHITECTURE.md if structure changed.
+- **Ask questions when anything is unclear** — if a task spec is ambiguous, a requirement contradicts the architecture, or you're unsure about the user's intent, ask before building. A 30-second question beats 30 minutes of rework.
+- **Never start serious development without a task document** — diagnosing and fixing 2-3 small bugs in plan mode is acceptable, but any substantial work must have a task doc first. Even bug fixes should be documented in LEARNINGS.md or as an annex to the relevant task doc, recording what the bug was and what the fix was. This makes the dev-docs folder large on complex projects, but it's worth it as a map of how the project was built for any future AI work on the codebase.
+- **Handle API timeout errors gracefully** — if you receive timeout errors when writing to a file, break the task into smaller chunks. For example, write the CSS head first, then the body HTML in sections, then the footer. Don't keep retrying the same large write.
 
 ### Architecture Rules
 - **Follow existing patterns** — check how similar things are done in the codebase before creating new patterns
@@ -68,6 +71,14 @@ Read these files first:
 - Do NOT use `any` types (TypeScript) or skip type safety
 - Do NOT store secrets or credentials in code
 - Do NOT ignore linter warnings
+- Do NOT install dependencies without first searching the web for the latest stable version — training data may be months out of date
+- Do NOT overwrite production `.env` files with local values — always confirm the target environment before any deployment action
+- Do NOT push code to the production stack directly — push to dev, test, then the user manually promotes to production
+
+### Git & Security Hygiene
+- **Set up `.gitignore` from the start** and review it regularly — no API keys, SSH keys, `.env` files, or credentials should ever reach the repository
+- When adding new environment variables, always update `.env.example` with the variable name and a description (not the actual secret value)
+- Before any git push, verify that `.gitignore` is covering all sensitive files
 
 ## Confidence Scoring
 
@@ -102,14 +113,25 @@ After each task, provide:
 
 ## Tech-Specific Rules
 
-### [Framework — e.g., SvelteKit / Next.js / Express]
-- [Rule specific to your framework]
+### SvelteKit (if applicable)
+- After ANY code change, run `npm run build` and check for build errors before declaring the task complete
+- If build artifacts seem stale (changes not appearing), run `rm -rf .svelte-kit && npm run build` for a clean rebuild
+- When modifying shared utilities, layouts (`+layout.svelte`, `+layout.server.ts`), or server load functions, test ALL pages that could be affected — not just the page you were working on. Layout changes propagate to every child route.
+- Guard all browser-only APIs (`window`, `document`, `localStorage`) with `if (browser)` from `$app/environment` — unguarded access causes 500 errors on the server-side render
+- If a page throws a 500 error, check the **server terminal output** — the actual error is there, not in the browser. The browser only shows a generic "Internal Error" message.
+- Use `+error.svelte` boundary pages to catch and display rendering errors gracefully
+
+### Drizzle ORM + PostgreSQL (if applicable)
+- After any schema migration on the dev server, ALWAYS run the seed script — the frontend will show stale data if only the schema is updated without re-seeding
+- Include the seed command in the deployment checklist: migrations first, then seed, then verify
+- When deploying to the cloud dev server, always confirm both schema and data are current before testing
+- Use upsert logic in seed scripts (insert or update) rather than truncate-and-reinsert, to avoid data loss on production
+
+### [Framework — customize for your stack]
 - [Rule specific to your framework]
 
-### [Database — e.g., PostgreSQL / Supabase]
-- [Rule specific to your DB]
+### [Database — customize for your stack]
 - [Rule specific to your DB]
 
 ### [Styling — e.g., Tailwind / CSS Modules]
-- [Rule specific to your styling approach]
 - [Rule specific to your styling approach]

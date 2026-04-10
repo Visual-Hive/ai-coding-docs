@@ -27,3 +27,5 @@ Reference specific file paths, function signatures, and database tables from ARC
 - Include code examples for non-obvious patterns
 - If a task depends on another, reference what the prior task created
 - Make acceptance criteria objectively checkable — "works correctly" is not a criterion; "returns 401 for unauthenticated requests" is
+- This step may take several turns depending on how many tasks are in the sprint. If you hit your daily Claude usage limit, a $5 USD top-up is typically enough to finish. It's worth it — Opus-quality task docs mean Cline executes faster and cheaper with Sonnet, often completing entire sprints with no clarifying questions.
+- The goal: you should be able to say "Please execute sprint 1" to Cline in plan mode, and it reads the task docs, says "ok let's go" with no outstanding questions.

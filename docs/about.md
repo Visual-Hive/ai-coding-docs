@@ -61,7 +61,7 @@ This isn't theory. It's what actually works.
 
 ## Open Source
 
-This guide is open source and available on [GitHub](https://github.com/The-Low-Code-Foundation/vibe-coding-docs).
+This guide is open source and available on [GitHub](https://github.com/Visual-Hive/ai-coding-docs).
 
 Contributions, corrections, and improvements are welcome. If you've found patterns that work or pitfalls to avoid, the community benefits from your experience.
 
@@ -71,7 +71,16 @@ Contributions, corrections, and improvements are welcome. If you've found patter
 
 - **The Low Code Foundation**: [thelowcodefoundation.com](https://thelowcodefoundation.com)
 - **Visual Hive**: [visualhive.co](https://visualhive.co)
-- **GitHub**: [The-Low-Code-Foundation/vibe-coding-docs](https://github.com/The-Low-Code-Foundation/vibe-coding-docs)
+- **GitHub**: [Visual-Hive/ai-coding-docs](https://github.com/Visual-Hive/ai-coding-docs)
+
+<div class="vh-cta">
+  <h3>Work with Visual Hive</h3>
+  <p>Need help putting this methodology into practice? Visual Hive offers free consultations for teams and founders looking to adopt AI-assisted development — whether that's a strategy audit to understand where AI fits in your workflow, hands-on support building your first AI-assisted project, or full-service development and deployment.</p>
+  <div class="vh-cta-actions">
+    <a href="https://visualhive.co/contact/" target="_blank" class="vh-cta-btn vh-cta-btn-primary">Book a Free Consultation →</a>
+    <a href="https://visualhive.co" target="_blank" class="vh-cta-btn vh-cta-btn-secondary">Visit visualhive.co</a>
+  </div>
+</div>
 
 ---
 
