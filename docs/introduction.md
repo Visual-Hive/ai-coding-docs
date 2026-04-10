@@ -29,7 +29,7 @@ This happens because:
 
 ### Step 1: Brainstorm with Claude Opus in a Project
 
-The conversation **always** starts in Claude Chat — not Claude Code, not Cowork, not the API. Claude Chat gives you access to inbuilt skills (document generation, web search, artifacts) and a far more developed system prompt than the alternatives. Use **Opus 4.6** for this phase — it's significantly better than Sonnet at "big think" scoping, architecture reasoning, and documentation generation.
+The conversation **always** starts in Claude Chat — not Cline, not Claude Code, not the API. Claude Chat gives you access to inbuilt skills (document generation, web search, artifacts) and a far more developed system prompt than the alternatives. Use **Opus** for this phase — it's significantly better than Sonnet at "big think" scoping, architecture reasoning, and documentation generation.
 
 Create a **Claude Project** first. This gives Claude persistent context across conversations. Before starting the brainstorming conversation, add your project files: screenshots of mockups you've made or apps you want to emulate, any initial scope notes, supporting files like spreadsheets with example data or calculations, competitor analysis, pitch decks — anything that helps Claude understand what you're building and why.
 
@@ -49,7 +49,7 @@ Then be explicit: *"Please create the foundational files for Cline and VSCode to
 
 ### Step 3: Generate Task Specs
 
-Ask Claude to produce the individual task files that go with the sprint plan. Depending on the project's complexity, there may be a lot of task docs and Claude may need several turns to complete them all. This may push you past your daily usage limit — a $5 USD top-up will typically be enough to finish. It's worth it: Cline using Sonnet 4.6 will cost less money and be **10x more reliable** if Opus has already written specific, detailed task docs. The goal is to reach the point where you say to Cline "Please execute sprint 1" in plan mode, it reads the task docs, says "ok let's go" with no outstanding questions, and 10 minutes later the sprint is done with minimal errors.
+Ask Claude to produce the individual task files that go with the sprint plan. Depending on the project's complexity, there may be a lot of task docs and Claude may need several turns to complete them all. This may push you past your daily usage limit — a $5 USD top-up will typically be enough to finish. It's worth it: Cline using the latest Sonnet will cost less money and be **10x more reliable** if Opus has already written specific, detailed task docs. The goal is to reach the point where you say to Cline "Please execute sprint 1" in plan mode, it reads the task docs, says "ok let's go" with no outstanding questions, and 10 minutes later the sprint is done with minimal errors.
 
 ### Step 4: Set Up Repo and Execute
 
@@ -129,20 +129,24 @@ If a fix or feature starts going in circles, ask AI to write a task doc capturin
 - Basic understanding of software development
 - Comfort with command line and Git
 - Claude access (Pro, Team, or API) — **Opus strongly recommended for brainstorming**
-- Cline extension for VS Code and/or Claude Code CLI
+- Cline extension for VS Code (primary) or Claude Code as an alternative
 - Willingness to document before coding
 
 ---
 
 ## Expected Results
 
-| Project Type | Timeline | Token Cost | Output |
-|--------------|----------|------------|--------|
-| Simple MVP | 2-3 weeks | $150-300 | Working proof of concept |
-| Complex MVP | 4-6 weeks | $300-600 | Production-ready core |
-| Large refactor | 6-12 weeks | $500-1500 | Documented, tested codebase |
+| Project Type | Token Cost | Output |
+|--------------|------------|--------|
+| Simple MVP | $150–$300 | Working proof of concept |
+| Complex MVP | $300–$600 | Production-ready core |
+| Large refactor | $500–$1500 | Documented, tested codebase |
 
 These assume following the methodology. Skip steps and costs balloon.
+
+::: tip We don't estimate timelines
+AI is notoriously bad at predicting how long things take — a task that takes 30 minutes of focused Cline work gets estimated at "2-3 days." We've deliberately left timelines out of this guide. How fast you move depends on your experience, your documentation quality, and the complexity of what you're building. The methodology is designed to keep you moving efficiently, task by task.
+:::
 
 ---
 

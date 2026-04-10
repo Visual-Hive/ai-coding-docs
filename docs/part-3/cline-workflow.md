@@ -9,7 +9,7 @@ description: Plan → Act → Verify, one task at a time
 
 **New conversation for every task.** Prevents context pollution.
 
-**Plan mode FIRST.** Whether using Cline or Claude Code, always review the approach before AI writes code. For fixes and debugging, this is **critical**.
+**Plan mode FIRST.** Always review the approach before AI writes code. For fixes and debugging, this is **critical**.
 
 **Minimal prompting.** "Can we plan task 2.3?" is enough — AI reads your docs for context.
 
@@ -20,7 +20,7 @@ description: Plan → Act → Verify, one task at a time
 ## The Cycle
 
 ```
-1. Open new Cline chat / Claude Code session
+1. Open new Cline chat
 2. "Can we please plan task X.X?"
 3. AI reads docs, proposes approach
 4. Review plan, ask questions, adjust

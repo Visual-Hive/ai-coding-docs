@@ -74,6 +74,7 @@ Read these files first:
 - Do NOT install dependencies without first searching the web for the latest stable version
 - Do NOT overwrite production `.env` files with local values
 - Do NOT push code to the production stack directly — dev first, user promotes to prod manually
+- Do NOT estimate how long tasks will take — AI time predictions are wildly inaccurate and misleading. A task that takes 30 minutes of focused AI-assisted work gets estimated at "2-3 days." Omit all time estimates from plans, task docs, and status updates.
 
 ### Git & Security Hygiene
 - Set up `.gitignore` from the start and review it regularly — no API keys, SSH keys, `.env` files, or credentials in the repo

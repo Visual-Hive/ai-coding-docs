@@ -60,9 +60,11 @@
    ======================================== */
 
 .VPNavBarTitle .logo {
-  height: 36px;
+  height: 48px;
   width: auto;
   flex-shrink: 0;
+  margin-left: 0;
+  padding-left: 0;
 }
 
 /* Stack logo above the title text */

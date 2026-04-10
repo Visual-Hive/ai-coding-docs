@@ -26,12 +26,13 @@ For this methodology, Pro is usually cheaper for moderate use. Opus is **strongl
 3. Install "Cline - AI Assistant"
 4. Open Cline panel (View → Cline)
 5. Configure:
-   - API Provider: Anthropic
-   - API Key: [your key]
-   - Model: claude-sonnet-4-20250514
+   - API Provider: **Cline** (the default — easiest setup, top up credits directly)
+   - Model: Select the latest **Sonnet** (no version numbers needed — Cline always shows the latest)
    - Auto-approve commands: **Off**
    - Sub-agents: **Off** (causes more errors than it saves time for most users)
    - Checkpoints: **Off** (slows Cline down significantly, advanced feature)
+
+Advanced users can switch the API Provider to **Anthropic** and use their own API key for more billing control. See [Setting Up Cline & Credits](/part-0/cline-and-credits) for details on both approaches.
 
 ### 3. Git & GitHub
 
@@ -146,8 +147,8 @@ Subsequent projects: ~30 minutes (just brainstorming + docs)
 
 **Rate limits:**
 - Wait a few minutes
-- Check usage at console.anthropic.com
-- Consider switching to claude-sonnet for cheaper tokens
+- Check usage at console.anthropic.com (if using your own API key)
+- Consider switching to Sonnet for cheaper tokens if you're using Opus
 
 **Cline not reading `.clinerules`:**
 - Verify the file is named `.clinerules` (with the dot prefix), not `clinerules.md`

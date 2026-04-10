@@ -145,7 +145,7 @@ You want to add a feature. Instead of going back to Claude with the repo synced 
 Stop. Go to Claude (Opus, Project with repo synced). Have the brainstorming conversation. Generate proper task specs. Then execute.
 
 **Prevention:**
-New features always start with a conversation in Claude. Fixes and tweaks can go straight to Cline/Claude Code. Know the difference.
+New features always start with a conversation in Claude. Fixes and tweaks can go straight to Cline. Know the difference.
 
 ---
 

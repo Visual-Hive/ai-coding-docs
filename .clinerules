@@ -225,29 +225,35 @@ Before marking task complete, verify:
 
 ## Technical Accuracy Requirements
 
-### Cost Estimates
-- Sonnet 4.5: $3 input / $15 output per million tokens
-- Opus 4: $15 input / $75 output per million tokens
-- Typical task: 10,000-30,000 tokens
-- MVP project: $200-$500
+### Cost Estimates (Realistic Per-Task Costs)
+- Simple task (small fix, minor feature): $1–$2
+- Medium task (new feature, moderate complexity): $2–$5
+- Complex task (major feature, lots of files): $5–$10
+- Brainstorming session: Free (use Claude Chat with Pro subscription)
+- MVP project total: $150–$600 depending on complexity
 
 **Always include:**
-- Token estimate
-- Cost range
-- Timeline estimate
+- Cost range per task
+- Do NOT include timeline estimates — AI time predictions are wildly inaccurate
 
 ### Model References
-- Current: Claude Sonnet 4.5, Claude Opus 4
-- Model IDs: claude-sonnet-4-20250514, claude-opus-4-20250514
+- Refer to models as "latest Sonnet" or "latest Opus" — Anthropic no longer uses version suffixes
+- Do NOT hardcode model IDs (e.g., claude-sonnet-4-20250514) — they go stale quickly
 - Mention extended thinking explicitly
 - Context window: 200k tokens
 
-### Tool References
-- Cline (VS Code extension)
-- Claude Code (terminal tool)
-- Claude web interface (claude.ai)
+### Tool References (Priority Order)
+- **Cline** (VS Code extension) — primary recommendation throughout the guide
+- **Claude Code Desktop** — beginner-friendly alternative for "vibe coding" style, but guide methodology doesn't fully apply
+- **Claude Code CLI** — advanced users only, terminal-based
+- **Claude Chat** (claude.ai) — for brainstorming and document generation in Projects
 
-**Be specific about versions and features.**
+**Be specific about features. Cline is the default recommendation. Claude Code Desktop and CLI are alternatives.**
+
+### Time Estimates
+- Do NOT include time estimates for tasks, sprints, or project timelines
+- AI massively overestimates timings (e.g., 30 minutes of Cline work → "2-3 days" estimate)
+- If a time reference is needed for context, frame it as relative effort, not absolute time
 
 ---
 

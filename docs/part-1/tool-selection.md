@@ -9,7 +9,9 @@ description: Choosing the right AI tools for each phase of development
 
 **Start every project in Claude** (preferably Opus) **inside a Project.** The brainstorming and document generation quality is unmatched. This is non-negotiable.
 
-**Use Cline or Claude Code** for execution. Both work. Cline has built-in Plan/Act modes. Claude Code has plan mode too. Pick what fits your workflow.
+**Use Cline in VS Code** for execution. It's a surgical coding tool — you watch the reasoning, you control the flow, you learn as it works. This guide is written for the Cline workflow throughout.
+
+**Claude Code Desktop** is an alternative for people who prefer a "sit back and let it handle things" style — but most of this guide won't apply to that workflow.
 
 **Use Claude Projects** for ongoing context. Sync your GitHub repo so Claude always knows where the project stands.
 
@@ -39,9 +41,13 @@ Every project starts here. A Claude Project gives you:
 
 ---
 
-## Cline: Structured Execution
+## Cline: The Recommended Execution Tool
 
-Cline is a VS Code extension with two explicit modes:
+Cline is a VS Code extension and the primary tool this guide is built around. Here's why.
+
+### Why Cline
+
+**Cline is a surgical coding tool.** It works directly on your codebase and you're in control the whole time, watching what it's doing. It has two explicit modes:
 
 **Plan Mode:** AI reads your project, proposes an approach, asks clarifying questions.
 
@@ -54,6 +60,14 @@ This matches the methodology perfectly:
 4. Approve terminal commands as they come
 5. Verify the result
 
+**The real power is watching it work.** As you get more experienced, you'll start reading Cline's reasoning in real-time and picking up on potential mistakes — seeing it turn in circles, noticing when it's missing information, catching when it's about to go down the wrong path. You can click **Cancel** at any point without repercussions and insert your advice, clues, or corrections to help it complete the task.
+
+Cline is cleverly navigating the fuzzy world of AI coding:
+- It knows how to split things up when tasks are too large
+- It knows when its context is maxed out and a new conversation would be more efficient
+- It manages token usage and context intelligently
+- It gives you terminal command approval so you see every action before it happens
+
 **Why terminal approval matters:**
 ```
 Cline wants to run: rm -rf node_modules && npm install
@@ -62,13 +76,14 @@ Cline wants to run: rm -rf node_modules && npm install
 
 You see every command before it runs. This prevents disasters.
 
-**Setup:**
+### Setup
+
 1. Install "Cline" from VS Code extensions
-2. Configure with your API key
-3. Enable extended thinking
+2. Top up credits directly in Cline (the default provider) — or configure with your own Anthropic API key for more control (see [Setting Up Cline & Credits](/part-0/cline-and-credits))
+3. Select the latest **Sonnet** model
 4. Keep `autoApproveCommands: false` (at least initially)
 
-**Recommended settings for beginners:**
+### Recommended Settings for Beginners
 
 **Disable sub-agents.** In Cline settings, turn off "sub agents." In practice this feature leads to more time wasting and errors than having Cline complete the task in the main chat, even at the expense of the context limit. Advanced users with high-end hardware can experiment with this later, but for most users and most projects, keep it off.
 
@@ -78,32 +93,43 @@ You see every command before it runs. This prevents disasters.
 
 ---
 
-## Claude Code: Terminal-Native Execution
+## Claude Code: The Alternatives
 
-CLI tool for developers who prefer terminal workflows.
+Claude Code comes in two very different flavours, and it's important to understand which is which.
+
+### Claude Code Desktop (Beginner-Friendly Alternative)
+
+Claude Code Desktop is a standalone application — you don't need VS Code or a terminal. It's designed for people who want to describe what they want and let the AI handle the rest.
+
+**The philosophy is different from Cline.** Claude Code Desktop is much more of a "just sit back and let me handle it" tool. It doesn't reveal its coding or reasoning in the chat the way Cline does. It seems designed for people who want to go with the vibes and see what happens.
+
+**If that's your style, that's fine.** But be aware:
+- Most of this guide's methodology (watching reasoning, surgical control, plan/act workflow, catching mistakes in real-time) doesn't apply to Claude Code Desktop
+- You won't build the same intuition for AI-assisted coding because you're not watching the process
+- You have less control over what changes are being made and why
+
+**Our recommendation:** If you're just getting started and want the easiest possible entry point, Claude Code Desktop works. But if you want to actually learn how AI-assisted development works — and be able to guide it, correct it, and get better results over time — Cline in VS Code is the better investment of your time.
+
+### Claude Code CLI (Advanced Users)
+
+The Claude Code CLI is a terminal-based tool for developers who prefer working in the command line. It's powerful and our methodology works well with it, but it requires significantly more coding and development experience to handle effectively.
 
 ```bash
 $ claude "plan task 3.2 from the sprint plan"
 ```
 
 **Key features for this methodology:**
-- **Plan mode** — `claude --plan` or ask it to plan before acting. Critical for fixes and debugging.
+- **Plan mode** — `claude --plan` or ask it to plan before acting
 - **CLAUDE.md** — Claude Code reads this file automatically. Same role as `.clinerules` for Cline.
 - **Project context** — reads your repo structure and docs
 
-**When to use Claude Code vs Cline:**
-- You prefer terminal over VS Code
+**When the CLI makes sense:**
+- You're an experienced developer comfortable reviewing diffs in the terminal
 - You want tighter Git integration
-- Quick fixes and small tasks
-- You're comfortable reviewing diffs instead of watching file edits
+- Quick fixes and small tasks where VS Code feels heavy
+- You're already a terminal-native developer
 
-**When to use Cline instead:**
-- You want visual Plan/Act mode separation
-- You prefer seeing file changes in the editor
-- You want explicit terminal command approval
-- Larger, more complex tasks where visual feedback helps
-
-**Both are valid.** The methodology works with either. The important thing is: **always plan before acting.**
+**This guide doesn't cover the CLI workflow in detail.** The principles are the same (plan before acting, one task per conversation, confidence scoring) but the interface is different. If you're experienced enough to prefer the CLI, you're experienced enough to adapt the methodology.
 
 ---
 
@@ -111,13 +137,13 @@ $ claude "plan task 3.2 from the sprint plan"
 
 | Phase | Tool | Why |
 |-------|------|-----|
-| **Initial brainstorm** | Claude (Opus, in a Project) | Best reasoning, persistent context |
-| **Foundation docs** | Claude (same conversation) | Keeps brainstorm context |
-| **Task execution** | Cline or Claude Code | Plan → Act → Verify cycle |
-| **Fixes & debugging** | Cline or Claude Code | Plan mode first, always |
-| **New features** | Claude (Project with repo synced) | Strategic discussion first |
-| **Phase audits** | Claude (fresh conversation) | Fresh eyes, no dev context |
-| **Quick tweaks** | Claude Code | Fast, low overhead |
+| **Initial brainstorm** | Claude Chat (Opus, in a Project) | Best reasoning, persistent context |
+| **Foundation docs** | Claude Chat (same conversation) | Keeps brainstorm context |
+| **Task execution** | Cline in VS Code | Plan → Act → Verify cycle with full visibility |
+| **Fixes & debugging** | Cline in VS Code | Plan mode first, watch the reasoning |
+| **New features** | Claude Chat (Project with repo synced) | Strategic discussion first |
+| **Phase audits** | Claude Chat (fresh conversation) | Fresh eyes, no dev context |
+| **Quick tweaks** | Cline in VS Code | Fast, low overhead, full control |
 
 ---
 
@@ -141,22 +167,36 @@ Extended thinking catches problems before they become expensive.
 
 ## Cost Expectations
 
-| Task Type | Tokens | Approx. Cost |
-|-----------|--------|-------------|
-| Simple task | 5-10k | $0.05-0.15 |
-| Medium task | 15-25k | $0.15-0.30 |
-| Complex task | 30-50k | $0.30-0.60 |
-| Brainstorm session | 50-100k | $1-3 |
+| Task Type | Approx. Cost |
+|-----------|-------------|
+| Simple task (small fix, minor feature) | $1–$2 |
+| Medium task (new feature, moderate complexity) | $2–$5 |
+| Complex task (major feature, lots of files) | $5–$10 |
+| Brainstorming session | Free — use Claude Chat with your Pro subscription |
 
-**Typical MVP (25-35 tasks + brainstorming):** $200-500
+::: tip Brainstorming is covered by your subscription
+All brainstorming and document generation happens in Claude Chat (claude.ai), which is covered by your Claude Pro subscription ($20/month). You only pay per-token costs for the **execution** work in Cline. This keeps the expensive part (Opus-quality brainstorming) essentially free, and the high-volume part (task execution with Sonnet) affordable.
+:::
 
-The methodology adds ~20% overhead (documentation, scoring, audits). It saves 10x that in avoided rework.
+The methodology adds some overhead (documentation, scoring, audits). It saves many times that in avoided rework.
+
+---
+
+## A Note on Time Estimates
+
+::: warning Don't trust AI time predictions
+AI is hilariously bad at estimating how long tasks will take. A task that takes 30 minutes of focused Cline work will routinely be estimated at "2-3 days" by the AI — which is what a traditional developer might take, but bears no resemblance to the AI-assisted workflow.
+
+**We don't include time estimates in this guide for that reason.** When you see AI-generated project plans or task docs predicting timelines, take them with a huge grain of salt. The methodology works on a "task by task" basis — how long each one takes varies wildly based on complexity, your experience, and how good your documentation is.
+
+**Add this to your `.clinerules` and `CLAUDE.md`:** "Do not estimate how long tasks will take. AI time predictions are wildly inaccurate." This prevents misleading estimates from cluttering your project documentation.
+:::
 
 ---
 
 ## Proof It Works
 
-This methodology built [RISE](https://github.com/The-Low-Code-Foundation/rise) — a desktop Electron app — in 4 weeks for ~$400. And the [VH Conference Toolkit](https://github.com/Visual-Hive/vh-conference-toolkit) — a suite of open-source event tools — using the same process with thorough sprint-based documentation.
+This methodology built [RISE](https://github.com/The-Low-Code-Foundation/rise) — a desktop Electron app — for ~$400 in token costs. And the [VH Conference Toolkit](https://github.com/Visual-Hive/vh-conference-toolkit) — a suite of open-source event tools — using the same process with thorough sprint-based documentation.
 
 ---
 

@@ -43,6 +43,18 @@ export default defineConfig({
         ]
       },
       {
+        text: 'Part 0: Before You Start',
+        collapsed: false,
+        items: [
+          { text: 'Setting Up Your Computer', link: '/part-0/setting-up-your-computer' },
+          { text: 'Cline & AI Credits', link: '/part-0/cline-and-credits' },
+          { text: 'Browser DevTools', link: '/part-0/browser-devtools' },
+          { text: 'How Apps Run', link: '/part-0/how-apps-run' },
+          { text: 'Files & Styling Basics', link: '/part-0/files-and-styles' },
+          { text: 'Concepts Glossary', link: '/part-0/glossary' },
+        ]
+      },
+      {
         text: 'Part I: Foundation',
         collapsed: false,
         items: [
