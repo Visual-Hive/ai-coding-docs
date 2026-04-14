@@ -163,6 +163,66 @@ After each task, provide:
 - Guard all browser-only APIs (`window`, `document`, `localStorage`) with `if (browser)` from `$app/environment` — unguarded access causes 500 errors on the server-side render
 - If a page throws a 500 error, check the **server terminal output** — the actual error is there, not in the browser. The browser only shows a generic "Internal Error" message.
 - Use `+error.svelte` boundary pages to catch and display rendering errors gracefully
+- **Deploy command must always clean first:** The standard deploy build is `rm -rf .svelte-kit build && npm run build`. Never run `npm run build` alone on a deploy — stale `.svelte-kit` artifacts cause the new build to silently include old code.
+- **Set cache headers in hooks.server.ts:** Every SvelteKit project must include a `hooks.server.ts` that sets `Cache-Control: no-cache` on all HTML/SSR responses. Without this, browsers and reverse proxies will serve stale HTML that points to old JS bundles — the #1 cause of "changes not appearing after deploy." See the cache header snippet below.
+- **nginx must distinguish assets from pages:** When configuring nginx for SvelteKit, set `Cache-Control: public, max-age=31536000, immutable` for `/_app/immutable/` paths (they're content-hashed and safe to cache forever) and `Cache-Control: no-cache` for everything else. Never rely on nginx's default caching behaviour for SSR responses.
+- **Use `pm2 restart`, not `pm2 reload`:** `pm2 reload` does a zero-downtime restart that can serve responses from the old process while the new one boots, causing intermittent stale responses. `pm2 restart` is a clean cut. For SvelteKit apps, a sub-second restart is less disruptive than serving stale pages.
+- **Kill orphan service workers:** If the project does not intentionally use a service worker for offline/PWA functionality, include the service worker cleanup snippet in `+layout.svelte` (see below). An accidentally registered service worker will aggressively cache the app shell and override all other cache settings.
+- **Add a visible build version:** Include a build timestamp or git commit hash visible in the app (footer, admin page, or console log). When "changes aren't appearing," check the version string first — if it's old, it's a cache problem. If it's current, the code change didn't take effect. This saves 30 minutes of guesswork every time.
+
+**SvelteKit cache header pattern (hooks.server.ts):**
+
+```ts
+import type { Handle } from '@sveltejs/kit';
+
+export const handle: Handle = async ({ event, resolve }) => {
+    const response = await resolve(event);
+
+    // Hashed assets are safe to cache forever
+    if (event.url.pathname.startsWith('/_app/immutable/')) {
+        response.headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+    }
+    // Everything else: browser must revalidate on every request
+    else if (!event.url.pathname.startsWith('/api/')) {
+        response.headers.set('Cache-Control', 'no-cache');
+    }
+
+    return response;
+};
+```
+
+**Service worker cleanup (+layout.svelte onMount):**
+
+```svelte
+<script>
+    import { onMount } from 'svelte';
+    import { browser } from '$app/environment';
+
+    onMount(() => {
+        if (browser && 'serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(registrations => {
+                registrations.forEach(r => r.unregister());
+            });
+        }
+    });
+</script>
+```
+
+**Build version stamp (vite.config.ts):**
+
+```ts
+define: {
+    '__BUILD_TIME__': JSON.stringify(new Date().toISOString()),
+    '__BUILD_HASH__': JSON.stringify(
+        process.env.COMMIT_SHA?.slice(0, 7) || 'dev'
+    )
+}
+```
+
+Then reference in a component:
+```svelte
+<span class="build-version">{__BUILD_TIME__} ({__BUILD_HASH__})</span>
+```
 
 ### Drizzle ORM + PostgreSQL (if applicable)
 - After any schema migration on the dev server, ALWAYS run the seed script — the frontend will show stale data if only the schema is updated without re-seeding

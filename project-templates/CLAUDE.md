@@ -161,6 +161,12 @@ After each task:
 - When modifying shared utilities, layouts, or server load functions, test ALL pages that could be affected — not just the page you worked on
 - Guard all browser-only APIs (`window`, `document`, `localStorage`) with `if (browser)` from `$app/environment`
 - If a page throws a 500, check the server terminal — the actual error is there, not in the browser
+- Deploy builds must always clean first: `rm -rf .svelte-kit build && npm run build`
+- Every project needs `hooks.server.ts` with `Cache-Control: no-cache` on HTML responses and `immutable` on `/_app/immutable/` paths — this prevents stale deploys
+- When setting up nginx, explicitly set cache headers: long cache for `/_app/immutable/`, no-cache for everything else
+- Use `pm2 restart` not `pm2 reload` for SvelteKit deploys
+- If the project doesn't use service workers intentionally, add the cleanup snippet to `+layout.svelte` onMount
+- Include a visible build version (timestamp or commit hash) in the app footer or console
 
 ### Drizzle ORM + PostgreSQL (if applicable)
 - After any schema migration on the dev server, ALWAYS run the seed script

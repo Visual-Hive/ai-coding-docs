@@ -28,7 +28,8 @@ Generate all of the following:
    - Dev/prod environment separation rules
    - Confidence scoring format (8/10 minimum)
    - When to ask the human
-   - Tech-specific rules for our chosen stack (use the SvelteKit and Drizzle examples from the templates if applicable)
+    - Tech-specific rules for our chosen stack (use the SvelteKit and Drizzle examples from the templates if applicable)
+    - SvelteKit cache and staleness prevention (hooks.server.ts cache headers, nginx config, clean builds, service worker cleanup, build versioning)
 5. **SPRINT_RULES.md** — Rules for sizing sprints, writing tasks, handling discovered work, finishing tasks
 6. **TASK_TEMPLATE.md** — Template for individual task specifications
 7. **Sprint 1 Plan** — The initial sprint plan with task index, execution order, dependencies, and definition of done
