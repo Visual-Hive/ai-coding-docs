@@ -1,0 +1,56 @@
+# .dockerignore — keep the docker build context small and reproducible
+
+# Build output and dependencies (we install fresh in the builder stage)
+node_modules/
+.svelte-kit/
+build/
+dist/
+.next/
+.nuxt/
+.vercel/
+.netlify/
+
+# Env files (NEVER bake secrets into the image)
+.env
+.env.*
+!.env.example
+
+# Version control and editor cruft
+.git/
+.gitignore
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Documentation and dev-only folders
+docs/
+dev-tasks/
+*.md
+!README.md
+
+# Tests and fixtures (image runtime doesn't need them)
+__tests__/
+__snapshots__/
+__fixtures__/
+test-results/
+coverage/
+playwright-report/
+*.test.ts
+*.test.js
+*.spec.ts
+*.spec.js
+
+# Logs and caches
+*.log
+logs/
+tmp/
+.cache/
+
+# Design assets that don't ship in the runtime
+screenshots/
+design-assets/
+
+# CI / lint configs that don't affect the runtime image
+.github/
+.eslintcache

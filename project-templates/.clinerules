@@ -34,6 +34,36 @@ Read these files first:
 - **Use absolute imports** — use `$lib/`, `@/`, or project aliases. No relative imports crossing module boundaries.
 - **Database changes need migrations** — never modify the database schema without a proper migration file
 
+### Live Project Overview Conventions
+
+- **Read `overview/README.md` at the start of every task.** It's small (~1 page). It's your map of the current state.
+- **Read additional `overview/*.md` files only when the task touches them.** Adding a route? Read `routes.md`. Adding an entity? Read `entities.md`. Do NOT read all overview files — be selective.
+- **Update `domain.config.js` whenever entities change.** Adding a field, a relationship, a new entity — change it there, not just in code.
+- **Add a JSDoc one-line description to every new route file** (`+page.server.ts`, `+server.ts`). The generator reads these.
+- **Append a decision stub to `overview/decisions/` whenever you make a non-obvious call.** Format: `YYYY-MM-DD-short-slug.md`, three lines: what changed, why, alternatives considered.
+- **Run `pnpm generate:overview` as the last step before committing.** Commit the regenerated folder. PR diffs surface drift.
+- **If `overview/DRIFT.md` exists, READ IT before doing anything else** — it means current code disagrees with `ARCHITECTURE.md` and the situation needs human attention before further work.
+
+### Cost Hygiene Rules
+
+- **A `.clineignore` file MUST exist at project root** with `node_modules/`, build outputs, lockfiles, `.env*`, large doc folders, and binary asset folders excluded. See [Token Economics](/part-5/token-economics) for the canonical list.
+- **Hard stop after 3 failures.** If the same operation fails three times, STOP. Report what's been tried, what failed, and what's confusing. Do not attempt a fourth time without human input.
+- **Stay in Plan mode for exploratory work.** Switch to Act only when the approach is genuinely clear. "Just try it and see" means stay in Plan.
+- **Use `new_task` to hand off long sessions.** When a task is past 50 turns and context is degrading, spawn a fresh task preloaded with structured state instead of letting the conversation grow indefinitely.
+- **Never poll a long-running operation.** For deploys, builds, migrations: kick off the operation, return immediately, give the human a one-line command to check status. Polling on flaky networks burns dollars per minute. See [Deployment & Platform Targets](/part-5/deployment-platforms).
+- **Auto-approve commands MUST stay OFF.** The human reviews every terminal command before it runs. The same applies to file edits in deploy-class operations — read-back confirmation is required.
+
+### Deploy Rules (any project that ships to a server)
+
+- **Build on the server, never on AI's machine.** AI's deploy command is a single SSH that triggers `scripts/deploy.sh` (or equivalent) on the server, then exits. AI does not watch the build.
+- **Return immediately after kicking off the deploy.** Once the SSH command completes, AI's job for this turn is DONE. Do not poll for build status. Do not run `pm2 logs` in a loop. Do not check the health endpoint until the human asks for it.
+- **Hand the human a one-line status command.** After every deploy, output: "Deploy kicked off. To check: `pm2 logs <app> --lines 50`" or `curl <health-url>`. The human runs that themselves when they want to know.
+- **Set `max_requests_per_task` to 10 for any deploy task.** This is a hard circuit breaker against polling-loop failures. Even if the rules above are misread, this caps damage.
+- **NEVER overwrite production `.env`.** When new env vars are needed, append them to `.env.example` with a description and notify the human to update production manually. AI does not edit `.env.production` or its remote equivalent.
+- **Push to dev only.** Production promotion is a human action — through the control panel, a GitHub merge, or a conscious manual step. AI's deploy commands target dev/staging.
+- **Maintain `deployment.json` at project root.** List every service, its URL, its `/api/health` endpoint, and its deploy method. The control panel reads this; humans read this; AI reads this on deploy-touching tasks.
+- **Every deploy is a clean build.** `rm -rf .svelte-kit build && npm run build` is the default. Stale artefacts cause the most-confusing class of post-deploy bugs.
+
 ### Control Panel Conventions (if project has a backend)
 
 **Deployment monitoring:**

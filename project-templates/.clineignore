@@ -1,0 +1,58 @@
+# .clineignore — paths Cline should NOT include in context
+# Same syntax as .gitignore. See: docs/part-5/token-economics
+
+# Build artefacts and dependencies
+node_modules/
+.svelte-kit/
+build/
+dist/
+.next/
+.nuxt/
+.vercel/
+.netlify/
+
+# Lockfiles (large, rarely the right thing to read)
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Version control
+.git/
+
+# Environment files (secrets and runtime config)
+.env
+.env.*
+!.env.example
+
+# Logs and temp files
+*.log
+logs/
+tmp/
+.cache/
+
+# OS / editor cruft
+.DS_Store
+.vscode/
+.idea/
+Thumbs.db
+
+# Doc-heavy folders the AI doesn't need on every turn
+# (AI can still read specific files on demand via the read-file tool)
+docs/
+dev-tasks/
+
+# Screenshots and design assets
+screenshots/
+design-assets/
+*.png
+*.jpg
+*.jpeg
+!public/**/*.png
+!public/**/*.jpg
+
+# Test fixtures and recordings
+__snapshots__/
+__fixtures__/
+test-results/
+coverage/
+playwright-report/

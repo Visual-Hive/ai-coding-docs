@@ -24,6 +24,16 @@ Drop these files into any repo and AI will know how to build your project. Each 
 | **SPRINT_PLAN_TEMPLATE.md** | Format for sprint planning documents | Light customization |
 | **SPRINT_RULES.md** | Rules for sizing sprints, writing tasks, managing scope | Review and adjust |
 | **convention-files/** | Frontend Tweaker starter files (design tokens, i18n, links, meta) | Yes — adjust to your stack |
+| **overview/** | Live Project Overview folder — generated, committed, AI reads selectively | Run `pnpm generate:overview` to populate |
+| **scripts/generate-overview.js** | Generator that builds `overview/` from `package.json`, `domain.config.js`, route scan, flow registry | Customise paths if your project layout differs |
+| **domain.config.js** | Declarative entity definitions feeding `overview/entities.md` | Yes — declare your real entities |
+| **.clineignore** | Paths Cline excludes from context — saves 20-30% per turn | Yes — add project-specific paths |
+| **scripts/deploy.sh** | Build-on-server deploy script — runs on the server, not on AI's machine | Yes — set `APP_DIR`, `PM2_NAME`, `BRANCH` |
+| **Dockerfile** | Multi-stage Node Dockerfile with `/api/health` healthcheck | Adjust runtime command for your framework |
+| **.dockerignore** | Keeps the Docker build context small and secret-free | Light customization |
+
+
+
 
 ### Prompt Templates
 
@@ -184,6 +194,18 @@ After each task: rate 1-10, 8 minimum to proceed.
 - Architectural changes
 - Ambiguous requirements
 - Confidence below 8
+
+### Live Project Overview Conventions (all projects)
+[Read `overview/README.md` at task start, update `domain.config.js` on entity changes, JSDoc all routes, append decision stubs, run `pnpm generate:overview` before commit]
+[See The Live Project Overview](/part-2/live-project-overview) for the full rules]
+
+### Cost Hygiene Rules (all projects)
+[`.clineignore` mandatory, hard stop after 3 failures, Plan-mode default, `new_task` for long sessions, never poll long-running operations, auto-approve OFF]
+[See Token Economics](/part-5/token-economics) for the full rules]
+
+### Deploy Rules (any project that ships to a server)
+[Build on the server not on AI's machine, return immediately after kicking off, hand the human a one-line status command, `max_requests_per_task` cap, never overwrite production `.env`, dev only, `deployment.json` mandatory, every deploy is a clean build]
+[See Deployment & Platform Targets](/part-5/deployment-platforms) for the full rules]
 
 ### Control Panel Conventions (if project has a backend)
 [Deployment monitoring, automation flow annotations, user journey testing, security checks]

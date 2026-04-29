@@ -68,6 +68,7 @@ export default defineConfig({
         items: [
           { text: 'The Brainstorming Session', link: '/part-2/brainstorming' },
           { text: 'Documentation Architecture', link: '/part-2/documentation-architecture' },
+          { text: 'The Live Project Overview', link: '/part-2/live-project-overview' },
         ]
       },
       {
@@ -96,6 +97,7 @@ export default defineConfig({
           { text: 'Team Workflows', link: '/part-5/team-workflows' },
           { text: 'The Project Control Panel', link: '/part-5/control-panel' },
           { text: 'The Frontend Tweaker', link: '/part-5/frontend-tweaker' },
+          { text: 'Token Economics', link: '/part-5/token-economics' },
           { text: 'Deployment & Platform Targets', link: '/part-5/deployment-platforms' },
         ]
       },

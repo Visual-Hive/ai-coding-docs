@@ -122,6 +122,14 @@ This document provides detailed outlines for all remaining chapters. Each can be
 
 ---
 
+### Chapter 4b: The Live Project Overview ✅ COMPLETE
+
+**Status:** Shipped at `docs/part-2/live-project-overview.md`. Templates at `project-templates/overview/`, `project-templates/domain.config.js`, `project-templates/scripts/generate-overview.js`. `.clinerules` and `CLAUDE.md` updated with Live Project Overview Conventions.
+
+**Premise:** Static foundation docs (`README`, `ARCHITECTURE`) drift from reality the moment coding starts. The Live Project Overview is a small, regenerated, AI-readable snapshot of the actual current state of the project — read on every task, kept fresh by a generator + lightweight conventions, with drift detection wired in.
+
+---
+
 ## Part III: Execution Methodology
 
 ### Chapter 5: The Cline Workflow
@@ -610,6 +618,24 @@ A chapter documenting the control panel pattern — a localhost admin dashboard 
 - Convention files and `.clinerules` rules
 - When to build it (minimum viable vs full)
 - OpsNest learnings
+
+---
+
+### Chapter 12d: Token Economics ✅ COMPLETE
+
+**File:** `docs/part-5/token-economics.md`
+**Status:** Written and published. `.clineignore` template + Cost Hygiene Rules added to `.clinerules` / `CLAUDE.md` / `docs/part-6/templates.md`.
+
+The cost-control chapter for AI-assisted development. Documents where token spend actually comes from (re-sent context per turn, not "AI thinking"), the four canonical leaks (open tabs, missing `.clineignore`, polling loops, sub-agent fan-out), and concrete patterns to keep cost predictable: `.clineignore`, hard stop after 3 failures, Plan-mode default, `new_task` for long sessions, max-requests-per-task circuit breaker, auto-approve OFF.
+
+---
+
+### Chapter 12e: Deployment & Platform Targets ✅ COMPLETE
+
+**File:** `docs/part-5/deployment-platforms.md`
+**Status:** Written and published. Includes "The Non-Polling Deploy Pattern" section + build-on-server template (`project-templates/scripts/deploy.sh`, `Dockerfile`, `.dockerignore`) + Deploy Rules added to `.clinerules` / `CLAUDE.md` / `docs/part-6/templates.md`.
+
+Covers Docker for local dev, Netlify/Vercel for static frontends, Hetzner for VPS production with strict dev/prod separation, Capacitor/PWA for mobile, Tauri/Electron for desktop, the SvelteKit cache-staleness trap, and — most importantly — the Non-Polling Deploy Pattern that prevented the OpsNest $30 polling-loop disaster from being repeatable.
 
 ---
 

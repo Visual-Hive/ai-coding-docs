@@ -52,6 +52,120 @@ Rules to bake into `.clinerules`:
 
 ---
 
+## The Non-Polling Deploy Pattern
+
+::: warning Real cost: $30 in one night
+The OpsNest deploy disaster — a polling loop on unstable WiFi during a Hetzner deploy — burned around $30 in a single overnight session. Cline kept polling the server for build status; each poll was a full API request carrying the entire conversation forward; the WiFi kept dropping; the loop never converged. None of the spend produced useful work. The pattern below would have prevented every cent of it.
+:::
+
+The catastrophic failure mode for AI deploys is **polling a long-running operation**. Builds, deploys, migrations, and image pulls all take minutes — sometimes tens of minutes. If AI is asked to "wait until the deploy finishes," it tends to:
+
+1. Run the deploy command
+2. Run a status-check command
+3. Wait, run the status-check again
+4. Wait, run the status-check again
+5. Continue forever, paying for the full conversation context on every poll
+
+If the human goes to bed mid-deploy, this is exactly when the disaster happens. The fix is structural: **AI never polls long-running operations.** Ever.
+
+### The Pattern
+
+Three rules, jointly sufficient to prevent the failure:
+
+1. **Build on the server, not on AI's machine.** SSH in, kick off `git pull && npm ci && npm run build && pm2 restart`, and exit. The build runs on the server's terminal independently. AI doesn't watch it.
+2. **Return immediately after kicking off the operation.** AI's job ends the moment the deploy command is sent. Whether the build succeeds or fails is no longer AI's concern in this turn.
+3. **Hand the human a one-line status command.** Something the human can run in 5 seconds when they want to know how it went. For pm2: `pm2 logs <app-name> --lines 50`. For Docker: `docker logs <container> --tail 100`. For a health endpoint: `curl https://your-domain/api/health`.
+
+### Concrete Example: Hetzner SvelteKit Deploy
+
+**Before (the bad pattern):**
+
+```
+You: "Deploy the latest main to production."
+
+AI: ssh prod "cd /app && git pull && npm run build && pm2 restart app"
+[2 minutes pass]
+AI: ssh prod "pm2 logs app --lines 20"
+AI: "Still building. Let me check again."
+AI: ssh prod "pm2 logs app --lines 20"
+[10 minutes pass, network drops, AI retries...]
+[$15 in spend, deploy may or may not have succeeded]
+```
+
+**After (the non-polling pattern):**
+
+```
+You: "Deploy the latest main to production."
+
+AI: ssh prod "cd /app && git pull && npm ci && npm run build && pm2 restart app"
+AI: "Deploy kicked off on prod. Build is running independently on the server.
+     To check status:
+       pm2 logs app --lines 50            # see build/runtime output
+       curl https://app.example.com/api/health   # confirm it's serving
+     If you want me to investigate after, paste me the output."
+[Conversation ends. $0.20 spent.]
+```
+
+The deploy still happens. The cost stops.
+
+### Why "Build on the Server" Specifically
+
+A common variant of the bad pattern is "build locally, then `scp` the artefacts up." For AI-driven deploys this is worse, not better, because:
+
+- The build runs on AI's machine, which means AI is watching the build (more polling)
+- Build artefacts can be tens to hundreds of megabytes — sending them over `scp` from a laptop on flaky WiFi is itself a long-running operation
+- The local build environment may differ from the server's (Node version, native dependencies)
+
+Building on the server, triggered by `git pull`, is the SOP for almost all VPS deploys. AI's terminal output ends within seconds because the moment the SSH command returns, the AI is done. The actual build runs in the server's shell, which AI is not watching.
+
+If you're using PM2: have a `npm run deploy:server` script on the server that does everything (`git pull && npm ci && npm run build && pm2 restart`). AI's command becomes one line: `ssh prod "npm run deploy:server"`. Even less to go wrong.
+
+### Build-on-Server Script Template
+
+Drop this in your repo as `scripts/deploy.sh` (full version in [Project Templates](/part-6/templates)). Make it executable. Run it on the server, never on AI's machine:
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+cd /var/www/your-app
+git pull origin main
+npm ci --production=false
+npm run build
+pm2 restart your-app --update-env
+echo "✓ Deploy complete at $(date -Iseconds)"
+```
+
+The AI command from your laptop becomes:
+
+```bash
+ssh deploy@prod 'bash /var/www/your-app/scripts/deploy.sh'
+```
+
+That's the entire deploy. AI's involvement ends in <30 seconds. The build runs on the server. The human checks `pm2 logs` later.
+
+### What About Errors?
+
+Errors don't change the pattern. If the deploy fails, AI shouldn't be polling to find that out — the human will see it when they check the status command. AI's job for that turn is done.
+
+The follow-up turn is a separate, clean conversation: "Here's what `pm2 logs` showed, please diagnose." Now AI is reading a finite log, not polling an unfinished operation. Costs are bounded.
+
+### When Polling Is OK
+
+There are operations short enough that polling doesn't matter:
+
+- A test suite that takes ~30 seconds
+- A `prisma migrate dev` on a local DB
+- A `tsc --noEmit` check
+
+For these, the natural Plan-then-Act flow handles it fine. The non-polling rule applies specifically to **operations that can take more than a minute and where network flakiness can extend that arbitrarily** — deploys, container builds, image pulls, large migrations, infrastructure provisioning.
+
+### Cross-References
+
+- [Token Economics](/part-5/token-economics) — the broader story of where token spend comes from, and the circuit breakers (max-requests-per-task, hard-stop-after-3-failures) that protect against runaway loops.
+- [The Project Control Panel](/part-5/control-panel) — health endpoints and `deployment.json` make "is it up?" a one-line curl, not an interactive AI investigation.
+
+---
+
 ## Cache, Staleness, and "My Changes Aren't Showing"
 
 This is the single most common frustration with SvelteKit projects deployed to a VPS. You make a change, deploy it, visit the site — and see the old version. Hard refresh fixes it. Sometimes. Log out, log in, and it reverts. The problem gets worse when deploying to cloud servers and is almost guaranteed to surface when Cline deploys on your behalf.

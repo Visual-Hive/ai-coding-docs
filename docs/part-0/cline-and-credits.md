@@ -173,6 +173,8 @@ These depend on what you're building, but Cline will often suggest installing th
 
 ### Tips to Keep Costs Down
 
+**Close VSCode tabs before starting a Cline task.** Cline ships your open tabs as part of its environment context with every single API request — confirmed in [Cline's own documentation](https://docs.cline.bot/). Ten unrelated tabs from yesterday's work add thousands of tokens to every turn. Close them. When Cline finishes editing a file and moves on, close that tab too. This single habit can cut spend by 20-30% on a typical task. See [Token Economics](/part-5/token-economics) for the full picture.
+
 **Start new conversations for new tasks.** Long conversations get expensive because Claude re-reads everything from the start each time. When you finish a task, start a fresh Cline conversation for the next one. The methodology naturally encourages this — one task, one conversation.
 
 **Use Sonnet for execution, Opus for brainstorming.** The brainstorming happens in Claude Projects (claude.ai), where your Claude Pro subscription covers the cost. The Cline work uses Sonnet, which is cheaper. You get the best of both worlds.
