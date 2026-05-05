@@ -168,6 +168,31 @@ Trust but verify. AI's confidence score is a starting point. Your manual testing
 
 ---
 
+## Pitfall 9: The Phantom Deploy
+
+**What it looks like:** You run a deploy. The output says success. Health checks pass. The AI declares "✅ Deploy complete." But the old code is still running. This is the hardest failure to catch because _every signal says success_.
+
+**Why it happens:** There are at least nine ways a deploy can silently fail — image tag mismatches, Docker cache lies, CI builds that never triggered, bind-mount blind spots. Each one produces "success" output. The AI sees "success" and moves on. You see "success" and trust it.
+
+**The core problem:** Health checks verify "is the process alive?" — not "is the _right_ process alive?" A container running months-old code passes health checks perfectly.
+
+**How to recover:**
+1. **Implement the build-info pattern** — a `/api/build-info` endpoint that returns the git SHA baked into the image. See [Deploy Verification — The Build-Info Pattern](/part-5/deploy-verification#the-build-info-pattern).
+2. **Add AI deploy rules** to your `.clinerules` / `CLAUDE.md` — the AI must check `/api/build-info` and compare SHAs before declaring "done." See [Deploy Verification — AI Deploy Rules](/part-5/deploy-verification#ai-deploy-rules).
+3. **Use the pre-flight checklist** before every deploy. See [Deploy Verification — The Deploy Verification Checklist](/part-5/deploy-verification#the-deploy-verification-checklist).
+
+**Prevention:**
+- Never trust "container started" as proof of a successful deploy
+- Always verify with a code-level check (build-info SHA, grep a known string, check a version endpoint)
+- Add `--force-recreate` to every registry-pull deploy command
+- Check CI build status _before_ deploying, not after
+
+::: tip
+This pitfall is uniquely dangerous in AI-assisted workflows because the AI is _designed_ to report success confidently. It sees Docker output saying "Started" and concludes the deploy worked. The AI has no way to know the container is running old code unless you give it a verification mechanism.
+:::
+
+---
+
 ## Quick Recovery Checklist
 
 When a project feels off-track:
@@ -179,6 +204,7 @@ When a project feels off-track:
 5. [ ] Am I actually testing? → Be honest
 6. [ ] Did I skip plan mode? → Go back to plan mode
 7. [ ] Is scope still reasonable? → Check sprint plan
+8. [ ] Did my deploy actually work? → Check `/api/build-info` SHA
 
 Most problems resolve with: **stop, write a task doc, start a fresh conversation.**
 

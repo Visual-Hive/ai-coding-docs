@@ -1,6 +1,6 @@
 # Phase 3: Deploy Verification & CI/CD Hardening
 
-**Status:** BACKLOG  
+**Status:** COMPLETE  
 **Source:** Real-world production incident from Visual Hive vh-command-centre (2026-05-05). Code pushed, CI green, deploy "succeeded" — but old code was still running. Root cause: image tag mismatch + Docker cache lies + zero post-deploy verification. Led to a comprehensive 9-failure-mode audit and systemic fixes.
 
 **Why this matters for the guide:** The existing deployment chapter covers platforms and the non-polling pattern, but says nothing about _verifying that code actually reached production_. This is the #1 failure mode in AI-assisted deployments — the AI says "✅ Done", Docker says "✅ Started", health checks say "✅ Healthy" — and old code is still running. Every reader using Docker + CI/CD will hit this.
@@ -11,11 +11,11 @@
 
 | Task | Title | Files Modified | Status |
 |------|-------|---------------|--------|
-| T1 | Write `deploy-verification.md` chapter | `docs/part-5/deploy-verification.md` | BACKLOG |
-| T2 | Update `deployment-platforms.md` with CI/CD section + cross-refs | `docs/part-5/deployment-platforms.md` | BACKLOG |
-| T3 | Add Pitfall 9: "The Phantom Deploy" | `docs/part-5/pitfalls-recovery.md` | BACKLOG |
-| T4 | Update template `.clinerules` + `CLAUDE.md` with deploy rules | `project-templates/.clinerules`, `project-templates/CLAUDE.md` | BACKLOG |
-| T5 | Update VitePress sidebar config | `docs/.vitepress/config.ts` | BACKLOG |
+| T1 | Write `deploy-verification.md` chapter | `docs/part-5/deploy-verification.md` | ✅ DONE |
+| T2 | Update `deployment-platforms.md` with CI/CD section + cross-refs | `docs/part-5/deployment-platforms.md` | ✅ DONE |
+| T3 | Add Pitfall 9: "The Phantom Deploy" | `docs/part-5/pitfalls-recovery.md` | ✅ DONE |
+| T4 | Update template `.clinerules` + `CLAUDE.md` with deploy rules | `project-templates/.clinerules`, `project-templates/CLAUDE.md` | ✅ DONE |
+| T5 | Update VitePress sidebar config | `docs/.vitepress/config.ts` | ✅ DONE |
 
 ---
 

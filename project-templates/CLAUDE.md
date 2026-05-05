@@ -64,6 +64,32 @@ Read these files first:
 - **Maintain `deployment.json` at project root.** List every service, its URL, its `/api/health` endpoint, and its deploy method.
 - **Every deploy is a clean build.** `rm -rf .svelte-kit build && npm run build` is the default.
 
+### Deploy Verification — MANDATORY
+
+#### Before declaring "ready to deploy":
+1. Verify push: `git log origin/[MAIN_BRANCH]..HEAD` must be empty
+2. Verify CI build: `gh run list --branch [MAIN_BRANCH] -L 3` — must show green ✅ for affected service
+3. If CI build hasn't triggered (paths filter didn't match), warn: "⚠ No build triggered — file not in CI build paths. Consider `workflow_dispatch` to force a build."
+
+#### After ANY production deployment:
+1. Check `/api/build-info` to confirm new code is running:
+   ```bash
+   curl -s https://[DOMAIN]/api/build-info | jq .
+   ```
+2. Compare the returned `git_sha` with the commit you pushed. They must match.
+3. **Never declare "deploy is done" without verification output.**
+4. If verification fails (SHA mismatch, endpoint 404, or old code still running):
+   ```
+   ❌ Deploy verification FAILED — code not live. SHA expected: XXX, got: YYY
+   ```
+5. If build-info endpoint returns `git_sha: "unknown"`, the image was built before build-info was added. Tell the human to trigger a fresh CI build.
+
+#### Image tag awareness:
+- Know which tag your production environment pulls (`:latest`, `:dev`, `:sha-XXXXXXX`)
+- Know which tag your CI pushes on which branch
+- If these don't match, the deploy will silently pull old code
+- **NEVER change `.env.production` to use a tag your CI doesn't push**
+
 ### Control Panel Conventions (if project has a backend)
 
 **Deployment monitoring:**

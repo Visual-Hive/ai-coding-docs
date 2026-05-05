@@ -9,6 +9,10 @@ description: Getting your app running — locally, on the web, on mobile, and on
 
 Where your app runs shapes how you build it. For simple frontends, Netlify or Vercel offer free, painless deployment. For backends, Docker Desktop keeps your local machine clean and Hetzner gives you affordable cloud hosting. For mobile, Capacitor wraps your web app for the app stores — plan for this from the start, not after. For desktop, Tauri is the modern lightweight choice, Electron is the established heavyweight. Whatever the target, always maintain dev/prod separation and never let AI overwrite production environment variables.
 
+::: tip Deploy Verification
+This chapter covers _where_ and _how_ to deploy. For verifying that your code actually reached production (the failure mode that bites hardest), see [Deploy Verification](/part-5/deploy-verification).
+:::
+
 ---
 
 ## Local Development with Docker
@@ -16,6 +20,10 @@ Where your app runs shapes how you build it. For simple frontends, Netlify or Ve
 Install **Docker Desktop** on your system. This gives Cline an easy way to run backend services — databases, APIs, caching layers — without installing packages directly on your machine. Every backend dependency runs in a container that can be started, stopped, and rebuilt without leaving traces on your system.
 
 Claude and Cline should aim to use Docker for any backend work. The `.clinerules` should specify this. When starting a project with a backend, one of the first sprint tasks should be setting up `docker-compose.yml` with the required services.
+
+::: warning Always use --force-recreate for registry deploys
+`docker compose up -d` may skip container recreation if Docker's local cache thinks the image hasn't changed. Always use `docker compose up -d --force-recreate <service>` when deploying from a registry. See [Deploy Verification — Docker Cache Lies](/part-5/deploy-verification#docker-cache-lies).
+:::
 
 Don't forget the **control panel** — even for the simplest backends, having a local interface to visualise backend processes is invaluable. See [The Project Control Panel](/part-5/control-panel) for the full pattern. The control panel is usually simpler to develop as an independent local app separate from the main project — just a GUI to interact with and understand the backend, data, automations, API calls, and deployment state.
 
@@ -39,6 +47,36 @@ Stick with the easiest, most non-technical-user-friendly route by default. Both 
 ## Production Hosting: Hetzner and Dev/Prod Separation
 
 For real production applications with backends, Hetzner VPS or similar affordable cloud hosting is cost-effective and gives you full control. But once you're deploying to a server, **dev/prod separation becomes critical.**
+
+### Image Tag Strategy
+
+When using a container registry (GHCR, Docker Hub, ECR), your `docker-compose.yml` references images by tag:
+
+```yaml
+image: ghcr.io/your-org/backend:${IMAGE_TAG:-latest}
+```
+
+The tag you choose determines what code gets deployed:
+
+| Tag | When Updated | Use Case | Risk |
+|-----|-------------|----------|------|
+| `:latest` | Only on `main` branch builds | Stable release channel | If you develop on `dev`, `:latest` is always stale |
+| `:dev` | Every push to `dev` branch | Active development | Safe if your CI is reliable |
+| `:sha-abc1234` | Every build (immutable) | Rollbacks, pinning | Most precise — use for rollback |
+
+**The most common mistake:** Your CI builds on `dev` but your production `.env` has `IMAGE_TAG=latest`. Every deploy pulls the months-old `:latest` image. Everything looks green. Old code runs.
+
+**The fix:** Set your production environment to pull the tag that your CI actually pushes:
+
+```bash
+# .env.production
+IMAGE_TAG_BACKEND=dev
+IMAGE_TAG_DASHBOARD=dev
+```
+
+For rollbacks, pin a specific SHA: `IMAGE_TAG_BACKEND=sha-abc1234`.
+
+See [Deploy Verification — The Nine Failure Modes](/part-5/deploy-verification#the-nine-failure-modes) for the complete list of ways this goes wrong.
 
 **The rule:** Cline is allowed to push to the **dev** server. The user must manually promote dev to prod — either through the control panel, a GitHub merge flow, or a conscious deployment step. This prevents Cline from accidentally breaking production.
 
@@ -354,4 +392,16 @@ Claude and Cline's training data can be months out of date. When installing depe
 
 ---
 
-**Next:** [Project Templates](/part-6/templates) — Drop-in templates for any project.
+## CI/CD Pipeline Verification
+
+Before deploying, always verify your CI pipeline actually built the image you're about to pull:
+
+```bash
+gh run list --branch dev -L 3
+```
+
+If the latest run failed or didn't trigger, deploying will pull a stale image. See [Deploy Verification — CI/CD Pre-Flight Checks](/part-5/deploy-verification#cicd-pre-flight-checks) for a complete pre-deploy script.
+
+---
+
+**Next:** [Deploy Verification](/part-5/deploy-verification) — Confirming your code actually reached production.

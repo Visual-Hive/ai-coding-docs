@@ -99,6 +99,7 @@ export default defineConfig({
           { text: 'The Frontend Tweaker', link: '/part-5/frontend-tweaker' },
           { text: 'Token Economics', link: '/part-5/token-economics' },
           { text: 'Deployment & Platform Targets', link: '/part-5/deployment-platforms' },
+          { text: 'Deploy Verification', link: '/part-5/deploy-verification' },
         ]
       },
       {
