@@ -204,6 +204,105 @@ For these, the natural Plan-then-Act flow handles it fine. The non-polling rule 
 
 ---
 
+## Docker Image Cleanup: The Silent Disk Killer
+
+Every `docker compose pull` downloads a new image but never removes the old one. After a few weeks of regular deploys, dangling and unused images accumulate silently until the server disk fills up — and when it does, the failure is catastrophic: containers won't start, builds fail with no space for temp files, databases crash, and logs can't write. Everything was working fine, then suddenly nothing is.
+
+This is one of the most avoidable production disasters. The fix is two lines.
+
+### Why Docker Doesn't Clean Up Automatically
+
+When Docker pulls a new `:dev` image, the old image layers are no longer referenced by that tag — but they're not deleted. They become "dangling" images: present on disk, not used by any running container, invisible in normal `docker ps` output. A typical image is 200–800MB. After 50 deploys, you've consumed 10–40GB of disk space in images you'll never use again.
+
+`docker images` won't show you the full picture. Use `docker system df` to see the real numbers:
+
+```bash
+docker system df
+# TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+# Images          47        3         18.3GB    17.9GB (97%)
+# Containers      3         3         1.2MB     0B
+# Local Volumes   2         2         4.1GB     0B
+# Build Cache     0         0         0B        0B
+```
+
+That `17.9GB reclaimable` is the problem. And it grows with every deploy.
+
+### The Deploy-Time Fix
+
+Add a single `docker image prune -f` to the end of every registry-pull deploy sequence. This removes all dangling images immediately after the new container is running:
+
+```bash
+# Complete registry-pull deploy sequence
+docker compose pull backend
+docker compose up -d --force-recreate backend
+docker image prune -f   # remove dangling images from old pulls
+```
+
+`-f` skips the confirmation prompt, which is what you want in automated or AI-assisted deploys.
+
+::: warning Don't use `docker system prune -f` here
+`docker system prune -f` removes dangling images AND stopped containers AND unused networks. This is useful for scheduled cleanup but can remove things you still want during an active deploy session. Stick with `docker image prune -f` in deploy scripts.
+:::
+
+### The Cron Safety Net
+
+Add a weekly cleanup job as a safety net. Even if the per-deploy prune is missed or disabled, this catches accumulated waste before it becomes a crisis:
+
+```bash
+# /etc/cron.d/docker-cleanup
+# Runs every Sunday at 3am. Removes images older than 7 days that are not in use.
+0 3 * * 0 root docker system prune -f --filter "until=168h" >> /var/log/docker-prune.log 2>&1
+```
+
+To set it up on a Hetzner or similar VPS:
+
+```bash
+# SSH into the server
+ssh user@your-server
+
+# Create the cron file
+sudo nano /etc/cron.d/docker-cleanup
+
+# Paste the entry above, save, exit
+
+# Verify it's loaded (no output = cron picked it up)
+sudo crontab -l
+```
+
+### Monitoring Disk Space
+
+Add a disk check to your pre-deploy checklist and to the control panel's health view:
+
+```bash
+# Quick disk check before a deploy
+df -h /                  # overall disk usage
+docker system df         # Docker-specific breakdown
+
+# Alert threshold: if / is above 80% used, clean up before deploying
+df -h / | awk 'NR==2 {print $5}' | tr -d '%'
+```
+
+If disk usage is above 80%, run a full system prune before pulling new images:
+
+```bash
+# Safe aggressive cleanup (only removes unused resources)
+docker system prune -f --filter "until=72h"
+```
+
+### The Checklist Addition
+
+Add these items to your deploy checklist for any project using registry-pull deploys:
+
+1. **Disk space check before deploy** — `docker system df` and `df -h /`
+2. **Prune after every deploy** — `docker image prune -f` as the last step
+3. **Weekly cron configured** — `/etc/cron.d/docker-cleanup` exists on the server
+
+Bake the per-deploy prune into `.clinerules`:
+
+> "After every `docker compose up -d --force-recreate`, run `docker image prune -f`. Never skip this on registry-pull deploys — dangling images accumulate silently and will eventually fill the server disk."
+
+---
+
 ## Cache, Staleness, and "My Changes Aren't Showing"
 
 This is the single most common frustration with SvelteKit projects deployed to a VPS. You make a change, deploy it, visit the site — and see the old version. Hard refresh fixes it. Sometimes. Log out, log in, and it reverts. The problem gets worse when deploying to cloud servers and is almost guaranteed to surface when Cline deploys on your behalf.

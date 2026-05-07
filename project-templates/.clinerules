@@ -63,6 +63,9 @@ Read these files first:
 - **Push to dev only.** Production promotion is a human action — through the control panel, a GitHub merge, or a conscious manual step. AI's deploy commands target dev/staging.
 - **Maintain `deployment.json` at project root.** List every service, its URL, its `/api/health` endpoint, and its deploy method. The control panel reads this; humans read this; AI reads this on deploy-touching tasks.
 - **Every deploy is a clean build.** `rm -rf .svelte-kit build && npm run build` is the default. Stale artefacts cause the most-confusing class of post-deploy bugs.
+- **Prune Docker images after every registry-pull deploy.** Run `docker image prune -f` immediately after `docker compose up -d --force-recreate`. Old images are never removed automatically — they accumulate silently and will eventually fill the server disk. See [Docker Image Cleanup](/part-5/deployment-platforms#docker-image-cleanup-the-silent-disk-killer).
+- **Check server disk space before every deploy.** Run `docker system df` and `df -h /`. If disk usage is above 80%, run `docker system prune -f --filter "until=72h"` before pulling new images.
+- **A weekly Docker cleanup cron MUST be configured on every server running Docker deploys.** Verify `/etc/cron.d/docker-cleanup` (or equivalent) exists: `0 3 * * 0 root docker system prune -f --filter "until=168h" >> /var/log/docker-prune.log 2>&1`
 
 ### Deploy Verification — MANDATORY
 

@@ -107,6 +107,31 @@ These are the ways a deploy silently fails. Every one of them produces "success"
 
 **The fix:** Explicitly exclude `.env*` files from all rsync/copy operations. Never automate env file deployment. This is already a rule in the [Deployment Platforms](/part-5/deployment-platforms) chapter — but it bears repeating because it's so easy to get wrong.
 
+### FM-10: The Disk That Filled Up
+
+**What happens:** The server runs out of disk space. Containers fail to start with cryptic errors (`no space left on device`), logs can't write, builds fail mid-way, databases refuse to accept new data. Everything was fine yesterday.
+
+**Why it's silent:** Nothing in the deploy process warns you the disk is filling up. Each `docker compose pull` downloads a fresh image — typically 200–800MB — but never removes the old one. After months of regular deploys, dozens of dangling images accumulate on disk. They're invisible in `docker ps` and `docker images` only shows the tagged ones.
+
+**The fix:**
+```bash
+# Check the current state
+docker system df
+df -h /
+
+# Immediate cleanup
+docker image prune -f         # remove dangling images
+# or more aggressively:
+docker system prune -f --filter "until=72h"
+```
+
+**Prevent it permanently:**
+1. Add `docker image prune -f` as the last step in every deploy script
+2. Set up a weekly cleanup cron: `0 3 * * 0 root docker system prune -f --filter "until=168h" >> /var/log/docker-prune.log 2>&1`
+3. Check disk space pre-deploy: `df -h / | awk 'NR==2 {print $5}'` — if above 80%, clean up first
+
+See [Docker Image Cleanup: The Silent Disk Killer](/part-5/deployment-platforms#docker-image-cleanup-the-silent-disk-killer) for the full pattern.
+
 ### FM-9: No Way to Ask "What Are You Running?"
 
 **What happens:** After deploy, there's no programmatic way to ask the running container "what commit are you?" You'd need to SSH in and grep source files. The ops dashboard can't verify the deploy succeeded. You have no idea if the new code is live.
@@ -508,6 +533,7 @@ A quick-reference checklist to use for every deploy. Print it, pin it, paste it 
 ║  □ CI/CD build is green for latest commit                ║
 ║  □ No unpushed commits: git log origin/X..HEAD           ║
 ║  □ Bind-mounted directories rsynced to server            ║
+║  □ Server disk space adequate: docker system df          ║
 ║                                                          ║
 ║  DEPLOY:                                                 ║
 ║  □ Used --force-recreate (not bare up -d)                ║
@@ -542,6 +568,7 @@ A quick-reference checklist to use for every deploy. Print it, pin it, paste it 
 | Forgot to push | Check unpushed commits | `git log origin/main..HEAD --oneline` |
 | Env file overwritten | Never rsync .env files | Audit deploy script for `.env*` in rsync |
 | Can't verify deploy | Build-info endpoint | `curl -s https://domain/api/build-info \| jq .git_sha` |
+| Disk full / no space left | Prune dangling images | `docker image prune -f` then `docker system df` |
 
 ---
 

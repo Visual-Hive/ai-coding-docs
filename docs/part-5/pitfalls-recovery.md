@@ -193,6 +193,43 @@ This pitfall is uniquely dangerous in AI-assisted workflows because the AI is _d
 
 ---
 
+## Pitfall 10: Docker Disk Space Exhaustion
+
+**What happens:**
+After weeks or months of registry-pull deploys (e.g. pulling from GHCR on a Hetzner VM), the server runs out of disk space. Containers fail to start with errors like `no space left on device`. Logs stop writing. Builds fail halfway. Databases refuse new inserts. Everything was working perfectly on the last deploy — nothing obviously changed.
+
+**Signs:**
+- Containers unexpectedly failing to start or restart
+- `docker compose up` exits with `no space left on device`
+- Server logs stop updating
+- CI pulls succeed but the container won't run
+- `df -h /` shows 95%+ disk usage
+
+**Why it happens:**
+Every `docker compose pull` downloads a new image but Docker never deletes the old one. Old images become "dangling" — no longer tagged, no longer used — but they stay on disk. Each image is typically 200–800MB. After 50 deploys, that's potentially 40GB of images you'll never use.
+
+**Recovery:**
+1. SSH into the server
+2. Check the damage: `docker system df` and `df -h /`
+3. Remove dangling images: `docker image prune -f`
+4. If still full, remove all unused resources: `docker system prune -f --filter "until=72h"`
+5. Verify free space is restored: `df -h /`
+6. Restart containers: `docker compose up -d`
+
+**Prevention:**
+Add `docker image prune -f` as the last line of every deploy script. Add a weekly cleanup cron job to catch anything that slips through:
+
+```bash
+# /etc/cron.d/docker-cleanup — runs every Sunday at 3am
+0 3 * * 0 root docker system prune -f --filter "until=168h" >> /var/log/docker-prune.log 2>&1
+```
+
+Add disk space to your pre-deploy checklist: `df -h /` — if above 80%, prune before pulling.
+
+See [Docker Image Cleanup: The Silent Disk Killer](/part-5/deployment-platforms#docker-image-cleanup-the-silent-disk-killer) for the full pattern and cron setup.
+
+---
+
 ## Quick Recovery Checklist
 
 When a project feels off-track:
