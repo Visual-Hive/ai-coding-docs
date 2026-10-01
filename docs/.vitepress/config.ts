@@ -162,7 +162,7 @@ export default defineConfig<DefaultTheme.Config & { builderOnlyPages: string[] }
   title: TITLE,
   description: DESCRIPTION,
 
-  sitemap: { hostname: 'https://learn-ai.digitalbricks.io' },
+  sitemap: { hostname: 'https://ai-coding.visualhive.co' },
   cleanUrls: true,
   lastUpdated: true,
 
@@ -176,11 +176,8 @@ export default defineConfig<DefaultTheme.Config & { builderOnlyPages: string[] }
 
   head: [
     ['script', {}, trackBootScript],
-    ['link', { rel: 'icon', href: '/brand/db-icon.svg', type: 'image/svg+xml' }],
-    ['link', { rel: 'icon', href: '/brand/favicon-32.png', sizes: '32x32', type: 'image/png' }],
-    ['link', { rel: 'apple-touch-icon', href: '/brand/apple-touch-icon.png' }],
-    ['meta', { name: 'author', content: 'Richard Osborne, Digital Bricks' }],
-    ['meta', { name: 'theme-color', content: '#0A192B' }],
+    ['meta', { name: 'author', content: 'Richard Osborne, Visual Hive' }],
+    ['meta', { name: 'theme-color', content: '#f8fa30' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:title', content: TITLE }],
     ['meta', { property: 'og:description', content: DESCRIPTION }],
@@ -189,9 +186,9 @@ export default defineConfig<DefaultTheme.Config & { builderOnlyPages: string[] }
   themeConfig: {
     siteTitle: TITLE,
     logo: {
-      light: '/brand/db-lockup-navy-nav.svg',
-      dark: '/brand/db-lockup-nav.svg',
-      alt: 'Digital Bricks'
+      light: '/assets/logo_black.png',
+      dark: '/assets/logo_white.png',
+      alt: 'Visual Hive'
     },
 
     nav: [
@@ -213,12 +210,12 @@ export default defineConfig<DefaultTheme.Config & { builderOnlyPages: string[] }
     builderOnlyPages,
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/richardosborne14/ai-coding-docs' }
+      { icon: 'github', link: 'https://github.com/Visual-Hive/ai-coding-docs' }
     ],
 
     footer: {
-      message: 'Written by Richard Osborne · <a href="https://digitalbricks.io">Digital Bricks</a>',
-      copyright: '© 2026 Digital Bricks'
+      message: 'Written by Richard Osborne · <a href="https://visualhive.co">Visual Hive</a>',
+      copyright: '© 2026 Visual Hive'
     },
 
     search: {

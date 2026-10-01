@@ -70,10 +70,9 @@ docs/                       # The methodology guide (VitePress)
 ```bash
 npm install
 npm run dev            # local preview at http://localhost:5173
-./deploy/deploy.sh     # build + push to nexus-1 (Hetzner), served by Caddy
 ```
 
-Live at [learn-ai.digitalbricks.io](https://learn-ai.digitalbricks.io). See `deploy/deploy.sh` for `--go-live` and `--rollback`.
+Live at [ai-coding.visualhive.co](https://ai-coding.visualhive.co), deployed by Vercel on every push to `main`. The Digital Bricks edition of the same guide is [learn-ai.digitalbricks.io](https://learn-ai.digitalbricks.io), from [richardosborne14/ai-coding-docs](https://github.com/richardosborne14/ai-coding-docs).
 
 ## Real Example
 
@@ -89,4 +88,4 @@ Major update complete. Core methodology revised to reflect current best practice
 
 ---
 
-Written and maintained by Richard Osborne at [Digital Bricks](https://digitalbricks.io).
+Written and maintained by Richard Osborne at [Visual Hive](https://visualhive.co).

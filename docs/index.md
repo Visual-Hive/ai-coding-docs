@@ -76,7 +76,7 @@ The [VH Conference Toolkit](https://github.com/Visual-Hive/vh-conference-toolkit
   <h3>...or do you?</h3>
   <p>You've got the whole method. What the guide can't do is look at your project. I can, and a short call is often enough to get you moving again.</p>
   <div class="db-cta-actions">
-    <a href="https://calendar.app.google/HH5FyJKogsLQc2kC8" target="_blank" rel="noopener" class="db-cta-btn db-cta-btn-primary">Book a call</a>
-    <a href="https://digitalbricks.io" target="_blank" rel="noopener" class="db-cta-btn db-cta-btn-secondary">About Digital Bricks</a>
+    <a href="https://visualhive.co/contact#book-a-call" target="_blank" rel="noopener" class="db-cta-btn db-cta-btn-primary">Book a call</a>
+    <a href="https://visualhive.co" target="_blank" rel="noopener" class="db-cta-btn db-cta-btn-secondary">About Visual Hive</a>
   </div>
 </div>

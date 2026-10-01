@@ -172,8 +172,8 @@ Half an hour of planning saves days of rework. Every time.
   <h3>Want these results on your own project?</h3>
   <p>These projects followed a clear process, and yours can too. If you want help applying it, whether that's an architecture review, an audit of what the AI has already built, or an end-to-end build, book a call.</p>
   <div class="db-cta-actions">
-    <a href="https://calendar.app.google/HH5FyJKogsLQc2kC8" target="_blank" rel="noopener" class="db-cta-btn db-cta-btn-primary">Book a call →</a>
-    <a href="https://digitalbricks.io" target="_blank" rel="noopener" class="db-cta-btn db-cta-btn-secondary">About Digital Bricks</a>
+    <a href="https://visualhive.co/contact#book-a-call" target="_blank" rel="noopener" class="db-cta-btn db-cta-btn-primary">Book a call →</a>
+    <a href="https://visualhive.co" target="_blank" rel="noopener" class="db-cta-btn db-cta-btn-secondary">About Visual Hive</a>
   </div>
 </div>
 

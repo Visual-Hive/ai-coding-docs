@@ -5,7 +5,7 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import type { Plugin } from 'vite'
 
-export const SITE_URL = 'https://learn-ai.digitalbricks.io'
+export const SITE_URL = 'https://ai-coding.visualhive.co'
 
 type Page = { title: string; description: string; path: string; body: string }
 

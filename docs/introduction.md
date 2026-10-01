@@ -49,7 +49,7 @@ More in [Mockups First](/part-2/mockups-first).
 Now, and only now, talk about the tech stack, the database and where it will be hosted. Then ask Claude to write the foundation docs: a README, an architecture doc, a `CLAUDE.md` with the rules for your project, a sprint plan and a task file for each job.
 
 ::: tip Give Claude the templates
-Add this guide's repo to your Claude Project (the `+` button on the chat input, then GitHub, then paste `https://github.com/richardosborne14/ai-coding-docs`). Then ask: *"Create the foundation files for this project using the templates in the AI Coding Docs repo."* Claude will follow the structure instead of inventing its own.
+Add this guide's repo to your Claude Project (the `+` button on the chat input, then GitHub, then paste `https://github.com/Visual-Hive/ai-coding-docs`). Then ask: *"Create the foundation files for this project using the templates in the AI Coding Docs repo."* Claude will follow the structure instead of inventing its own.
 :::
 
 Each task file names the model that should run it. Most get Opus. Small, well-specified ones can go to Sonnet if you're watching your limits. The docs carry most of the weight in this whole process, which is why [Documentation Architecture](/part-2/documentation-architecture) is one of the longest chapters.
@@ -133,8 +133,8 @@ The [VH Conference Toolkit](https://github.com/Visual-Hive/vh-conference-toolkit
   <h3>Want a second pair of eyes first?</h3>
   <p>Every project is different. If you'd like someone to look over your idea or your architecture before you start, book a call and we'll work out the right first step.</p>
   <div class="db-cta-actions">
-    <a href="https://calendar.app.google/HH5FyJKogsLQc2kC8" target="_blank" rel="noopener" class="db-cta-btn db-cta-btn-primary">Book a call</a>
-    <a href="https://digitalbricks.io" target="_blank" rel="noopener" class="db-cta-btn db-cta-btn-secondary">About Digital Bricks</a>
+    <a href="https://visualhive.co/contact#book-a-call" target="_blank" rel="noopener" class="db-cta-btn db-cta-btn-primary">Book a call</a>
+    <a href="https://visualhive.co" target="_blank" rel="noopener" class="db-cta-btn db-cta-btn-secondary">About Visual Hive</a>
   </div>
 </div>
 

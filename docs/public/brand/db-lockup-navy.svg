@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 100" width="430" height="100" role="img" aria-label="Digital Bricks">
-  <title>Digital Bricks</title>
-  <rect x="18" y="30" width="29" height="17" rx="3" fill="#0A192B"/>
-  <rect x="53" y="30" width="29" height="17" rx="3" fill="#0A192B"/>
-  <rect x="18" y="53" width="40" height="17" rx="3" fill="#0A192B"/>
-  <text x="112" y="57" font-family="system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif" font-size="25" font-weight="700"
-        letter-spacing="1.6" fill="#0A192B">DIGITAL BRICKS</text>
-</svg>

@@ -15,10 +15,6 @@ I came to software the long way round: spreadsheets, then no-code tools, then bu
 
 These days I build apps for clients, and I teach founders and teams to build and look after their own. Nearly all of that work happens in Claude Code. Everything on this site comes from real projects, and when something stops working for me, the guide changes.
 
-## Digital Bricks
-
-[Digital Bricks](https://digitalbricks.io) is my company. It's where the client work and the training happen.
-
 ## How I work, in five lines
 
 1. Talk the idea through before building anything.
@@ -33,25 +29,25 @@ The long version is [the rest of the site](/introduction).
 
 ## History
 
-The guide started as a collaboration between [The Low Code Foundation](https://www.helloasso.com/associations/the-low-code-foundation), a French non-profit that promotes accessible software development, and [Visual Hive](https://visualhive.co), where I was CTO. It's now maintained independently under Digital Bricks. Thanks to both for helping get it going.
+The guide started as a collaboration between [The Low Code Foundation](https://www.helloasso.com/associations/the-low-code-foundation), a French non-profit that promotes accessible software development, and [Visual Hive](https://visualhive.co).
 
 ## Open source
 
-The whole guide is on [GitHub](https://github.com/richardosborne14/ai-coding-docs). Corrections and suggestions are welcome. If you've found something that works better, I'd like to hear about it.
+The whole guide is on [GitHub](https://github.com/Visual-Hive/ai-coding-docs). Corrections and suggestions are welcome. If you've found something that works better, I'd like to hear about it.
 
 ## Contact
 
-- **Email:** [richard@digitalbricks.io](mailto:richard@digitalbricks.io)
-- **Digital Bricks:** [digitalbricks.io](https://digitalbricks.io)
+- **Email:** [hello@visualhive.co](mailto:hello@visualhive.co)
+- **Visual Hive:** [visualhive.co](https://visualhive.co)
 - **LinkedIn:** [Richard Osborne](https://www.linkedin.com/in/richard-osborne-28b9042a3/)
-- **GitHub:** [richardosborne14/ai-coding-docs](https://github.com/richardosborne14/ai-coding-docs)
+- **GitHub:** [Visual-Hive/ai-coding-docs](https://github.com/Visual-Hive/ai-coding-docs)
 
 <div class="db-cta">
   <h3>Work with me</h3>
   <p>If you'd rather not do it alone, I can help. That might be a look at where you're stuck, getting a first project off the ground properly, or building it for you.</p>
   <div class="db-cta-actions">
-    <a href="https://calendar.app.google/HH5FyJKogsLQc2kC8" target="_blank" rel="noopener" class="db-cta-btn db-cta-btn-primary">Book a call</a>
-    <a href="https://digitalbricks.io" target="_blank" rel="noopener" class="db-cta-btn db-cta-btn-secondary">Visit digitalbricks.io</a>
+    <a href="https://visualhive.co/contact#book-a-call" target="_blank" rel="noopener" class="db-cta-btn db-cta-btn-primary">Book a call</a>
+    <a href="https://visualhive.co" target="_blank" rel="noopener" class="db-cta-btn db-cta-btn-secondary">Visit visualhive.co</a>
   </div>
 </div>
 

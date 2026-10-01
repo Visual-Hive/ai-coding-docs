@@ -1,0 +1,48 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "docs/.vitepress/dist",
+  "framework": "vitepress",
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/part-3/cline-workflow",
+      "destination": "/part-3/execution-workflow",
+      "permanent": true
+    },
+    {
+      "source": "/part-3/cline-workflow.html",
+      "destination": "/part-3/execution-workflow",
+      "permanent": true
+    },
+    {
+      "source": "/part-0/cline-and-credits",
+      "destination": "/appendix-other-tools",
+      "permanent": true
+    },
+    {
+      "source": "/part-0/cline-and-credits.html",
+      "destination": "/appendix-other-tools",
+      "permanent": true
+    },
+    {
+      "source": "/part-5/token-economics",
+      "destination": "/part-0/plans-and-limits",
+      "permanent": true
+    },
+    {
+      "source": "/part-5/token-economics.html",
+      "destination": "/part-0/plans-and-limits",
+      "permanent": true
+    },
+    {
+      "source": "/part-6/setup-guide",
+      "destination": "/part-0/setting-up-your-computer",
+      "permanent": true
+    },
+    {
+      "source": "/part-6/setup-guide.html",
+      "destination": "/part-0/setting-up-your-computer",
+      "permanent": true
+    }
+  ]
+}

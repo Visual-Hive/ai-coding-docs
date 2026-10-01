@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" role="img" aria-label="Digital Bricks">
-  <title>Digital Bricks</title>
-  <rect width="100" height="100" fill="#0A192B"/>
-  <rect x="18" y="30" width="29" height="17" rx="3" fill="#7FB2DE"/>
-  <rect x="53" y="30" width="29" height="17" rx="3" fill="#7FB2DE"/>
-  <rect x="18" y="53" width="40" height="17" rx="3" fill="#7FB2DE"/>
-</svg>

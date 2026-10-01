@@ -1,7 +1,8 @@
 /**
- * Digital Bricks Branding — Custom VitePress Theme
- * Palette mirrors digitalbricks.io: deep-water navy ground, pale steel-blue accent.
- * Dark is the intended look; light is the explicit swap.
+ * Visual Hive Branding — Custom VitePress Theme
+ * Brand color: #f8fa30 (neon yellow)
+ * Content and layout follow the Digital Bricks edition of this guide
+ * (learn-ai.digitalbricks.io); only the palette and logo are Visual Hive's.
  */
 
 /* ========================================
@@ -9,63 +10,56 @@
    ======================================== */
 
 :root {
-  /* Light mode: the deeper blue keeps AA contrast on a pale ground */
-  --vp-c-brand-1: #1F5C8E;
-  --vp-c-brand-2: #164771;
-  --vp-c-brand-3: #164771;
-  --vp-c-brand-soft: rgba(31, 92, 142, 0.12);
+  /* Brand colors — light mode needs darker variants for readability */
+  --vp-c-brand-1: #d4d600;
+  --vp-c-brand-2: #c0c200;
+  --vp-c-brand-3: #a8aa00;
+  --vp-c-brand-soft: rgba(248, 250, 48, 0.14);
 
-  --vp-button-brand-text: #FFFFFF;
-  --vp-button-brand-bg: #1F5C8E;
-  --vp-button-brand-hover-text: #FFFFFF;
-  --vp-button-brand-hover-bg: #164771;
-  --vp-button-brand-active-text: #FFFFFF;
-  --vp-button-brand-active-bg: #164771;
+  /* Button text must be dark on yellow background */
+  --vp-button-brand-text: #1a1a2e;
+  --vp-button-brand-bg: #f8fa30;
+  --vp-button-brand-hover-text: #1a1a2e;
+  --vp-button-brand-hover-bg: #e6e82b;
+  --vp-button-brand-active-text: #1a1a2e;
+  --vp-button-brand-active-bg: #d4d600;
 
-  --db-cta-text: #FFFFFF;
+  --db-cta-text: #1a1a2e;
   --db-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Hoefler Text", Charter, Georgia, serif;
 }
 
 .dark {
-  --vp-c-bg: #0A192B;
-  --vp-c-bg-alt: #0E2139;
-  --vp-c-bg-elv: #0E2139;
-  --vp-c-bg-soft: #0E2139;
-  --vp-c-divider: #1B3049;
-  --vp-c-gutter: #06111E;
-  --vp-c-border: #1B3049;
-  --vp-c-text-1: #E6EDF5;
-  --vp-c-text-2: #94AAC2;
-  --vp-c-text-3: #657E99;
-  --vp-code-block-bg: #0E2139;
+  /* Brighter values work well on dark backgrounds */
+  --vp-c-brand-1: #f8fa30;
+  --vp-c-brand-2: #e6e82b;
+  --vp-c-brand-3: #d4d600;
+  --vp-c-brand-soft: rgba(248, 250, 48, 0.16);
 
-  --vp-c-brand-1: #7FB2DE;
-  --vp-c-brand-2: #5C93C4;
-  --vp-c-brand-3: #5C93C4;
-  --vp-c-brand-soft: rgba(127, 178, 222, 0.14);
-
-  --vp-button-brand-text: #0A192B;
-  --vp-button-brand-bg: #7FB2DE;
-  --vp-button-brand-hover-text: #0A192B;
-  --vp-button-brand-hover-bg: #9CC4E6;
-  --vp-button-brand-active-text: #0A192B;
-  --vp-button-brand-active-bg: #5C93C4;
-
-  --db-cta-text: #0A192B;
+  --db-cta-text: #1a1a2e;
 }
 
 /* ========================================
    Hero Section
    ======================================== */
 
+/* Hero name gradient — yellow to soft gold */
 :root {
-  --vp-home-hero-name-color: var(--vp-c-brand-1);
-  --vp-home-hero-image-background-image: linear-gradient(-45deg, #7FB2DE50 50%, #1F5C8E50 50%);
-  --vp-home-hero-image-filter: blur(44px);
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: -webkit-linear-gradient(
+    120deg,
+    #f8fa30 30%,
+    #e6c84a
+  );
 }
 
-.VPHero .tagline {
-  font-family: var(--db-serif);
+/* Hero image glow */
+:root {
+  --vp-home-hero-image-background-image: linear-gradient(
+    -45deg,
+    #f8fa3050 50%,
+    #e6c84a50 50%
+  );
+  --vp-home-hero-image-filter: blur(44px);
 }
 
 /* ========================================
@@ -73,7 +67,7 @@
    ======================================== */
 
 .VPNavBarTitle .logo {
-  height: 24px;
+  height: 48px;
   width: auto;
   flex-shrink: 0;
   margin-left: 0;
@@ -99,7 +93,7 @@
 }
 
 /* ========================================
-   Digital Bricks CTA Component
+   Call-to-action box
    ======================================== */
 
 .db-cta {
